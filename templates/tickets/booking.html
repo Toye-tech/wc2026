@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Tickets — {{ match.team_home }} vs {{ match.team_away }} | WC2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{--navy:#0a0e1a;--navy2:#0f1525;--navy3:#151c30;--gold:#f39c12;--gold2:#d68910;--gold-glow:rgba(243,156,18,.15);--green:#27ae60;--red:#c0392b;--white:#f0eeea;--off:#b8b5ae;--mute:#5a5850;--border:rgba(243,156,18,.12);--border2:rgba(255,255,255,.06);--r:6px;--r2:12px;--font-head:'Bebas Neue',sans-serif;--font-cond:'Barlow Condensed',sans-serif;--font-body:'Barlow',sans-serif;--font-mono:'DM Mono',monospace;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--navy);color:var(--white);font-family:var(--font-body);font-weight:300;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--navy)}::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
+nav{background:rgba(10,14,26,.97);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200;padding:0 5%;height:64px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:12px}
+.logo-emblem{width:38px;height:38px;background:linear-gradient(135deg,var(--gold),var(--gold2));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:16px;color:var(--navy)}
+.logo-text h1{font-family:var(--font-head);font-size:18px;letter-spacing:3px;text-transform:uppercase;line-height:1}
+.logo-text p{font-family:var(--font-mono);font-size:8px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-top:1px}
+.page-header{background:var(--navy2);border-bottom:1px solid var(--border2);padding:2rem 5%}
+.page-header-inner{max-width:1100px;margin:0 auto}
+.breadcrumb{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mute);margin-bottom:1rem}
+.breadcrumb a{color:var(--gold)}
+.match-summary{display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
+.match-vs-compact{font-family:var(--font-head);font-size:clamp(28px,4vw,48px);letter-spacing:2px;text-transform:uppercase;line-height:1}
+.match-vs-compact .vs{color:var(--gold);opacity:.5;margin:0 .5rem}
+.match-tags{display:flex;gap:.6rem;flex-wrap:wrap}
+.tag{font-family:var(--font-mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;padding:5px 10px;border:1px solid var(--border2);border-radius:2px;color:var(--off)}
+.tag.gold{border-color:var(--border);color:var(--gold);background:var(--gold-glow)}
+.main{max-width:1100px;margin:0 auto;padding:3rem 5%;display:grid;grid-template-columns:1fr 380px;gap:2.5rem;align-items:start}
+.form-box{background:var(--navy2);border:1px solid var(--border2);border-radius:var(--r2);overflow:hidden}
+.form-head{background:linear-gradient(135deg,var(--gold-glow),transparent);border-bottom:1px solid var(--border2);padding:1.25rem 1.75rem}
+.form-head h2{font-family:var(--font-head);font-size:22px;letter-spacing:2px;text-transform:uppercase}
+.form-head p{font-size:12px;color:var(--mute);margin-top:4px}
+.form-body{padding:1.75rem}
+.form-section{margin-bottom:1.75rem;padding-bottom:1.75rem;border-bottom:1px solid var(--border2)}
+.form-section:last-child{border:none;margin-bottom:0;padding-bottom:0}
+.form-section-title{font-family:var(--font-mono);font-size:9px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
+.f-grp{display:flex;flex-direction:column;margin-bottom:.85rem}
+.f-lbl{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mute);margin-bottom:6px}
+.f-inp{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:var(--r);padding:12px 14px;font-family:var(--font-body);font-size:13px;color:var(--white);outline:none;transition:border-color .2s;width:100%}
+.f-inp:focus{border-color:var(--gold);background:rgba(243,156,18,.03)}
+.f-inp::placeholder{color:rgba(240,238,234,.18)}
+.f-inp option{background:var(--navy2)}
+.f-err{font-family:var(--font-mono);font-size:9px;color:var(--red);margin-top:4px;display:none;letter-spacing:.5px}
+.qty-row{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+.qty-btn{width:36px;height:36px;background:rgba(243,156,18,.1);border:1px solid var(--border);border-radius:var(--r);color:var(--gold);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
+.qty-btn:hover{background:var(--gold);color:var(--navy)}
+.qty-num{font-family:var(--font-head);font-size:32px;color:var(--white);min-width:40px;text-align:center}
+.qty-info{font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--mute);text-transform:uppercase}
+.submit-btn{width:100%;background:var(--gold);color:var(--navy);font-family:var(--font-cond);font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:none;padding:16px;border-radius:var(--r);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:1.5rem}
+.submit-btn:hover{background:var(--gold2);transform:translateY(-1px)}
+.submit-btn:disabled{opacity:.4;pointer-events:none}
+.security-note{display:flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:9px;letter-spacing:.5px;color:var(--mute);margin-top:1rem;justify-content:center}
+.security-note i{color:var(--green)}
+.order-card{background:var(--navy2);border:1px solid var(--border2);border-radius:var(--r2);overflow:hidden;position:sticky;top:80px}
+.order-head{background:linear-gradient(135deg,var(--gold-glow),transparent);border-bottom:1px solid var(--border2);padding:1.25rem 1.5rem}
+.order-head h3{font-family:var(--font-head);font-size:20px;letter-spacing:2px;text-transform:uppercase}
+.order-body{padding:1.5rem}
+.order-match{background:rgba(255,255,255,.02);border:1px solid var(--border2);border-radius:var(--r);padding:1rem;margin-bottom:1.25rem}
+.order-teams{font-family:var(--font-head);font-size:20px;letter-spacing:1px;text-transform:uppercase;margin-bottom:.5rem}
+.order-teams .vs{color:var(--gold);opacity:.5;font-size:16px;margin:0 6px}
+.order-rows{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.25rem}
+.order-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.order-row:last-child{border:none}
+.order-k{font-family:var(--font-mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--mute)}
+.order-v{font-weight:500;color:var(--white)}
+.order-v.gold{color:var(--gold)}
+.order-total{background:var(--gold-glow);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;display:flex;justify-content:space-between;align-items:center}
+.total-lbl{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mute)}
+.total-val{font-family:var(--font-head);font-size:36px;color:var(--gold);line-height:1}
+.total-currency{font-family:var(--font-mono);font-size:10px;color:var(--mute);letter-spacing:1px}
+.paystack-logo{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:1rem;font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--mute);text-transform:uppercase}
+.paystack-logo i{color:var(--green);font-size:14px}
+#toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(10px);background:var(--navy3);border:1px solid var(--border2);color:var(--white);padding:10px 20px;border-radius:var(--r);font-family:var(--font-mono);font-size:10px;opacity:0;pointer-events:none;transition:all .35s;z-index:9999;white-space:nowrap}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:1024px){.main{grid-template-columns:1fr}.order-card{position:static}}
+@media(max-width:640px){.f-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<script>
+var CSRF = '{{ csrf_token }}';
+var PAYSTACK_PUBLIC_KEY = '{{ paystack_public_key }}';
+var MATCH_ID = {{ match.id }};
+var CATEGORY_ID = {{ category.id }};
+var PRICE_USD = {{ category.price_usd }};
+</script>
+
+<nav>
+  <a href="/" class="nav-logo">
+    <div class="logo-emblem">WC</div>
+    <div class="logo-text"><h1>WC 2026</h1><p>African Ticketing</p></div>
+  </a>
+  <a href="/matches/{{ match.id }}/" style="font-family:var(--font-cond);font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--mute);display:flex;align-items:center;gap:6px"><i class="fas fa-arrow-left"></i> Back to Match</a>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="breadcrumb"><a href="/">Home</a> › <a href="/matches/">Matches</a> › <a href="/matches/{{ match.id }}/">{{ match.team_home }} vs {{ match.team_away }}</a> › Book</div>
+    <div class="match-summary">
+      <div class="match-vs-compact">{{ match.team_home }}<span class="vs">VS</span>{{ match.team_away }}</div>
+      <div class="match-tags">
+        <span class="tag gold">{{ category.get_name_display }}</span>
+        <span class="tag">{{ match.get_stage_display_short }}</span>
+        <span class="tag">{{ match.match_date|date:"M d, Y" }}</span>
+        <span class="tag">{{ match.city }}, {{ match.get_country_display }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="form-box">
+    <div class="form-head">
+      <h2>Your Details</h2>
+      <p>Fill in your details below to complete the booking. All fields marked * are required.</p>
+    </div>
+    <div class="form-body">
+
+      <div class="form-section">
+        <div class="form-section-title">Number of Tickets</div>
+        <div class="qty-row">
+          <button class="qty-btn" onclick="changeQty(-1)"><i class="fas fa-minus"></i></button>
+          <div class="qty-num" id="qtyDisplay">1</div>
+          <button class="qty-btn" onclick="changeQty(1)"><i class="fas fa-plus"></i></button>
+          <div class="qty-info">Max 6 per booking<br><span style="color:var(--green)">{{ category.seats_remaining }} seats left</span></div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">Personal Information</div>
+        <div class="f-row">
+          <div class="f-grp">
+            <label class="f-lbl">Full Name *</label>
+            <input type="text" id="fName" class="f-inp" placeholder="As on your passport">
+            <div class="f-err" id="errName">Please enter your full name</div>
+          </div>
+          <div class="f-grp">
+            <label class="f-lbl">Email Address *</label>
+            <input type="email" id="fEmail" class="f-inp" placeholder="your@email.com">
+            <div class="f-err" id="errEmail">Enter a valid email address</div>
+          </div>
+        </div>
+        <div class="f-row">
+          <div class="f-grp">
+            <label class="f-lbl">Phone Number *</label>
+            <input type="tel" id="fPhone" class="f-inp" placeholder="+234 803 000 0000">
+            <div class="f-err" id="errPhone">Enter a valid phone number</div>
+          </div>
+          <div class="f-grp">
+            <label class="f-lbl">Country *</label>
+            <select id="fCountry" class="f-inp">
+              <option value="">Select your country...</option>
+              {% for code, name in african_countries %}
+              <option value="{{ code }}">{{ name }}</option>
+              {% endfor %}
+            </select>
+            <div class="f-err" id="errCountry">Please select your country</div>
+          </div>
+        </div>
+        <div class="f-grp">
+          <label class="f-lbl">Passport Number</label>
+          <input type="text" id="fPassport" class="f-inp" placeholder="Optional — for travel assistance">
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">Special Requirements</div>
+        <div class="f-grp">
+          <label class="f-lbl">Any Special Needs or Notes</label>
+          <textarea id="fSpecial" class="f-inp" rows="3" placeholder="Wheelchair access, dietary needs, group arrangements..."></textarea>
+        </div>
+      </div>
+
+      <button class="submit-btn" id="submitBtn" onclick="handleBooking()">
+        <i class="fas fa-lock"></i>
+        <span id="submitTxt">Proceed to Secure Payment</span>
+      </button>
+      <div class="security-note"><i class="fas fa-shield-alt"></i> Secured by Paystack · 256-bit SSL Encryption · PCI-DSS Compliant</div>
+    </div>
+  </div>
+
+  <div class="order-card">
+    <div class="order-head"><h3>Order Summary</h3></div>
+    <div class="order-body">
+      <div class="order-match">
+        <div class="order-teams">{{ match.team_home }}<span class="vs">VS</span>{{ match.team_away }}</div>
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--mute);text-transform:uppercase">{{ match.match_date|date:"M d, Y" }} · {{ match.city }}</div>
+      </div>
+      <div class="order-rows">
+        <div class="order-row"><span class="order-k">Category</span><span class="order-v gold">{{ category.get_name_display }}</span></div>
+        <div class="order-row"><span class="order-k">Stage</span><span class="order-v">{{ match.get_stage_display_short }}</span></div>
+        <div class="order-row"><span class="order-k">Venue</span><span class="order-v">{{ match.city }}</span></div>
+        <div class="order-row"><span class="order-k">Price per Ticket</span><span class="order-v">${{ category.price_usd }} USD</span></div>
+        <div class="order-row"><span class="order-k">Quantity</span><span class="order-v" id="summaryQty">1</span></div>
+      </div>
+      <div class="order-total">
+        <div>
+          <div class="total-lbl">Total Amount</div>
+          <div class="total-currency">US Dollars</div>
+        </div>
+        <div style="text-align:right">
+          <div class="total-val" id="totalDisplay">${{ category.price_usd }}</div>
+          <div class="total-currency">USD</div>
+        </div>
+      </div>
+      <div class="paystack-logo"><i class="fas fa-shield-alt"></i> Secured by Paystack</div>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<script>
+var qty = 1;
+var maxQty = Math.min(6, {{ category.seats_remaining }});
+var priceUsd = parseFloat('{{ category.price_usd }}');
+
+function changeQty(delta){
+  qty = Math.max(1, Math.min(maxQty, qty + delta));
+  document.getElementById('qtyDisplay').textContent = qty;
+  document.getElementById('summaryQty').textContent = qty;
+  var total = (priceUsd * qty).toFixed(2);
+  document.getElementById('totalDisplay').textContent = '$' + parseFloat(total).toLocaleString('en-US', {minimumFractionDigits:2});
+}
+
+function toast(msg, err){
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.borderColor = err ? 'rgba(192,57,43,.3)' : 'rgba(255,255,255,.07)';
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 3500);
+}
+
+function validate(){
+  var ok = true;
+  document.querySelectorAll('.f-err').forEach(function(e){ e.style.display='none'; });
+  var name = document.getElementById('fName').value.trim();
+  var email = document.getElementById('fEmail').value.trim();
+  var phone = document.getElementById('fPhone').value.trim();
+  var country = document.getElementById('fCountry').value;
+  if(!name){ document.getElementById('errName').style.display='block'; ok=false; }
+  if(!email || !email.includes('@')){ document.getElementById('errEmail').style.display='block'; ok=false; }
+  if(phone.length < 7){ document.getElementById('errPhone').style.display='block'; ok=false; }
+  if(!country){ document.getElementById('errCountry').style.display='block'; ok=false; }
+  return ok;
+}
+
+async function handleBooking(){
+  if(!validate()) return;
+  var btn = document.getElementById('submitBtn');
+  document.getElementById('submitTxt').textContent = 'Creating Booking...';
+  btn.disabled = true;
+
+  var name    = document.getElementById('fName').value.trim();
+  var email   = document.getElementById('fEmail').value.trim();
+  var phone   = document.getElementById('fPhone').value.trim();
+  var country = document.getElementById('fCountry').value;
+  var passport= document.getElementById('fPassport').value.trim();
+  var special = document.getElementById('fSpecial').value.trim();
+  var total   = priceUsd * qty;
+
+  try {
+    // Create a temporary Paystack reference
+    var paystackRef = 'WC26-PS-' + Date.now();
+
+    // Create booking record first
+    var res = await fetch('/booking/create/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-CSRFToken': CSRF },
+      body: JSON.stringify({
+        match_id: MATCH_ID,
+        category_id: CATEGORY_ID,
+        quantity: qty,
+        name: name,
+        email: email,
+        phone: phone,
+        country: country,
+        passport: passport,
+        special: special,
+        paystack_ref: paystackRef,
+      })
+    });
+    var data = await res.json();
+
+    if(!data.success){
+      toast('Booking error: ' + (data.error || 'Unknown error'), true);
+      btn.disabled = false;
+      document.getElementById('submitTxt').textContent = 'Proceed to Secure Payment';
+      return;
+    }
+
+    // Open Paystack
+    document.getElementById('submitTxt').textContent = 'Opening Payment...';
+    var handler = PaystackPop.setup({
+      key: PAYSTACK_PUBLIC_KEY,
+      email: email,
+      amount: Math.round(total * 100), // in cents
+      currency: 'USD',
+      ref: paystackRef,
+      metadata: {
+        custom_fields: [
+          { display_name: 'Customer Name', variable_name: 'name', value: name },
+          { display_name: 'Phone', variable_name: 'phone', value: phone },
+          { display_name: 'Country', variable_name: 'country', value: country },
+          { display_name: 'Match', variable_name: 'match', value: '{{ match.team_home }} vs {{ match.team_away }}' },
+          { display_name: 'Category', variable_name: 'category', value: '{{ category.get_name_display }}' },
+          { display_name: 'Quantity', variable_name: 'quantity', value: qty.toString() },
+        ]
+      },
+      onClose: function(){
+        toast('Payment window closed. Your booking is saved — complete payment to confirm.');
+        btn.disabled = false;
+        document.getElementById('submitTxt').textContent = 'Proceed to Secure Payment';
+      },
+      callback: function(response){
+        toast('Payment successful! Confirming your booking...');
+        window.location.href = '/payment/success/?ref=' + response.reference + '&name=' + encodeURIComponent(name);
+      }
+    });
+    handler.openIframe();
+    btn.disabled = false;
+    document.getElementById('submitTxt').textContent = 'Proceed to Secure Payment';
+
+  } catch(e){
+    toast('Network error. Please try again.', true);
+    btn.disabled = false;
+    document.getElementById('submitTxt').textContent = 'Proceed to Secure Payment';
+  }
+}
+</script>
+</body>
+</html>

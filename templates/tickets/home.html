@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FIFA World Cup 2026 — Official African Ticketing Portal</title>
+<meta name="description" content="Book your FIFA World Cup 2026 tickets. Africa's official gateway to matches in USA, Mexico and Canada.">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=Barlow+Condensed:wght@400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --navy:#0a0e1a;--navy2:#0f1525;--navy3:#151c30;
+  --red:#c0392b;--red2:#a93226;--red-glow:rgba(192,57,43,.2);
+  --gold:#f39c12;--gold2:#d68910;--gold-glow:rgba(243,156,18,.15);
+  --green:#27ae60;--green2:#1e8449;
+  --white:#f0eeea;--off:#b8b5ae;--mute:#5a5850;
+  --border:rgba(243,156,18,.12);--border2:rgba(255,255,255,.06);
+  --shadow:0 32px 80px rgba(0,0,0,.6);
+  --r:6px;--r2:12px;
+  --font-head:'Bebas Neue',sans-serif;
+  --font-cond:'Barlow Condensed',sans-serif;
+  --font-body:'Barlow',sans-serif;
+  --font-mono:'DM Mono',monospace;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--navy);color:var(--white);font-family:var(--font-body);font-weight:300;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{font-family:var(--font-body)}
+img{max-width:100%}
+
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--navy)}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
+
+/* TICKER */
+.ticker{background:linear-gradient(90deg,var(--red),var(--red2));height:34px;overflow:hidden;display:flex;align-items:center}
+.ticker-wrap{display:flex;animation:tick 40s linear infinite;white-space:nowrap}
+.ticker-item{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:0 2.5rem;color:rgba(255,255,255,.9)}
+.ticker-dot{color:rgba(255,255,255,.35);margin:0 .4rem}
+@keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* NAV */
+nav{position:fixed;top:34px;left:0;right:0;z-index:200;padding:0 5%;height:64px;display:flex;align-items:center;justify-content:space-between;transition:all .4s}
+nav.stuck{background:rgba(10,14,26,.97);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);top:0}
+.nav-logo{display:flex;align-items:center;gap:12px}
+.logo-emblem{width:42px;height:42px;background:linear-gradient(135deg,var(--gold),var(--gold2));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:18px;color:var(--navy);letter-spacing:0}
+.logo-text h1{font-family:var(--font-head);font-size:20px;letter-spacing:3px;text-transform:uppercase;line-height:1;color:var(--white)}
+.logo-text p{font-family:var(--font-mono);font-size:8px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-top:1px}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-family:var(--font-cond);font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(240,238,234,.45);transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-right{display:flex;gap:10px;align-items:center}
+.nav-btn{font-family:var(--font-cond);font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:9px 18px;border-radius:var(--r);cursor:pointer;transition:all .2s}
+.nav-btn.ghost{border:1px solid var(--border);background:none;color:var(--gold)}
+.nav-btn.ghost:hover{background:var(--gold-glow)}
+.nav-btn.primary{background:var(--gold);color:var(--navy);border:none}
+.nav-btn.primary:hover{background:var(--gold2);transform:translateY(-1px)}
+.hamburger{display:none;background:none;border:1px solid var(--border2);color:var(--white);width:38px;height:38px;border-radius:var(--r);cursor:pointer;font-size:14px;align-items:center;justify-content:center}
+.mob-menu{display:none;position:fixed;inset:0;background:rgba(10,14,26,.98);z-index:300;flex-direction:column;align-items:center;justify-content:center;gap:2rem}
+.mob-menu.open{display:flex}
+.mob-menu a{font-family:var(--font-head);font-size:52px;letter-spacing:4px;text-transform:uppercase;color:var(--white);transition:color .2s}
+.mob-menu a:hover{color:var(--gold)}
+.mob-close{position:absolute;top:1.5rem;right:2rem;background:none;border:none;color:var(--mute);font-size:24px;cursor:pointer}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:98px}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,14,26,.99) 0%,rgba(10,14,26,.85) 50%,rgba(10,14,26,.70) 100%),url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1800&q=80') center/cover no-repeat}
+.hero-pattern{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(243,156,18,.06) 1px,transparent 1px);background-size:40px 40px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black,transparent)}
+.hero-inner{position:relative;z-index:2;max-width:1320px;margin:0 auto;padding:0 5%;width:100%;display:grid;grid-template-columns:1.2fr 1fr;gap:4rem;align-items:center}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--border);padding:7px 16px;border-radius:2px;font-family:var(--font-mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;background:var(--gold-glow)}
+.pulse{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pulse-a 1.4s ease-in-out infinite}
+@keyframes pulse-a{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.6)}}
+.hero-title{font-family:var(--font-head);font-size:clamp(72px,10vw,148px);line-height:.85;letter-spacing:-1px;text-transform:uppercase;margin-bottom:1.5rem}
+.hero-title .hl{color:var(--gold)}
+.hero-title .ol{-webkit-text-stroke:1.5px var(--white);color:transparent}
+.hero-title .ol-g{-webkit-text-stroke:1.5px var(--gold);color:transparent}
+.hero-sub{font-size:15px;line-height:1.9;color:rgba(240,238,234,.5);max-width:500px;margin-bottom:2rem}
+.hero-cta{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.cta-gold{display:inline-flex;align-items:center;gap:9px;background:var(--gold);color:var(--navy);font-family:var(--font-cond);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:15px 30px;border-radius:var(--r);border:none;cursor:pointer;transition:all .25s}
+.cta-gold:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 12px 32px var(--gold-glow)}
+.cta-outline{display:inline-flex;align-items:center;gap:9px;border:1px solid rgba(240,238,234,.2);color:var(--white);font-family:var(--font-cond);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:15px 30px;border-radius:var(--r);transition:all .25s}
+.cta-outline:hover{border-color:var(--gold);color:var(--gold)}
+.trust-row{display:flex;gap:1.5rem;flex-wrap:wrap}
+.trust-item{display:flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--mute);text-transform:uppercase}
+.trust-item i{color:var(--gold);font-size:11px}
+
+/* COUNTDOWN */
+.countdown-card{background:rgba(15,21,37,.9);border:1px solid var(--border);border-radius:var(--r2);padding:2rem;backdrop-filter:blur(16px)}
+.cd-label{font-family:var(--font-mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--mute);text-align:center;margin-bottom:1.5rem}
+.cd-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-bottom:1.5rem}
+.cd-unit{text-align:center;background:rgba(243,156,18,.06);border:1px solid var(--border);border-radius:var(--r);padding:1rem .5rem}
+.cd-num{font-family:var(--font-head);font-size:48px;color:var(--gold);line-height:1;letter-spacing:-1px}
+.cd-lbl{font-family:var(--font-mono);font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--mute);margin-top:4px}
+.cd-matches{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:1.25rem}
+.cd-stat{background:rgba(255,255,255,.03);border:1px solid var(--border2);border-radius:var(--r);padding:.85rem;text-align:center}
+.cd-stat-n{font-family:var(--font-head);font-size:30px;color:var(--gold);line-height:1}
+.cd-stat-l{font-family:var(--font-mono);font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--mute);margin-top:3px}
+.cd-foot{text-align:center;font-family:var(--font-cond);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--mute)}
+.cd-foot span{color:var(--gold)}
+
+/* STATS BAR */
+.stats-bar{background:var(--navy2);border-top:1px solid var(--border2);border-bottom:1px solid var(--border2)}
+.stats-inner{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);padding:0 5%}
+.stat-block{padding:2.25rem 1.75rem;border-right:1px solid var(--border2);transition:background .3s}
+.stat-block:last-child{border:none}
+.stat-block:hover{background:rgba(243,156,18,.03)}
+.stat-n{font-family:var(--font-head);font-size:52px;color:var(--gold);line-height:1;letter-spacing:-1px}
+.stat-l{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mute);margin-top:5px}
+
+/* SECTION HELPERS */
+.sec-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.sec-eyebrow::before{content:'';width:24px;height:1px;background:var(--gold)}
+.sec-heading{font-family:var(--font-head);font-size:clamp(44px,6vw,76px);text-transform:uppercase;line-height:.9;letter-spacing:-1px;margin-bottom:1.25rem}
+.sec-heading .hl{color:var(--gold)}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+/* HOST NATIONS */
+.hosts-section{padding:5rem 5%;background:var(--navy)}
+.hosts-inner{max-width:1320px;margin:0 auto}
+.hosts-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.host-card{position:relative;border-radius:var(--r2);overflow:hidden;height:320px;cursor:pointer;transition:transform .3s}
+.host-card:hover{transform:translateY(-6px)}
+.host-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .5s}
+.host-card:hover .host-bg{transform:scale(1.06)}
+.host-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,14,26,.95) 0%,rgba(10,14,26,.3) 100%)}
+.host-body{position:absolute;bottom:0;left:0;right:0;padding:1.75rem}
+.host-flag{font-size:36px;display:block;margin-bottom:.75rem}
+.host-country{font-family:var(--font-head);font-size:36px;letter-spacing:2px;text-transform:uppercase;color:var(--white);line-height:1}
+.host-cities{font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;color:var(--gold);text-transform:uppercase;margin-top:6px}
+.host-matches{position:absolute;top:1.25rem;right:1.25rem;background:var(--gold);color:var(--navy);font-family:var(--font-head);font-size:18px;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+
+/* FEATURED MATCHES */
+.matches-section{padding:5rem 5%;background:var(--navy2)}
+.matches-inner{max-width:1320px;margin:0 auto}
+.matches-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:3rem;flex-wrap:wrap;gap:1.5rem}
+.filter-bar{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.flt{font-family:var(--font-mono);font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:8px 16px;border:1px solid var(--border2);border-radius:2px;background:none;color:var(--mute);cursor:pointer;transition:all .2s}
+.flt:hover,.flt.on{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+.matches-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.match-card{background:var(--navy3);border:1px solid var(--border2);border-radius:var(--r2);overflow:hidden;transition:all .3s;position:relative}
+.match-card:hover{transform:translateY(-5px);border-color:rgba(243,156,18,.25);box-shadow:var(--shadow)}
+.match-img{height:160px;position:relative;overflow:hidden;background:var(--navy2)}
+.match-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.match-card:hover .match-img img{transform:scale(1.06)}
+.match-stage{position:absolute;top:10px;left:10px;background:var(--gold);color:var(--navy);font-family:var(--font-cond);font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:2px}
+.match-country{position:absolute;top:10px;right:10px;background:rgba(10,14,26,.85);border:1px solid var(--border2);font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--off);padding:4px 9px;border-radius:2px}
+.match-body{padding:1.25rem}
+.match-teams{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1rem}
+.match-team{text-align:center;flex:1}
+.match-team-name{font-family:var(--font-head);font-size:22px;letter-spacing:1px;text-transform:uppercase;line-height:1;color:var(--white)}
+.match-team-flag{font-size:28px;display:block;margin-bottom:4px}
+.match-vs{font-family:var(--font-head);font-size:28px;color:var(--gold);opacity:.6}
+.match-meta{display:flex;justify-content:space-between;align-items:center;font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--mute);text-transform:uppercase;padding-top:1rem;border-top:1px solid var(--border2);margin-bottom:1rem}
+.match-price{font-family:var(--font-head);font-size:22px;color:var(--gold)}
+.match-price span{font-family:var(--font-mono);font-size:9px;color:var(--mute);letter-spacing:1px;margin-left:4px}
+.match-btn{width:100%;background:var(--gold);color:var(--navy);font-family:var(--font-cond);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:12px;border:none;border-radius:var(--r);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:7px}
+.match-btn:hover{background:var(--gold2)}
+.match-btn.sold{background:var(--mute);color:var(--navy2);cursor:not-allowed}
+.match-no-img{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:42px;opacity:.2}
+
+/* HOW IT WORKS */
+.how-section{padding:5rem 5%;background:var(--navy);border-top:1px solid var(--border2)}
+.how-inner{max-width:1320px;margin:0 auto}
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:3rem}
+.how-card{position:relative;padding:2rem 1.5rem;border:1px solid var(--border2);border-radius:var(--r2);background:var(--navy2);transition:all .3s;overflow:hidden}
+.how-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.how-card:hover{border-color:rgba(243,156,18,.2);transform:translateY(-3px)}
+.how-card:hover::before{transform:scaleX(1)}
+.how-num{font-family:var(--font-head);font-size:80px;color:rgba(243,156,18,.08);line-height:1;position:absolute;top:.5rem;right:1rem}
+.how-icon{font-size:28px;margin-bottom:1rem;display:block}
+.how-card h3{font-family:var(--font-cond);font-size:18px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:.5rem;color:var(--white)}
+.how-card p{font-size:13px;color:var(--mute);line-height:1.7}
+
+/* AFRICAN NATIONS */
+.africa-section{padding:5rem 5%;background:var(--navy2);border-top:1px solid var(--border2)}
+.africa-inner{max-width:1320px;margin:0 auto}
+.africa-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-top:3rem}
+.africa-text p{font-size:14px;line-height:1.9;color:rgba(240,238,234,.5);margin-bottom:2rem}
+.africa-flags{display:flex;flex-wrap:wrap;gap:.75rem}
+.flag-chip{font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--mute);padding:5px 10px;border:1px solid var(--border2);border-radius:2px;text-transform:uppercase;transition:all .2s;cursor:default}
+.flag-chip:hover{border-color:var(--gold);color:var(--gold)}
+.flag-chip.qualified{border-color:rgba(39,174,96,.3);color:var(--green)}
+.africa-stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.africa-stat{background:var(--navy3);border:1px solid var(--border2);border-radius:var(--r);padding:1.5rem;border-top:2px solid var(--gold);transition:transform .2s}
+.africa-stat:hover{transform:translateY(-2px)}
+.africa-stat-n{font-family:var(--font-head);font-size:44px;color:var(--gold);line-height:1}
+.africa-stat-l{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mute);margin-top:4px}
+
+/* FAQ */
+.faq-section{padding:5rem 5%;background:var(--navy);border-top:1px solid var(--border2)}
+.faq-inner{max-width:860px;margin:0 auto}
+.faq-list{margin-top:3rem;display:flex;flex-direction:column;gap:.75rem}
+.faq-item{border:1px solid var(--border2);border-radius:var(--r);overflow:hidden;transition:border-color .2s}
+.faq-item.open{border-color:rgba(243,156,18,.25)}
+.faq-q{padding:1.25rem 1.5rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-family:var(--font-cond);font-size:15px;font-weight:600;letter-spacing:.5px;color:var(--white);transition:background .2s;gap:1rem}
+.faq-q:hover{background:rgba(243,156,18,.04)}
+.faq-q i{color:var(--gold);font-size:12px;transition:transform .3s;flex-shrink:0}
+.faq-item.open .faq-q i{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease}
+.faq-item.open .faq-a{max-height:200px;padding:0 1.5rem 1.25rem}
+.faq-a p{font-size:13px;color:var(--mute);line-height:1.8}
+
+/* FOOTER */
+footer{background:var(--navy);border-top:1px solid var(--border2);padding:4rem 5% 2rem}
+.foot-grid{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;padding-bottom:2.5rem;border-bottom:1px solid var(--border2)}
+.foot-brand p{font-size:13px;color:var(--mute);line-height:1.8;margin:1rem 0 1.5rem;max-width:240px}
+.foot-socials{display:flex;gap:8px}
+.soc{width:32px;height:32px;border:1px solid var(--border2);border-radius:var(--r);display:flex;align-items:center;justify-content:center;color:var(--mute);font-size:12px;transition:all .2s}
+.soc:hover{background:var(--gold-glow);color:var(--gold);border-color:var(--border)}
+.foot-col h4{font-family:var(--font-cond);font-size:14px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:1.25rem;color:var(--gold)}
+.foot-links{list-style:none;display:flex;flex-direction:column;gap:8px}
+.foot-links a{font-size:12px;color:var(--mute);transition:color .2s}
+.foot-links a:hover{color:var(--gold)}
+.foot-bottom{max-width:1320px;margin:2rem auto 0;display:flex;align-items:center;justify-content:space-between;font-family:var(--font-mono);font-size:9px;color:rgba(90,88,80,.5);flex-wrap:wrap;gap:1rem;letter-spacing:.5px}
+.fifa-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--gold);border:1px solid var(--border);padding:5px 12px;border-radius:2px}
+
+/* FLOATING */
+.wa-float{position:fixed;bottom:2.5rem;right:2.5rem;z-index:89;width:52px;height:52px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;box-shadow:0 8px 24px rgba(37,211,102,.4);transition:all .2s}
+.wa-float:hover{transform:scale(1.1)}
+#btt{position:fixed;bottom:2.5rem;left:2.5rem;width:40px;height:40px;background:var(--navy3);border:1px solid var(--border2);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:12px;cursor:pointer;opacity:0;pointer-events:none;transition:all .3s;z-index:88}
+#btt.show{opacity:1;pointer-events:all}
+#btt:hover{background:var(--gold);color:var(--navy)}
+#toast{position:fixed;bottom:5rem;left:50%;transform:translateX(-50%) translateY(10px);background:var(--navy3);border:1px solid var(--border2);color:var(--white);padding:10px 20px;border-radius:var(--r);font-family:var(--font-mono);font-size:10px;letter-spacing:.5px;opacity:0;pointer-events:none;transition:all .35s;z-index:9999;white-space:nowrap}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:1100px){.hero-inner{grid-template-columns:1fr}.countdown-card{display:none}.matches-grid{grid-template-columns:1fr 1fr}.hosts-grid{grid-template-columns:1fr 1fr}.how-grid{grid-template-columns:1fr 1fr}.foot-grid{grid-template-columns:1fr 1fr;gap:2rem}}
+@media(max-width:768px){.nav-links,.nav-right{display:none}.hamburger{display:flex}.stats-inner{grid-template-columns:repeat(2,1fr)}.matches-grid{grid-template-columns:1fr}.hosts-grid{grid-template-columns:1fr}.how-grid{grid-template-columns:1fr}.africa-grid{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<script>
+var CSRF = '{{ csrf_token }}';
+var PAYSTACK_PUBLIC_KEY = '{{ paystack_public_key }}';
+</script>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-wrap">
+    <span class="ticker-item">🏆 FIFA World Cup 2026 — USA · Mexico · Canada</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">48 Teams · 104 Matches · 16 Venues</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">Africa Gets 9 Spots — Record Representation</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">Tickets From $75 USD · Secure Paystack Checkout</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">Group Stage Kicks Off June 11, 2026</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">🏆 FIFA World Cup 2026 — USA · Mexico · Canada</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">48 Teams · 104 Matches · 16 Venues</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">Africa Gets 9 Spots — Record Representation</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">Tickets From $75 USD · Secure Paystack Checkout</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">Group Stage Kicks Off June 11, 2026</span><span class="ticker-dot">◆</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="/" class="nav-logo">
+    <div class="logo-emblem">WC</div>
+    <div class="logo-text"><h1>WC 2026</h1><p>African Ticketing Portal</p></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/matches/">Matches</a></li>
+    <li><a href="#hosts">Venues</a></li>
+    <li><a href="#how">How to Buy</a></li>
+    <li><a href="/booking/lookup/">My Tickets</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="/booking/lookup/" class="nav-btn ghost">My Bookings</a>
+    <a href="/matches/" class="nav-btn primary"><i class="fas fa-ticket-alt"></i> Buy Tickets</a>
+  </div>
+  <button class="hamburger" id="ham"><i class="fas fa-bars"></i></button>
+</nav>
+
+<div class="mob-menu" id="mobMenu">
+  <button class="mob-close" id="mobClose"><i class="fas fa-times"></i></button>
+  <a href="/matches/" onclick="closeMob()">Matches</a>
+  <a href="#hosts" onclick="closeMob()">Venues</a>
+  <a href="#how" onclick="closeMob()">How to Buy</a>
+  <a href="/booking/lookup/" onclick="closeMob()">My Tickets</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow"><span class="pulse"></span>Official African Ticketing Gateway · 2026</div>
+      <h1 class="hero-title">
+        THE<br>
+        WORLD<br>
+        <span class="hl">CUP</span><br>
+        <span class="ol-g">AWAITS</span>
+      </h1>
+      <p class="hero-sub">Africa's largest tournament in history. 9 African nations. 104 matches across USA, Mexico and Canada. Your seat is waiting.</p>
+      <div class="hero-cta">
+        <a href="/matches/" class="cta-gold"><i class="fas fa-ticket-alt"></i> Browse All Matches</a>
+        <a href="#how" class="cta-outline"><i class="fas fa-info-circle"></i> How It Works</a>
+      </div>
+      <div class="trust-row">
+        <div class="trust-item"><i class="fas fa-shield-alt"></i> Secure Paystack</div>
+        <div class="trust-item"><i class="fas fa-dollar-sign"></i> USD Pricing</div>
+        <div class="trust-item"><i class="fas fa-globe-africa"></i> 54 African Nations</div>
+        <div class="trust-item"><i class="fas fa-mobile-alt"></i> E-Ticket Delivery</div>
+      </div>
+    </div>
+
+    <!-- COUNTDOWN -->
+    <div class="countdown-card">
+      <div class="cd-label">Tournament Begins In</div>
+      <div class="cd-grid">
+        <div class="cd-unit"><div class="cd-num" id="cdDays">00</div><div class="cd-lbl">Days</div></div>
+        <div class="cd-unit"><div class="cd-num" id="cdHours">00</div><div class="cd-lbl">Hours</div></div>
+        <div class="cd-unit"><div class="cd-num" id="cdMins">00</div><div class="cd-lbl">Mins</div></div>
+        <div class="cd-unit"><div class="cd-num" id="cdSecs">00</div><div class="cd-lbl">Secs</div></div>
+      </div>
+      <div class="cd-matches">
+        <div class="cd-stat"><div class="cd-stat-n">{{ total_matches }}</div><div class="cd-stat-l">Matches</div></div>
+        <div class="cd-stat"><div class="cd-stat-n">{{ total_venues }}</div><div class="cd-stat-l">Venues</div></div>
+        <div class="cd-stat"><div class="cd-stat-n">48</div><div class="cd-stat-l">Teams</div></div>
+        <div class="cd-stat"><div class="cd-stat-n">9</div><div class="cd-stat-l">Africa Slots</div></div>
+      </div>
+      <div class="cd-foot">Opening Match: <span>June 11, 2026</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-block reveal"><div class="stat-n">104</div><div class="stat-l">Total Matches</div></div>
+    <div class="stat-block reveal"><div class="stat-n">16</div><div class="stat-l">Host Venues</div></div>
+    <div class="stat-block reveal"><div class="stat-n">48</div><div class="stat-l">Nations Competing</div></div>
+    <div class="stat-block reveal"><div class="stat-n">9</div><div class="stat-l">African Qualifiers</div></div>
+  </div>
+</div>
+
+<!-- HOST NATIONS -->
+<section id="hosts" class="hosts-section">
+  <div class="hosts-inner">
+    <div class="reveal">
+      <div class="sec-eyebrow">Host Nations</div>
+      <h2 class="sec-heading">THREE <span class="hl">NATIONS</span><br>ONE TOURNAMENT</h2>
+    </div>
+    <div class="hosts-grid">
+      <div class="host-card reveal">
+        <div class="host-bg" style="background-image:url('https://images.unsplash.com/photo-1560969184-10fe8719e047?w=800&q=80')"></div>
+        <div class="host-overlay"></div>
+        <div class="host-matches">60</div>
+        <div class="host-body">
+          <span class="host-flag">🇺🇸</span>
+          <div class="host-country">United States</div>
+          <div class="host-cities">New York · LA · Dallas · Miami · Seattle · Boston · Philadelphia · Kansas City · San Francisco · Atlanta</div>
+        </div>
+      </div>
+      <div class="host-card reveal">
+        <div class="host-bg" style="background-image:url('https://images.unsplash.com/photo-1518638150340-f706e86654de?w=800&q=80')"></div>
+        <div class="host-overlay"></div>
+        <div class="host-matches">10</div>
+        <div class="host-body">
+          <span class="host-flag">🇲🇽</span>
+          <div class="host-country">Mexico</div>
+          <div class="host-cities">Mexico City · Guadalajara · Monterrey</div>
+        </div>
+      </div>
+      <div class="host-card reveal">
+        <div class="host-bg" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80')"></div>
+        <div class="host-overlay"></div>
+        <div class="host-matches">10</div>
+        <div class="host-body">
+          <span class="host-flag">🇨🇦</span>
+          <div class="host-country">Canada</div>
+          <div class="host-cities">Toronto · Vancouver</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED MATCHES -->
+<section id="matches" class="matches-section">
+  <div class="matches-inner">
+    <div class="matches-header reveal">
+      <div>
+        <div class="sec-eyebrow">Book Now</div>
+        <h2 class="sec-heading">FEATURED <span class="hl">MATCHES</span></h2>
+      </div>
+      <a href="/matches/" class="cta-outline" style="font-size:11px;font-family:var(--font-cond);letter-spacing:2px">View All Matches <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="filter-bar reveal">
+      <button class="flt on" onclick="filterMatches('all',this)">All</button>
+      <button class="flt" onclick="filterMatches('USA',this)">🇺🇸 USA</button>
+      <button class="flt" onclick="filterMatches('Mexico',this)">🇲🇽 Mexico</button>
+      <button class="flt" onclick="filterMatches('Canada',this)">🇨🇦 Canada</button>
+    </div>
+    <div class="matches-grid" id="matchesGrid">
+      {% for match in featured_matches %}
+      <div class="match-card reveal" data-country="{{ match.country }}">
+        <div class="match-img">
+          {% if match.image_url %}
+          <img src="{{ match.image_url }}" alt="{{ match.team_home }} vs {{ match.team_away }}" loading="lazy">
+          {% else %}
+          <div class="match-no-img">🏟️</div>
+          {% endif %}
+          <span class="match-stage">{{ match.get_stage_display_short }}</span>
+          <span class="match-country">{{ match.get_country_display }}</span>
+        </div>
+        <div class="match-body">
+          <div class="match-teams">
+            <div class="match-team">
+              <span class="match-team-flag">🏴</span>
+              <div class="match-team-name">{{ match.team_home }}</div>
+            </div>
+            <div class="match-vs">VS</div>
+            <div class="match-team">
+              <span class="match-team-flag">🏴</span>
+              <div class="match-team-name">{{ match.team_away }}</div>
+            </div>
+          </div>
+          <div class="match-meta">
+            <span><i class="fas fa-calendar"></i> {{ match.match_date|date:"M d, Y" }}</span>
+            <span><i class="fas fa-map-marker-alt"></i> {{ match.city }}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+            <div>
+              <div style="font-family:var(--font-mono);font-size:8px;letter-spacing:2px;color:var(--mute);text-transform:uppercase;margin-bottom:2px">From</div>
+              <div class="match-price">
+                {% if match.min_price %}${{ match.min_price }}{% else %}TBA{% endif %}
+                <span>USD</span>
+              </div>
+            </div>
+            <div style="font-family:var(--font-mono);font-size:9px;color:{% if match.status == 'available' %}var(--green){% else %}var(--red){% endif %}">
+              {% if match.status == 'available' %}● Available{% elif match.status == 'sold_out' %}● Sold Out{% else %}● Cancelled{% endif %}
+            </div>
+          </div>
+          {% if match.status == 'available' %}
+          <a href="/matches/{{ match.id }}/" class="match-btn"><i class="fas fa-ticket-alt"></i> Select Tickets</a>
+          {% else %}
+          <button class="match-btn sold" disabled>{{ match.get_status_display }}</button>
+          {% endif %}
+        </div>
+      </div>
+      {% empty %}
+      <div style="grid-column:1/-1;text-align:center;padding:4rem;color:var(--mute)">
+        <div style="font-size:48px;margin-bottom:1rem">🏟️</div>
+        <p style="font-size:14px;margin-bottom:1.5rem">No featured matches yet. Add matches from the admin dashboard.</p>
+        {% if user.is_staff %}
+        <a href="/wc2026-admin/tickets/match/add/" class="cta-gold" style="display:inline-flex;font-size:11px">Add First Match</a>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    {% if featured_matches %}
+    <div style="text-align:center;margin-top:3rem" class="reveal">
+      <a href="/matches/" class="cta-gold" style="display:inline-flex;font-size:12px"><i class="fas fa-list"></i> View All {{ total_matches }} Matches</a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="how-section">
+  <div class="how-inner">
+    <div class="reveal" style="text-align:center;max-width:600px;margin:0 auto">
+      <div class="sec-eyebrow">Simple Process</div>
+      <h2 class="sec-heading">HOW TO <span class="hl">BUY</span><br>YOUR TICKETS</h2>
+    </div>
+    <div class="how-grid">
+      <div class="how-card reveal">
+        <div class="how-num">1</div>
+        <span class="how-icon">🔍</span>
+        <h3>Browse Matches</h3>
+        <p>Filter matches by country, stage or your favourite team. View all ticket categories and pricing in USD.</p>
+      </div>
+      <div class="how-card reveal">
+        <div class="how-num">2</div>
+        <span class="how-icon">🎫</span>
+        <h3>Select Category</h3>
+        <p>Choose from Category 1, 2, 3 or Hospitality. Pick your quantity — up to 6 tickets per booking.</p>
+      </div>
+      <div class="how-card reveal">
+        <div class="how-num">3</div>
+        <span class="how-icon">💳</span>
+        <h3>Pay Securely</h3>
+        <p>Complete payment via Paystack. All major cards accepted. Transactions secured with 256-bit encryption.</p>
+      </div>
+      <div class="how-card reveal">
+        <div class="how-num">4</div>
+        <span class="how-icon">📱</span>
+        <h3>Get Your Ticket</h3>
+        <p>Receive your unique ticket code instantly. Present at the stadium on match day. Simple as that.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AFRICAN NATIONS -->
+<section class="africa-section">
+  <div class="africa-inner">
+    <div class="reveal">
+      <div class="sec-eyebrow">Africa Represents</div>
+      <h2 class="sec-heading">FOR <span class="hl">AFRICA</span><br>BY AFRICANS</h2>
+    </div>
+    <div class="africa-grid">
+      <div class="africa-text reveal">
+        <p>The 2026 FIFA World Cup marks the largest African representation in tournament history — 9 spots secured for the continent. This portal is built specifically for African fans to easily purchase tickets and make the journey to North America.</p>
+        <p>All 54 African nations are supported. Tickets priced in USD with seamless Paystack checkout — the payment gateway trusted by millions across Africa.</p>
+        <div class="africa-flags">
+          {% for flag in "🇳🇬🇲🇦🇿🇦🇨🇲🇬🇭🇸🇳🇹🇳🇪🇬🇩🇿🇰🇪🇨🇮🇺🇬🇲🇱🇧🇫🇦🇴🇲🇿🇿🇲🇿🇼🇷🇼🇹🇿🇪🇹"|make_list %}{% endfor %}
+          <span class="flag-chip qualified">Nigeria 🇳🇬</span>
+          <span class="flag-chip qualified">Morocco 🇲🇦</span>
+          <span class="flag-chip qualified">Senegal 🇸🇳</span>
+          <span class="flag-chip qualified">Cameroon 🇨🇲</span>
+          <span class="flag-chip qualified">Egypt 🇪🇬</span>
+          <span class="flag-chip qualified">Ghana 🇬🇭</span>
+          <span class="flag-chip qualified">Ivory Coast 🇨🇮</span>
+          <span class="flag-chip qualified">South Africa 🇿🇦</span>
+          <span class="flag-chip qualified">Tunisia 🇹🇳</span>
+          <span class="flag-chip">Algeria 🇩🇿</span>
+          <span class="flag-chip">Kenya 🇰🇪</span>
+          <span class="flag-chip">Ethiopia 🇪🇹</span>
+          <span class="flag-chip">Tanzania 🇹🇿</span>
+          <span class="flag-chip">Uganda 🇺🇬</span>
+          <span class="flag-chip">+ 40 more</span>
+        </div>
+      </div>
+      <div class="africa-stats reveal">
+        <div class="africa-stat"><div class="africa-stat-n">9</div><div class="africa-stat-l">African Teams</div></div>
+        <div class="africa-stat"><div class="africa-stat-n">54</div><div class="africa-stat-l">Nations Supported</div></div>
+        <div class="africa-stat"><div class="africa-stat-n">$75</div><div class="africa-stat-l">Starting Price</div></div>
+        <div class="africa-stat"><div class="africa-stat-n">3</div><div class="africa-stat-l">Host Countries</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING TABLE -->
+<section style="padding:5rem 5%;background:var(--navy2);border-top:1px solid var(--border2)">
+  <div style="max-width:1320px;margin:0 auto">
+    <div class="reveal" style="text-align:center;margin-bottom:3rem">
+      <div class="sec-eyebrow">Ticket Pricing</div>
+      <h2 class="sec-heading">PRICES IN <span class="hl">USD</span></h2>
+      <p style="color:var(--mute);font-size:14px;max-width:500px;margin:0 auto">All prices in US Dollars. Paystack accepts all major cards from African banks.</p>
+    </div>
+    <div style="overflow-x:auto" class="reveal">
+      <table style="width:100%;border-collapse:collapse;min-width:600px">
+        <thead>
+          <tr style="border-bottom:2px solid var(--border)">
+            <th style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);padding:12px 16px;text-align:left">Category</th>
+            <th style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mute);padding:12px 16px;text-align:center">Group Stage</th>
+            <th style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mute);padding:12px 16px;text-align:center">Round of 16</th>
+            <th style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mute);padding:12px 16px;text-align:center">Quarter Final</th>
+            <th style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mute);padding:12px 16px;text-align:center">Semi Final</th>
+            <th style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);padding:12px 16px;text-align:center">Final</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in "1234"|make_list %}
+          {% endfor %}
+          <tr style="border-bottom:1px solid var(--border2)">
+            <td style="padding:14px 16px"><div style="font-family:var(--font-cond);font-size:15px;font-weight:700;letter-spacing:1px;color:var(--white)">Category 1</div><div style="font-size:11px;color:var(--mute)">Best seats, closest view</div></td>
+            <td style="padding:14px 16px;text-align:center;font-family:var(--font-head);font-size:20px;color:var(--gold)">$150</td>
+            <td style="padding:14px 16px;text-align:center;font-family:var(--font-head);font-size:20px;color:var(--gold)">$250</td>
+            <td style="padding:14px 16px;text-align:center;font-family:var(--font-head);font-size:20px;color:var(--gold)">$350</td>
+            <td style="padding:14px 16px;text-align:center;font-family:var(--font-head);font-size:20px;color:var(--gold)">$500</td>
+            <td style="padding:14px 16px;text-align:center;font-family:var(--font-head);font-size:20px;color:var(--gold)">$1,000</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border2)">
+            <td style="padding:14px 16px"><div style="font-family:var(--font-cond);font-size:15px;font-weight:700;letter-spacing:1px;color:var(--white)">Category 2</div><div style="font-size:11px;color:var(--mute)">Great atmosphere</div></td>
+            <td style="padding:14px 16px;text-align:center;font-family:var(--font-head);font-size:20px;color:var(--gold)">$100</td>
+            <td style="padding:14px 16px;text-align:center;font-family:var(--font-head);font-size:20px;color:var(--gold)">$175</td>
+            <td style="padding:14px 16px;text-align:center;font-family:var(--font-head);font-size:20px;color:var(--gold)">$250</td>
+            <td style="padding:14px 16px;text-align:center;font-family:var(--font-head);font-size:20px;color:var(--gold)">$350</td>
+            <td style="padding:14px 16px;text-align:center;font-family:var(--font-head);font-size:20px;color:var(--gold)">$700</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border2)">
+            <td style="padding:14px 16px"><div style="font-family:var(--font-cond);font-size:15px;font-weight:700;letter-spacing:1px;color:var(--white)">Category 3</div><div style="font-size:11px;color:var(--mute)">Affordable, full experience</div></td>
+            <td style="padding:14px 16px;text-align:center;font-family:var(--font-head);font-size:20px;color:var(--gold)">$75</td>
+            <td style="padding:14px 16px;text-align:center;font-family:var(--font-head);font-size:20px;color:var(--gold)">$125</td>
+            <td style="padding:14px 16px;text-align:center;font-family:var(--font-head);font-size:20px;color:var(--gold)">$175</td>
+            <td style="padding:14px 16px;text-align:center;font-family:var(--font-head);font-size:20px;color:var(--gold)">$250</td>
+            <td style="padding:14px 16px;text-align:center;font-family:var(--font-head);font-size:20px;color:var(--gold)">$500</td>
+          </tr>
+          <tr>
+            <td style="padding:14px 16px"><div style="font-family:var(--font-cond);font-size:15px;font-weight:700;letter-spacing:1px;color:var(--gold)">Hospitality ⭐</div><div style="font-size:11px;color:var(--mute)">VIP lounge, dining, premium</div></td>
+            <td style="padding:14px 16px;text-align:center;font-family:var(--font-head);font-size:20px;color:var(--gold)">$500</td>
+            <td style="padding:14px 16px;text-align:center;font-family:var(--font-head);font-size:20px;color:var(--gold)">$750</td>
+            <td style="padding:14px 16px;text-align:center;font-family:var(--font-head);font-size:20px;color:var(--gold)">$1,000</td>
+            <td style="padding:14px 16px;text-align:center;font-family:var(--font-head);font-size:20px;color:var(--gold)">$1,500</td>
+            <td style="padding:14px 16px;text-align:center;font-family:var(--font-head);font-size:20px;color:var(--gold)">$3,000</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="faq-inner">
+    <div class="reveal" style="text-align:center">
+      <div class="sec-eyebrow">FAQ</div>
+      <h2 class="sec-heading">COMMON <span class="hl">QUESTIONS</span></h2>
+    </div>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>Are these official FIFA tickets?</span><i class="fas fa-plus"></i></div>
+        <div class="faq-a"><p>This platform provides authorized ticketing services for African fans to purchase FIFA World Cup 2026 tickets. All transactions are secured and verified through Paystack.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>What currency are tickets sold in?</span><i class="fas fa-plus"></i></div>
+        <div class="faq-a"><p>All tickets are priced and sold in US Dollars (USD). Paystack handles the currency conversion and accepts cards from all African banks. You'll be charged in your local currency equivalent.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>How do I receive my tickets after payment?</span><i class="fas fa-plus"></i></div>
+        <div class="faq-a"><p>Immediately after successful payment, you'll receive a unique ticket code and booking reference. You can retrieve your booking anytime using the "My Bookings" lookup page with your email address.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>Can I buy tickets for multiple matches?</span><i class="fas fa-plus"></i></div>
+        <div class="faq-a"><p>Yes! You can purchase tickets for as many matches as you like. Each booking is separate. You can buy up to 6 tickets per single booking transaction.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>Is my payment information safe?</span><i class="fas fa-plus"></i></div>
+        <div class="faq-a"><p>Absolutely. All payments are processed by Paystack, which is PCI-DSS Level 1 compliant — the highest standard of payment security. We never store your card details.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>Do I need a visa to attend matches in the USA, Mexico or Canada?</span><i class="fas fa-plus"></i></div>
+        <div class="faq-a"><p>FIFA and the host nations are working on streamlined visa processes for ticketholders. We recommend checking the official FIFA website and your country's embassy for the latest visa requirements closer to the tournament.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <div class="nav-logo" style="margin-bottom:.5rem">
+        <div class="logo-emblem" style="width:36px;height:36px;font-size:15px">WC</div>
+        <div class="logo-text"><h1 style="font-size:18px">WC 2026</h1><p>African Ticketing Portal</p></div>
+      </div>
+      <p>Africa's gateway to the FIFA World Cup 2026. Secure tickets for all 54 African nations. Powered by Paystack.</p>
+      <div class="foot-socials">
+        <a href="#" class="soc"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="soc"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="soc"><i class="fab fa-facebook"></i></a>
+        <a href="#" class="soc"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+    <div class="foot-col">
+      <h4>Tickets</h4>
+      <ul class="foot-links">
+        <li><a href="/matches/">Browse All Matches</a></li>
+        <li><a href="/matches/?country=USA">USA Matches</a></li>
+        <li><a href="/matches/?country=Mexico">Mexico Matches</a></li>
+        <li><a href="/matches/?country=Canada">Canada Matches</a></li>
+        <li><a href="/booking/lookup/">My Bookings</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Information</h4>
+      <ul class="foot-links">
+        <li><a href="#how">How to Buy</a></li>
+        <li><a href="#hosts">Host Venues</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#africa">African Nations</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Support</h4>
+      <ul class="foot-links">
+        <li><a href="mailto:support@wc2026africa.com">Email Support</a></li>
+        <li><a href="https://wa.me/2348000000000">WhatsApp Help</a></li>
+        <li><a href="/booking/lookup/">Booking Lookup</a></li>
+      </ul>
+      <div class="fifa-badge" style="margin-top:1.25rem"><i class="fas fa-shield-alt"></i> Paystack Secured</div>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 WC2026 African Ticketing Portal · All Rights Reserved</span>
+    <span>Powered by Paystack · Supabase · Django</span>
+  </div>
+</footer>
+
+<a href="https://wa.me/2348000000000" target="_blank" class="wa-float"><i class="fab fa-whatsapp"></i></a>
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i></button>
+<div id="toast"></div>
+
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<script>
+// NAV
+window.addEventListener('scroll',function(){
+  document.getElementById('navbar').classList.toggle('stuck',scrollY>60);
+  document.getElementById('btt').classList.toggle('show',scrollY>400);
+});
+document.getElementById('ham').onclick=function(){document.getElementById('mobMenu').classList.add('open');};
+document.getElementById('mobClose').onclick=function(){document.getElementById('mobMenu').classList.remove('open');};
+function closeMob(){document.getElementById('mobMenu').classList.remove('open');}
+
+// REVEAL
+document.querySelectorAll('.reveal').forEach(function(el){
+  new IntersectionObserver(function(e){
+    e.forEach(function(x){if(x.isIntersecting)x.target.classList.add('in');});
+  },{threshold:.1}).observe(el);
+});
+
+// COUNTDOWN
+function updateCountdown(){
+  var target=new Date('2026-06-11T19:00:00Z').getTime();
+  var now=Date.now();
+  var diff=target-now;
+  if(diff<=0){
+    ['cdDays','cdHours','cdMins','cdSecs'].forEach(function(id){document.getElementById(id).textContent='00';});
+    return;
+  }
+  var d=Math.floor(diff/86400000);
+  var h=Math.floor((diff%86400000)/3600000);
+  var m=Math.floor((diff%3600000)/60000);
+  var s=Math.floor((diff%60000)/1000);
+  document.getElementById('cdDays').textContent=String(d).padStart(2,'0');
+  document.getElementById('cdHours').textContent=String(h).padStart(2,'0');
+  document.getElementById('cdMins').textContent=String(m).padStart(2,'0');
+  document.getElementById('cdSecs').textContent=String(s).padStart(2,'0');
+}
+updateCountdown();
+setInterval(updateCountdown,1000);
+
+// FILTER MATCHES
+function filterMatches(country,btn){
+  document.querySelectorAll('.flt').forEach(function(b){b.classList.remove('on');});
+  if(btn) btn.classList.add('on');
+  document.querySelectorAll('.match-card').forEach(function(c){
+    c.style.display=(country==='all'||c.dataset.country===country)?'block':'none';
+  });
+}
+
+// FAQ
+function toggleFaq(el){
+  var item=el.parentElement;
+  var wasOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(function(i){i.classList.remove('open');});
+  if(!wasOpen) item.classList.add('open');
+}
+
+// TOAST
+function toast(msg,err){
+  var t=document.getElementById('toast');
+  t.textContent=msg;
+  t.style.borderColor=err?'rgba(192,57,43,.3)':'rgba(255,255,255,.07)';
+  t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show');},3500);
+}
+</script>
+</body>
+</html>

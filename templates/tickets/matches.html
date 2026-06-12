@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Matches — WC2026 African Ticketing</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{--navy:#0a0e1a;--navy2:#0f1525;--navy3:#151c30;--red:#c0392b;--gold:#f39c12;--gold2:#d68910;--gold-glow:rgba(243,156,18,.15);--green:#27ae60;--white:#f0eeea;--off:#b8b5ae;--mute:#5a5850;--border:rgba(243,156,18,.12);--border2:rgba(255,255,255,.06);--shadow:0 24px 60px rgba(0,0,0,.5);--r:6px;--r2:12px;--font-head:'Bebas Neue',sans-serif;--font-cond:'Barlow Condensed',sans-serif;--font-body:'Barlow',sans-serif;--font-mono:'DM Mono',monospace;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--navy);color:var(--white);font-family:var(--font-body);font-weight:300;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--navy)}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
+nav{background:rgba(10,14,26,.97);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200;padding:0 5%;height:64px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:12px}
+.logo-emblem{width:38px;height:38px;background:linear-gradient(135deg,var(--gold),var(--gold2));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:16px;color:var(--navy)}
+.logo-text h1{font-family:var(--font-head);font-size:18px;letter-spacing:3px;text-transform:uppercase;line-height:1}
+.logo-text p{font-family:var(--font-mono);font-size:8px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-top:1px}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-family:var(--font-cond);font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(240,238,234,.5);transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--gold)}
+.nav-btn{font-family:var(--font-cond);font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:9px 18px;border-radius:var(--r);cursor:pointer;transition:all .2s;background:var(--gold);color:var(--navy);border:none}
+.nav-btn:hover{background:var(--gold2)}
+.page-header{background:linear-gradient(135deg,var(--navy2),var(--navy3));border-bottom:1px solid var(--border2);padding:3rem 5%}
+.page-header-inner{max-width:1320px;margin:0 auto}
+.breadcrumb{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mute);margin-bottom:1rem}
+.breadcrumb a{color:var(--gold);transition:color .2s}
+.breadcrumb a:hover{color:var(--white)}
+.page-title{font-family:var(--font-head);font-size:clamp(48px,6vw,80px);text-transform:uppercase;line-height:.9;letter-spacing:-1px}
+.page-title .hl{color:var(--gold)}
+.filters-bar{background:var(--navy2);border-bottom:1px solid var(--border2);padding:1.25rem 5%;position:sticky;top:64px;z-index:100}
+.filters-inner{max-width:1320px;margin:0 auto;display:flex;gap:1rem;flex-wrap:wrap;align-items:center}
+.filter-group{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+.filter-lbl{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mute)}
+.flt{font-family:var(--font-mono);font-size:9px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;padding:7px 14px;border:1px solid var(--border2);border-radius:2px;background:none;color:var(--mute);cursor:pointer;transition:all .2s}
+.flt:hover,.flt.on{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+.filter-search{background:rgba(255,255,255,.03);border:1px solid var(--border2);border-radius:var(--r);padding:8px 13px;font-family:var(--font-body);font-size:12px;color:var(--white);outline:none;transition:border-color .2s;min-width:200px}
+.filter-search:focus{border-color:var(--gold)}
+.filter-search::placeholder{color:rgba(240,238,234,.2)}
+.main-content{max-width:1320px;margin:0 auto;padding:3rem 5%}
+.results-info{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;flex-wrap:wrap;gap:1rem}
+.results-count{font-family:var(--font-mono);font-size:10px;letter-spacing:1px;color:var(--mute);text-transform:uppercase}
+.results-count span{color:var(--gold)}
+.sort-sel{background:rgba(255,255,255,.03);border:1px solid var(--border2);border-radius:var(--r);padding:8px 12px;font-family:var(--font-mono);font-size:9px;color:var(--white);outline:none;cursor:pointer}
+.sort-sel option{background:var(--navy2)}
+.matches-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.match-card{background:var(--navy3);border:1px solid var(--border2);border-radius:var(--r2);overflow:hidden;transition:all .3s;position:relative}
+.match-card:hover{transform:translateY(-5px);border-color:rgba(243,156,18,.25);box-shadow:var(--shadow)}
+.match-img{height:150px;position:relative;overflow:hidden;background:var(--navy2)}
+.match-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.match-card:hover .match-img img{transform:scale(1.06)}
+.match-stage{position:absolute;top:10px;left:10px;background:var(--gold);color:var(--navy);font-family:var(--font-cond);font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:2px}
+.match-flag-country{position:absolute;top:10px;right:10px;background:rgba(10,14,26,.85);border:1px solid var(--border2);font-size:11px;padding:4px 9px;border-radius:2px}
+.match-body{padding:1.25rem}
+.match-teams{display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin-bottom:1rem}
+.match-team{text-align:center;flex:1}
+.match-team-name{font-family:var(--font-head);font-size:20px;letter-spacing:1px;text-transform:uppercase;line-height:1.1;color:var(--white)}
+.match-team-sub{font-family:var(--font-mono);font-size:8px;letter-spacing:1px;color:var(--mute);text-transform:uppercase;margin-top:2px}
+.match-vs{font-family:var(--font-head);font-size:26px;color:var(--gold);opacity:.5;flex-shrink:0}
+.match-info-row{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--mute);text-transform:uppercase;padding:10px 0;border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);margin-bottom:1rem}
+.match-price-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.price-from{font-family:var(--font-mono);font-size:8px;letter-spacing:2px;color:var(--mute);text-transform:uppercase;margin-bottom:2px}
+.price-val{font-family:var(--font-head);font-size:26px;color:var(--gold);line-height:1}
+.price-val span{font-family:var(--font-mono);font-size:9px;color:var(--mute);letter-spacing:1px;margin-left:4px}
+.avail-badge{font-family:var(--font-mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:5px 10px;border-radius:2px}
+.avail-badge.available{background:rgba(39,174,96,.1);color:var(--green);border:1px solid rgba(39,174,96,.2)}
+.avail-badge.sold_out{background:rgba(192,57,43,.1);color:var(--red);border:1px solid rgba(192,57,43,.2)}
+.avail-badge.cancelled{background:rgba(90,88,80,.1);color:var(--mute);border:1px solid var(--border2)}
+.match-btn{width:100%;background:var(--gold);color:var(--navy);font-family:var(--font-cond);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:12px;border:none;border-radius:var(--r);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:7px}
+.match-btn:hover{background:var(--gold2)}
+.match-btn.disabled{background:var(--mute);color:var(--navy2);cursor:not-allowed}
+.no-matches{text-align:center;padding:5rem 2rem;color:var(--mute);grid-column:1/-1}
+.no-matches i{font-size:52px;display:block;margin-bottom:1.25rem;opacity:.2}
+.no-matches p{font-size:14px}
+#toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(10px);background:var(--navy3);border:1px solid var(--border2);color:var(--white);padding:10px 20px;border-radius:var(--r);font-family:var(--font-mono);font-size:10px;letter-spacing:.5px;opacity:0;pointer-events:none;transition:all .35s;z-index:9999;white-space:nowrap}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:1100px){.matches-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){.matches-grid{grid-template-columns:1fr}.nav-links{display:none}.filters-inner{flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">
+    <div class="logo-emblem">WC</div>
+    <div class="logo-text"><h1>WC 2026</h1><p>African Ticketing</p></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/matches/" class="active">Matches</a></li>
+    <li><a href="/booking/lookup/">My Tickets</a></li>
+  </ul>
+  <a href="/booking/lookup/" class="nav-btn"><i class="fas fa-search"></i> My Bookings</a>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="breadcrumb"><a href="/">Home</a> › Matches</div>
+    <h1 class="page-title">ALL <span class="hl">MATCHES</span></h1>
+    <p style="color:var(--mute);font-size:14px;margin-top:.75rem">{{ matches|length }} match{{ matches|length|pluralize:"es" }} available · Filter by country, stage or team</p>
+  </div>
+</div>
+
+<div class="filters-bar">
+  <div class="filters-inner">
+    <div class="filter-group">
+      <span class="filter-lbl">Country:</span>
+      <button class="flt {% if not country_filter %}on{% endif %}" onclick="applyFilter('country','')">All</button>
+      <button class="flt {% if country_filter == 'USA' %}on{% endif %}" onclick="applyFilter('country','USA')">🇺🇸 USA</button>
+      <button class="flt {% if country_filter == 'Mexico' %}on{% endif %}" onclick="applyFilter('country','Mexico')">🇲🇽 Mexico</button>
+      <button class="flt {% if country_filter == 'Canada' %}on{% endif %}" onclick="applyFilter('country','Canada')">🇨🇦 Canada</button>
+    </div>
+    <div class="filter-group">
+      <span class="filter-lbl">Stage:</span>
+      <button class="flt {% if not stage_filter %}on{% endif %}" onclick="applyFilter('stage','')">All</button>
+      <button class="flt {% if stage_filter == 'group' %}on{% endif %}" onclick="applyFilter('stage','group')">Group</button>
+      <button class="flt {% if stage_filter == 'r16' %}on{% endif %}" onclick="applyFilter('stage','r16')">R16</button>
+      <button class="flt {% if stage_filter == 'qf' %}on{% endif %}" onclick="applyFilter('stage','qf')">QF</button>
+      <button class="flt {% if stage_filter == 'sf' %}on{% endif %}" onclick="applyFilter('stage','sf')">SF</button>
+      <button class="flt {% if stage_filter == 'final' %}on{% endif %}" onclick="applyFilter('stage','final')">Final</button>
+    </div>
+    <input type="text" class="filter-search" placeholder="Search team name..." id="teamSearch" value="{{ team_filter }}" oninput="debounceSearch(this.value)">
+  </div>
+</div>
+
+<div class="main-content">
+  <div class="results-info">
+    <div class="results-count">Showing <span>{{ matches|length }}</span> match{{ matches|length|pluralize:"es" }}</div>
+    <select class="sort-sel" onchange="sortMatches(this.value)">
+      <option value="date">Sort by Date</option>
+      <option value="price">Sort by Price</option>
+      <option value="country">Sort by Country</option>
+    </select>
+  </div>
+
+  <div class="matches-grid" id="matchesGrid">
+    {% for match in matches %}
+    <div class="match-card" data-country="{{ match.country }}" data-stage="{{ match.group_stage }}" data-date="{{ match.match_date|date:'Y-m-d' }}">
+      <div class="match-img">
+        {% if match.image_url %}
+        <img src="{{ match.image_url }}" alt="{{ match.team_home }} vs {{ match.team_away }}" loading="lazy">
+        {% else %}
+        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:40px;opacity:.2">🏟️</div>
+        {% endif %}
+        <span class="match-stage">{{ match.get_stage_display_short }}</span>
+        <span class="match-flag-country">
+          {% if match.country == 'USA' %}🇺🇸{% elif match.country == 'Mexico' %}🇲🇽{% else %}🇨🇦{% endif %}
+        </span>
+      </div>
+      <div class="match-body">
+        <div class="match-teams">
+          <div class="match-team">
+            <div class="match-team-name">{{ match.team_home }}</div>
+            <div class="match-team-sub">Home</div>
+          </div>
+          <div class="match-vs">VS</div>
+          <div class="match-team">
+            <div class="match-team-name">{{ match.team_away }}</div>
+            <div class="match-team-sub">Away</div>
+          </div>
+        </div>
+        <div class="match-info-row">
+          <span><i class="fas fa-calendar" style="color:var(--gold);margin-right:4px"></i>{{ match.match_date|date:"M d, Y" }}</span>
+          <span><i class="fas fa-clock" style="color:var(--gold);margin-right:4px"></i>{{ match.match_time|time:"H:i" }}</span>
+          <span><i class="fas fa-map-marker-alt" style="color:var(--gold);margin-right:4px"></i>{{ match.city }}</span>
+        </div>
+        <div class="match-price-row">
+          <div>
+            <div class="price-from">From</div>
+            <div class="price-val">
+              {% if match.min_price %}${{ match.min_price }}<span>USD</span>{% else %}<span style="font-size:13px">TBA</span>{% endif %}
+            </div>
+          </div>
+          <span class="avail-badge {{ match.status }}">
+            {% if match.status == 'available' %}● Available{% elif match.status == 'sold_out' %}● Sold Out{% else %}● Cancelled{% endif %}
+          </span>
+        </div>
+        {% if match.status == 'available' %}
+        <a href="/matches/{{ match.id }}/" class="match-btn"><i class="fas fa-ticket-alt"></i> Select Tickets</a>
+        {% else %}
+        <button class="match-btn disabled" disabled>{{ match.get_status_display }}</button>
+        {% endif %}
+      </div>
+    </div>
+    {% empty %}
+    <div class="no-matches">
+      <i class="fas fa-calendar-times"></i>
+      <p>No matches found. Try adjusting your filters.</p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div id="toast"></div>
+<script>
+function applyFilter(type, value){
+  var url = new URL(window.location.href);
+  url.searchParams.set(type, value);
+  window.location.href = url.toString();
+}
+var searchTimeout;
+function debounceSearch(val){
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(function(){
+    var url = new URL(window.location.href);
+    url.searchParams.set('team', val);
+    window.location.href = url.toString();
+  }, 600);
+}
+function sortMatches(by){
+  var grid = document.getElementById('matchesGrid');
+  var cards = Array.from(grid.querySelectorAll('.match-card'));
+  cards.sort(function(a,b){
+    if(by==='date') return a.dataset.date.localeCompare(b.dataset.date);
+    if(by==='country') return a.dataset.country.localeCompare(b.dataset.country);
+    return 0;
+  });
+  cards.forEach(function(c){ grid.appendChild(c); });
+}
+</script>
+</body>
+</html>

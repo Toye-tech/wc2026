@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment {% if success %}Successful{% else %}Failed{% endif %} — WC2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{--navy:#0a0e1a;--navy2:#0f1525;--gold:#f39c12;--gold2:#d68910;--gold-glow:rgba(243,156,18,.15);--green:#27ae60;--red:#c0392b;--white:#f0eeea;--mute:#5a5850;--border:rgba(243,156,18,.12);--border2:rgba(255,255,255,.06);--r:6px;--r2:12px;--font-head:'Bebas Neue',sans-serif;--font-cond:'Barlow Condensed',sans-serif;--font-body:'Barlow',sans-serif;--font-mono:'DM Mono',monospace;}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--navy);color:var(--white);font-family:var(--font-body);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
+a{text-decoration:none;color:inherit}
+.card{background:var(--navy2);border:1px solid var(--border2);border-radius:var(--r2);padding:3rem;max-width:520px;width:100%;text-align:center;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:{% if success %}linear-gradient(90deg,var(--green),var(--gold)){% else %}var(--red){% endif %}}
+.ico{width:88px;height:88px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;margin:0 auto 1.5rem;animation:pop .5s ease}
+@keyframes pop{0%{transform:scale(.5);opacity:0}80%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+.ico.ok{background:rgba(39,174,96,.1);border:2px solid rgba(39,174,96,.3)}
+.ico.fail{background:rgba(192,57,43,.1);border:2px solid rgba(192,57,43,.3)}
+h1{font-family:var(--font-head);font-size:48px;letter-spacing:2px;text-transform:uppercase;margin-bottom:.5rem}
+.sub{font-size:13px;color:var(--mute);line-height:1.8;margin-bottom:2rem;max-width:380px;margin-left:auto;margin-right:auto}
+.detail-box{background:rgba(255,255,255,.02);border:1px solid var(--border2);border-radius:var(--r);padding:1.25rem;margin-bottom:2rem;text-align:left}
+.d-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:12px}
+.d-row:last-child{border:none}
+.d-k{color:var(--mute);font-family:var(--font-mono);font-size:9px;letter-spacing:.5px;text-transform:uppercase}
+.d-v{font-weight:500;color:var(--white)}
+.d-v.gold{color:var(--gold)}
+.btns{display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:var(--r);font-family:var(--font-cond);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s;border:none}
+.btn.gold{background:var(--gold);color:var(--navy)}
+.btn.gold:hover{background:var(--gold2)}
+.btn.ghost{background:none;border:1px solid var(--border2);color:var(--mute)}
+.btn.ghost:hover{border-color:var(--gold);color:var(--gold)}
+.btn.red{background:var(--red);color:#fff}
+.btn.red:hover{background:#a93226}
+</style>
+</head>
+<body>
+<div class="card">
+  {% if success %}
+  <div class="ico ok">✓</div>
+  <h1>Payment Confirmed!</h1>
+  <p class="sub">Your FIFA World Cup 2026 tickets are secured. Our team will contact you with further details.</p>
+  {% if car_name or customer_name or reference %}
+  <div class="detail-box">
+    {% if customer_name %}<div class="d-row"><span class="d-k">Customer</span><span class="d-v">{{ customer_name }}</span></div>{% endif %}
+    {% if car_name %}<div class="d-row"><span class="d-k">Match</span><span class="d-v gold">{{ car_name }}</span></div>{% endif %}
+    {% if amount and amount != 'Deposit Paid' %}<div class="d-row"><span class="d-k">Amount Paid</span><span class="d-v gold">${{ amount }} USD</span></div>{% endif %}
+    {% if reference %}<div class="d-row"><span class="d-k">Reference</span><span class="d-v" style="font-family:var(--font-mono);font-size:11px">{{ reference }}</span></div>{% endif %}
+  </div>
+  {% endif %}
+  <div class="btns">
+    <a href="/booking/lookup/" class="btn gold"><i class="fas fa-ticket-alt"></i> View My Tickets</a>
+    <a href="/matches/" class="btn ghost"><i class="fas fa-list"></i> More Matches</a>
+  </div>
+  {% else %}
+  <div class="ico fail">✕</div>
+  <h1>Payment Failed</h1>
+  <p class="sub">{{ message|default:"Your payment could not be completed. Please try again or contact support." }}</p>
+  <div class="btns">
+    <a href="/matches/" class="btn gold"><i class="fas fa-arrow-left"></i> Back to Matches</a>
+    <a href="https://wa.me/2348000000000" target="_blank" class="btn ghost"><i class="fab fa-whatsapp"></i> Get Help</a>
+  </div>
+  {% endif %}
+</div>
+</body>
+</html>
