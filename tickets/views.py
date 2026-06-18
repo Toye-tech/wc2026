@@ -79,6 +79,7 @@ def booking(request, match_id, category_id):
     }
     return render(request, 'tickets/booking.html', context)
 
+
 # ============================================================
 # PAYMENT VERIFICATION
 # ============================================================
@@ -223,3 +224,7 @@ def payment_success(request):
         'amount'       : 'Paid',
         'reference'    : ref,
     })
+
+
+def updates(request):
+    return render(request, 'tickets/updates.html')
