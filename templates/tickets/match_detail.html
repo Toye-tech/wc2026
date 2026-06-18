@@ -121,12 +121,11 @@ nav{background:rgba(10,14,26,.97);backdrop-filter:blur(24px);border-bottom:1px s
         <div>
           <div class="cat-name">{{ cat.get_name_display }}</div>
           <div class="cat-desc">{{ cat.description|default:"Standard seating with excellent views of the pitch." }}</div>
-          {% if cat.perks %}
-          {% if cat.perks %}
-       <div class="cat-perks">
-         <span class="perk">✓ Included Perks</span>
-           </div>
-             {% endif %}
+            {% if cat.perks %}
+              <div class="cat-perks">
+                <span class="perk">✓ Included Perks</span>
+              </div>
+              {% endif %}
           <div class="cat-seats">
             {% if cat.is_available %}
             <span style="color:var(--green)">● {{ cat.seats_remaining }} seats remaining</span>
