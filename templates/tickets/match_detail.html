@@ -124,7 +124,7 @@ nav{background:rgba(10,14,26,.97);backdrop-filter:blur(24px);border-bottom:1px s
           {% if cat.perks %}
           <div class="cat-perks">
             {% for perk in cat.perks.split(',') %}
-            <span class="perk">✓ {{ perk|trim }}</span>
+            <span class="perk">✓ {{ perk|cut:" " }}</span>
             {% endfor %}
           </div>
           {% endif %}

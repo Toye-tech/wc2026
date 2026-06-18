@@ -79,7 +79,6 @@ def booking(request, match_id, category_id):
     }
     return render(request, 'tickets/booking.html', context)
 
-
 # ============================================================
 # PAYMENT VERIFICATION
 # ============================================================
