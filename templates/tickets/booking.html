@@ -86,7 +86,7 @@ var CSRF = '{{ csrf_token }}';
 var PAYSTACK_PUBLIC_KEY = '{{ paystack_public_key }}';
 var MATCH_ID = {{ match.id }};
 var CATEGORY_ID = {{ category.id }};
-var PRICE_USD = {{ category.price_usd }};
+var PRICE_NGN = {{ category.price_usd }};
 </script>
 
 <nav>
@@ -200,11 +200,11 @@ var PRICE_USD = {{ category.price_usd }};
       <div class="order-total">
         <div>
           <div class="total-lbl">Total Amount</div>
-          <div class="total-currency">US Dollars</div>
+          <div class="total-currency">Naira</div>
         </div>
         <div style="text-align:right">
-          <div class="total-val" id="totalDisplay">${{ category.price_usd }}</div>
-          <div class="total-currency">USD</div>
+          <div class="total-val" id="totalDisplay">${{ category.price_ngn }}</div>
+          <div class="total-currency">NGN</div>
         </div>
       </div>
       <div class="paystack-logo"><i class="fas fa-shield-alt"></i> Secured by Paystack</div>
@@ -217,7 +217,7 @@ var PRICE_USD = {{ category.price_usd }};
 <script>
 var qty = 1;
 var maxQty = Math.min(6, {{ category.seats_remaining }});
-var priceUsd = parseFloat('{{ category.price_usd }}');
+var priceUsd = parseFloat('{{ category.price_ngn }}');
 
 function changeQty(delta){
   qty = Math.max(1, Math.min(maxQty, qty + delta));
@@ -299,7 +299,7 @@ async function handleBooking(){
       key: PAYSTACK_PUBLIC_KEY,
       email: email,
       amount: Math.round(total * 100), // in cents
-      currency: 'USD',
+      currency: 'NGN',
       ref: paystackRef,
       metadata: {
         custom_fields: [
