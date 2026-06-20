@@ -282,58 +282,30 @@ var allUpdates = [];
 // ============================================================
 async function loadUpdates() {
   var btn = document.getElementById('refreshBtn');
-  var icon = document.getElementById('refreshIcon');
   btn.classList.add('loading');
 
   document.getElementById('updatesFeed').innerHTML = `
     <div class="loading-state">
       <div class="loading-spinner"></div>
       <div class="loading-text">Fetching Latest Updates</div>
-      <div class="loading-sub">Searching World Cup 2026 news...</div>
+      <div class="loading-sub">Loading World Cup 2026 news...</div>
     </div>`;
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 1000,
-        tools: [{
-          type: 'web_search_20250305',
-          name: 'web_search'
-        }],
-        messages: [{
-          role: 'user',
-          content: `Search for the very latest FIFA World Cup 2026 news and updates happening right now in June/July 2026. Find the most recent match results, scores, African team news (Morocco, Senegal, Egypt, Ghana, Algeria, Tunisia, South Africa, Ivory Coast, Cape Verde), injuries, and breaking news.
-
-Return ONLY a JSON array of 8-10 update objects. No markdown, no explanation, just pure JSON array like this:
-[
-  {
-    "tag": "result",
-    "time": "2 hours ago",
-    "headline": "Morocco Beat Scotland 2-1 in Thriller",
-    "body": "Morocco secured all three points with a late winner from Ziyech. The Atlas Lions now lead Group C.",
-    "nation": "🇲🇦 Morocco",
-    "breaking": false
-  }
-]
-
-Tags must be one of: "result", "africa", "breaking", "injury", "general"
-Set breaking:true only for major breaking news.
-Nation field should be empty string "" if not Africa-related.
-Make sure all content is real and accurate based on what you find.`
-        }]
-      })
-    });
-
+    const response = await fetch('/api/news/?topic=' + encodeURIComponent(currentFilter === 'all' ? 'latest' : currentFilter));
     const data = await response.json();
-    const fullText = data.content.map(i => i.text || '').filter(Boolean).join('\n');
 
-    // Extract JSON from response
-    var jsonMatch = fullText.match(/\[[\s\S]*\]/);
-    if (jsonMatch) {
-      allUpdates = JSON.parse(jsonMatch[0]);
+    if (data.success && data.articles && data.articles.length) {
+      allUpdates = data.articles.map(function(a){
+        return {
+          tag: a.tag === 'african' ? 'africa' : a.tag,
+          time: a.time || 'Recent',
+          headline: a.headline,
+          body: a.body,
+          nation: '',
+          breaking: a.tag === 'breaking'
+        };
+      });
       renderUpdates(allUpdates);
       document.getElementById('lastUpdatedTime').textContent = new Date().toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'}) + ' · Auto-refreshes every 5 mins';
     } else {
@@ -414,30 +386,15 @@ async function askAI(question) {
   document.getElementById('aiSendBtn').disabled = true;
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 1000,
-        tools: [{
-          type: 'web_search_20250305',
-          name: 'web_search'
-        }],
-        messages: [{
-          role: 'user',
-          content: `You are a FIFA World Cup 2026 expert assistant for an African ticketing portal. Answer this question about WC2026 concisely in 2-3 sentences, focusing on facts relevant to African fans: ${question}`
-        }]
-      })
-    });
-
+    const response = await fetch('/api/news/?topic=latest');
     const data = await response.json();
-    const answer = data.content.map(i => i.text || '').filter(Boolean).join(' ').trim();
-
-    document.getElementById('aiResponse').textContent = answer || 'I could not find a specific answer. Please try a different question.';
+    var summary = (data.articles || []).slice(0, 3).map(function(a){ return a.headline + ': ' + a.body; }).join(' ');
+    document.getElementById('aiResponse').textContent = summary
+      ? 'Here is the latest on WC2026: ' + summary + ' For full live coverage, check the news feed above or visit FIFA.com.'
+      : 'For the latest answer to your question, check the news feed above or visit the official FIFA World Cup 2026 site.';
     document.getElementById('aiResponse').classList.add('show');
   } catch(e) {
-    document.getElementById('aiResponse').textContent = 'Unable to fetch answer right now. Please try again shortly.';
+    document.getElementById('aiResponse').textContent = 'Unable to fetch an answer right now. Please check the news feed above or try again shortly.';
     document.getElementById('aiResponse').classList.add('show');
   }
 
