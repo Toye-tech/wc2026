@@ -86,7 +86,7 @@ var CSRF = '{{ csrf_token }}';
 var PAYSTACK_PUBLIC_KEY = '{{ paystack_public_key }}';
 var MATCH_ID = {{ match.id }};
 var CATEGORY_ID = {{ category.id }};
-var PRICE_NGN = {{ category.price_usd }};
+var PRICE_USD = {{ category.price_usd }};
 </script>
 
 <nav>
@@ -200,11 +200,11 @@ var PRICE_NGN = {{ category.price_usd }};
       <div class="order-total">
         <div>
           <div class="total-lbl">Total Amount</div>
-          <div class="total-currency">Naira</div>
+          <div class="total-currency">US Dollars</div>
         </div>
         <div style="text-align:right">
-          <div class="total-val" id="totalDisplay">${{ category.price_ngn }}</div>
-          <div class="total-currency">NGN</div>
+          <div class="total-val" id="totalDisplay">${{ category.price_usd }}</div>
+          <div class="total-currency">USD</div>
         </div>
       </div>
       <div class="paystack-logo"><i class="fas fa-shield-alt"></i> Secured by Paystack</div>
@@ -217,7 +217,7 @@ var PRICE_NGN = {{ category.price_usd }};
 <script>
 var qty = 1;
 var maxQty = Math.min(6, {{ category.seats_remaining }});
-var priceUsd = parseFloat('{{ category.price_ngn }}');
+var priceUsd = parseFloat('{{ category.price_usd }}');
 
 function changeQty(delta){
   qty = Math.max(1, Math.min(maxQty, qty + delta));
@@ -263,6 +263,13 @@ async function handleBooking(){
   var special = document.getElementById('fSpecial').value.trim();
   var total   = priceUsd * qty;
 
+  if(!total || isNaN(total) || total <= 0){
+    toast('Invalid amount. Please refresh and try again.', true);
+    btn.disabled = false;
+    document.getElementById('submitTxt').textContent = 'Proceed to Secure Payment';
+    return;
+  }
+
   try {
     // Create a temporary Paystack reference
     var paystackRef = 'WC26-PS-' + Date.now();
@@ -293,12 +300,22 @@ async function handleBooking(){
       return;
     }
 
+    // Amount in kobo for NGN (Paystack base unit). Use server-confirmed amount when available.
+    var amountKobo = data.amount_cents ? Math.round(data.amount_cents) : Math.round(total * 100);
+
+    if(!amountKobo || amountKobo <= 0){
+      toast('Could not determine payment amount. Please try again.', true);
+      btn.disabled = false;
+      document.getElementById('submitTxt').textContent = 'Proceed to Secure Payment';
+      return;
+    }
+
     // Open Paystack
     document.getElementById('submitTxt').textContent = 'Opening Payment...';
     var handler = PaystackPop.setup({
       key: PAYSTACK_PUBLIC_KEY,
       email: email,
-      amount: Math.round(total * 100), // in cents
+      amount: amountKobo,
       currency: 'NGN',
       ref: paystackRef,
       metadata: {

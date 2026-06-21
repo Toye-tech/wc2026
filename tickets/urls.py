@@ -11,6 +11,7 @@ urlpatterns = [
     path('booking/confirmation/<str:reference>/', views.confirmation,  name='confirmation'),
     path('payment/verify/',                     views.payment_verify,  name='payment_verify'),
     path('payment/success/',                    views.payment_success, name='payment_success'),
-    path('updates/', views.updates, name='updates'),
-    path('api/news/', views.api_news_feed, name='api_news_feed'),
+    path('updates/',                            views.updates,         name='updates'),
+    path('api/news/',                           views.api_news_feed,   name='api_news_feed'),
 ]
+

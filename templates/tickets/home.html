@@ -262,6 +262,7 @@ var PAYSTACK_PUBLIC_KEY = '{{ paystack_public_key }}';
   <ul class="nav-links">
     <li><a href="/matches/">Matches</a></li>
     <li><a href="#hosts">Venues</a></li>
+    <li><a href="/updates/">Live Updates</a></li>
     <li><a href="#how">How to Buy</a></li>
     <li><a href="/booking/lookup/">My Tickets</a></li>
   </ul>
@@ -276,9 +277,11 @@ var PAYSTACK_PUBLIC_KEY = '{{ paystack_public_key }}';
   <button class="mob-close" id="mobClose"><i class="fas fa-times"></i></button>
   <a href="/matches/" onclick="closeMob()">Matches</a>
   <a href="#hosts" onclick="closeMob()">Venues</a>
+  <a href="/updates/" onclick="closeMob()">Live Updates</a>
   <a href="#how" onclick="closeMob()">How to Buy</a>
   <a href="/booking/lookup/" onclick="closeMob()">My Tickets</a>
 </div>
+
 
 <!-- HERO -->
 <section class="hero">
@@ -306,22 +309,20 @@ var PAYSTACK_PUBLIC_KEY = '{{ paystack_public_key }}';
       </div>
     </div>
 
-    <!-- COUNTDOWN -->
+    <!-- TOURNAMENT LIVE STATUS -->
     <div class="countdown-card">
-      <div class="cd-label">Tournament Begins In</div>
-      <div class="cd-grid">
-        <div class="cd-unit"><div class="cd-num" id="cdDays">00</div><div class="cd-lbl">Days</div></div>
-        <div class="cd-unit"><div class="cd-num" id="cdHours">00</div><div class="cd-lbl">Hours</div></div>
-        <div class="cd-unit"><div class="cd-num" id="cdMins">00</div><div class="cd-lbl">Mins</div></div>
-        <div class="cd-unit"><div class="cd-num" id="cdSecs">00</div><div class="cd-lbl">Secs</div></div>
+      <div class="cd-label" style="display:flex;align-items:center;justify-content:center;gap:8px">
+        <span class="pulse" style="background:var(--red)"></span>
+        <span style="color:var(--red);letter-spacing:3px">Tournament Live Now</span>
       </div>
-      <div class="cd-matches">
+      <div class="cd-matches" style="margin-top:1.25rem">
         <div class="cd-stat"><div class="cd-stat-n">{{ total_matches }}</div><div class="cd-stat-l">Matches</div></div>
         <div class="cd-stat"><div class="cd-stat-n">{{ total_venues }}</div><div class="cd-stat-l">Venues</div></div>
         <div class="cd-stat"><div class="cd-stat-n">48</div><div class="cd-stat-l">Teams</div></div>
         <div class="cd-stat"><div class="cd-stat-n">9</div><div class="cd-stat-l">Africa Slots</div></div>
       </div>
-      <div class="cd-foot">Opening Match: <span>June 11, 2026</span></div>
+      <a href="/updates/" class="cta-gold" style="display:flex;margin-top:1.25rem;font-size:11px;justify-content:center"><i class="fas fa-bolt"></i> See Live Updates</a>
+      <div class="cd-foot" style="margin-top:1rem">Final: <span>July 19, 2026</span></div>
     </div>
   </div>
 </section>
@@ -456,6 +457,90 @@ var PAYSTACK_PUBLIC_KEY = '{{ paystack_public_key }}';
       <a href="/matches/" class="cta-gold" style="display:inline-flex;font-size:12px"><i class="fas fa-list"></i> View All {{ total_matches }} Matches</a>
     </div>
     {% endif %}
+  </div>
+</section>
+
+<!-- RECENT RESULTS -->
+<section class="matches-section" style="background:var(--navy);border-top:1px solid var(--border2)">
+  <div class="matches-inner">
+    <div class="matches-header reveal">
+      <div>
+        <div class="sec-eyebrow"><span class="pulse" style="background:var(--red)"></span> Just Played</div>
+        <h2 class="sec-heading">RECENT <span class="hl">RESULTS</span></h2>
+      </div>
+      <a href="/updates/" class="cta-outline" style="font-size:11px;font-family:var(--font-cond);letter-spacing:2px">Full Live Coverage <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="matches-grid" style="grid-template-columns:repeat(3,1fr)">
+      <div class="match-card reveal">
+        <div class="match-body" style="padding-top:1.5rem">
+          <span class="match-stage" style="position:static;display:inline-block;margin-bottom:.75rem">Group A</span>
+          <div class="match-teams">
+            <div class="match-team"><div class="match-team-name">Mexico</div></div>
+            <div class="match-vs" style="color:var(--green)">1-0</div>
+            <div class="match-team"><div class="match-team-name">S. Korea</div></div>
+          </div>
+          <div class="match-meta" style="border-top:none;padding-top:0"><span><i class="fas fa-check-circle" style="color:var(--green)"></i> Full Time</span><span>Mexico City</span></div>
+        </div>
+      </div>
+      <div class="match-card reveal">
+        <div class="match-body" style="padding-top:1.5rem">
+          <span class="match-stage" style="position:static;display:inline-block;margin-bottom:.75rem">Group B</span>
+          <div class="match-teams">
+            <div class="match-team"><div class="match-team-name">Canada</div></div>
+            <div class="match-vs" style="color:var(--green)">6-0</div>
+            <div class="match-team"><div class="match-team-name">Qatar</div></div>
+          </div>
+          <div class="match-meta" style="border-top:none;padding-top:0"><span><i class="fas fa-check-circle" style="color:var(--green)"></i> Full Time</span><span>Vancouver</span></div>
+        </div>
+      </div>
+      <div class="match-card reveal">
+        <div class="match-body" style="padding-top:1.5rem">
+          <span class="match-stage" style="position:static;display:inline-block;margin-bottom:.75rem">Group D</span>
+          <div class="match-teams">
+            <div class="match-team"><div class="match-team-name">USA</div></div>
+            <div class="match-vs" style="color:var(--green)">2-0</div>
+            <div class="match-team"><div class="match-team-name">Australia</div></div>
+          </div>
+          <div class="match-meta" style="border-top:none;padding-top:0"><span><i class="fas fa-check-circle" style="color:var(--green)"></i> Full Time</span><span>Seattle</span></div>
+        </div>
+      </div>
+      <div class="match-card reveal">
+        <div class="match-body" style="padding-top:1.5rem">
+          <span class="match-stage" style="position:static;display:inline-block;margin-bottom:.75rem">Group A · 🇿🇦</span>
+          <div class="match-teams">
+            <div class="match-team"><div class="match-team-name">S. Africa</div></div>
+            <div class="match-vs" style="color:var(--gold)">1-1</div>
+            <div class="match-team"><div class="match-team-name">Czechia</div></div>
+          </div>
+          <div class="match-meta" style="border-top:none;padding-top:0"><span><i class="fas fa-check-circle" style="color:var(--green)"></i> Full Time</span><span>Atlanta</span></div>
+        </div>
+      </div>
+      <div class="match-card reveal">
+        <div class="match-body" style="padding-top:1.5rem">
+          <span class="match-stage" style="position:static;display:inline-block;margin-bottom:.75rem">Group J · 🇩🇿</span>
+          <div class="match-teams">
+            <div class="match-team"><div class="match-team-name">Argentina</div></div>
+            <div class="match-vs" style="color:var(--green)">2-1</div>
+            <div class="match-team"><div class="match-team-name">Algeria</div></div>
+          </div>
+          <div class="match-meta" style="border-top:none;padding-top:0"><span><i class="fas fa-check-circle" style="color:var(--green)"></i> Full Time</span><span>Kansas City</span></div>
+        </div>
+      </div>
+      <div class="match-card reveal">
+        <div class="match-body" style="padding-top:1.5rem">
+          <span class="match-stage" style="position:static;display:inline-block;margin-bottom:.75rem">Group C · 🇲🇦</span>
+          <div class="match-teams">
+            <div class="match-team"><div class="match-team-name">Brazil</div></div>
+            <div class="match-vs" style="color:var(--gold)">vs</div>
+            <div class="match-team"><div class="match-team-name">Morocco</div></div>
+          </div>
+          <div class="match-meta" style="border-top:none;padding-top:0"><span><i class="fas fa-clock" style="color:var(--gold)"></i> Upcoming</span><span>New York</span></div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:2.5rem" class="reveal">
+      <a href="/updates/" class="cta-gold" style="display:inline-flex;font-size:12px"><i class="fas fa-bolt"></i> See All Live Updates</a>
+    </div>
   </div>
 </section>
 
@@ -704,27 +789,6 @@ document.querySelectorAll('.reveal').forEach(function(el){
     e.forEach(function(x){if(x.isIntersecting)x.target.classList.add('in');});
   },{threshold:.1}).observe(el);
 });
-
-// COUNTDOWN
-function updateCountdown(){
-  var target=new Date('2026-06-11T19:00:00Z').getTime();
-  var now=Date.now();
-  var diff=target-now;
-  if(diff<=0){
-    ['cdDays','cdHours','cdMins','cdSecs'].forEach(function(id){document.getElementById(id).textContent='00';});
-    return;
-  }
-  var d=Math.floor(diff/86400000);
-  var h=Math.floor((diff%86400000)/3600000);
-  var m=Math.floor((diff%3600000)/60000);
-  var s=Math.floor((diff%60000)/1000);
-  document.getElementById('cdDays').textContent=String(d).padStart(2,'0');
-  document.getElementById('cdHours').textContent=String(h).padStart(2,'0');
-  document.getElementById('cdMins').textContent=String(m).padStart(2,'0');
-  document.getElementById('cdSecs').textContent=String(s).padStart(2,'0');
-}
-updateCountdown();
-setInterval(updateCountdown,1000);
 
 // FILTER MATCHES
 function filterMatches(country,btn){
