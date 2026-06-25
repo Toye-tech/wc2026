@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Live Updates — FIFA World Cup 2026 | WC2026 African Portal</title>
+<title>Live Updates — FIFA World Cup 2026 | WC2026 Africa</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
 :root{
   --navy:#0a0e1a;--navy2:#0f1525;--navy3:#151c30;
   --gold:#f39c12;--gold2:#d68910;--gold-glow:rgba(243,156,18,.15);
-  --green:#27ae60;--red:#c0392b;--white:#f0eeea;
-  --off:#b8b5ae;--mute:#5a5850;
+  --green:#27ae60;--red:#c0392b;--blue:#2980b9;
+  --white:#f0eeea;--off:#b8b5ae;--mute:#5a5850;
   --border:rgba(243,156,18,.12);--border2:rgba(255,255,255,.06);
   --r:6px;--r2:12px;
   --font-head:'Bebas Neue',sans-serif;
@@ -27,6 +27,7 @@ a{text-decoration:none;color:inherit}
 ::-webkit-scrollbar-track{background:var(--navy)}
 ::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
 
+/* NAV */
 nav{background:rgba(10,14,26,.97);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200;padding:0 5%;height:64px;display:flex;align-items:center;justify-content:space-between}
 .nav-logo{display:flex;align-items:center;gap:12px}
 .logo-emblem{width:38px;height:38px;background:linear-gradient(135deg,var(--gold),var(--gold2));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:16px;color:var(--navy)}
@@ -38,116 +39,125 @@ nav{background:rgba(10,14,26,.97);backdrop-filter:blur(24px);border-bottom:1px s
 .nav-btn{font-family:var(--font-cond);font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:9px 18px;border-radius:var(--r);background:var(--gold);color:var(--navy);border:none;cursor:pointer;transition:all .2s}
 .nav-btn:hover{background:var(--gold2)}
 
-.page-hero{background:linear-gradient(135deg,var(--navy2),var(--navy3));border-bottom:1px solid var(--border2);padding:3rem 5%;position:relative;overflow:hidden}
-.page-hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(243,156,18,.05) 1px,transparent 1px);background-size:32px 32px}
-.page-hero-inner{max-width:1320px;margin:0 auto;position:relative;z-index:1}
-.breadcrumb{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mute);margin-bottom:1rem}
-.breadcrumb a{color:var(--gold)}
-.live-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(192,57,43,.1);border:1px solid rgba(192,57,43,.3);padding:6px 14px;border-radius:2px;font-family:var(--font-mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:1rem}
-.live-dot{width:7px;height:7px;background:var(--red);border-radius:50%;animation:pulse-r 1.2s ease-in-out infinite}
-@keyframes pulse-r{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.6)}}
-.page-title{font-family:var(--font-head);font-size:clamp(48px,7vw,88px);text-transform:uppercase;line-height:.88;letter-spacing:-1px;margin-bottom:.75rem}
+/* PAGE HEADER */
+.page-header{background:linear-gradient(135deg,var(--navy2),var(--navy3));border-bottom:1px solid var(--border2);padding:3rem 5%;position:relative;overflow:hidden}
+.page-header::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(243,156,18,.05) 1px,transparent 1px);background-size:32px 32px}
+.page-header-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+.live-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(192,57,43,.15);border:1px solid rgba(192,57,43,.3);padding:6px 14px;border-radius:2px;font-family:var(--font-mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:1rem}
+.live-dot{width:7px;height:7px;background:var(--red);border-radius:50%;animation:blink 1s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.page-title{font-family:var(--font-head);font-size:clamp(44px,7vw,80px);text-transform:uppercase;line-height:.9;letter-spacing:-1px;margin-bottom:.75rem}
 .page-title .hl{color:var(--gold)}
-.page-sub{font-size:14px;color:var(--mute);line-height:1.7;max-width:560px}
-.last-updated{font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--mute);margin-top:.75rem;text-transform:uppercase}
+.page-sub{font-size:14px;color:var(--mute);line-height:1.7;max-width:600px}
+.last-updated{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mute);margin-top:1rem}
 .last-updated span{color:var(--gold)}
 
-.main{max-width:1320px;margin:0 auto;padding:3rem 5%;display:grid;grid-template-columns:1fr 340px;gap:2.5rem;align-items:start}
+/* TABS */
+.page-tabs{display:flex;gap:.5rem;max-width:1100px;margin:0 auto;padding:0 5%;margin-top:1.5rem;flex-wrap:wrap}
+.page-tab{font-family:var(--font-cond);font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:9px 18px;border:1px solid var(--border2);border-radius:2px;background:none;color:var(--mute);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px}
+.page-tab:hover{border-color:var(--border);color:var(--white)}
+.page-tab.on{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+.page-section{display:none}
+.page-section.on{display:block}
 
-/* LEFT COLUMN */
-.updates-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem}
-.updates-title{font-family:var(--font-cond);font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:10px}
-.updates-title::before{content:'';width:20px;height:1px;background:var(--gold)}
-.refresh-btn{display:flex;align-items:center;gap:7px;background:rgba(243,156,18,.08);border:1px solid var(--border);color:var(--gold);font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:8px 14px;border-radius:var(--r);cursor:pointer;transition:all .2s}
-.refresh-btn:hover{background:rgba(243,156,18,.15)}
-.refresh-btn.loading i{animation:spin 1s linear infinite}
-@keyframes spin{100%{transform:rotate(360deg)}}
+/* MAIN LAYOUT */
+.main{max-width:1100px;margin:0 auto;padding:3rem 5%;display:grid;grid-template-columns:1fr 320px;gap:2.5rem;align-items:start}
 
-.topic-filters{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
-.topic-btn{font-family:var(--font-mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;padding:6px 12px;border:1px solid var(--border2);border-radius:2px;background:none;color:var(--mute);cursor:pointer;transition:all .2s}
-.topic-btn:hover,.topic-btn.active{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+/* TOPICS */
+.topics-bar{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:2rem}
+.topic-btn{font-family:var(--font-mono);font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:7px 14px;border:1px solid var(--border2);border-radius:2px;background:none;color:var(--mute);cursor:pointer;transition:all .2s}
+.topic-btn:hover,.topic-btn.on{background:var(--gold);color:var(--navy);border-color:var(--gold)}
 
-.updates-feed{display:flex;flex-direction:column;gap:1rem}
-.update-card{background:var(--navy2);border:1px solid var(--border2);border-radius:var(--r2);padding:1.5rem;transition:all .3s;position:relative;overflow:hidden;cursor:pointer}
-.update-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:var(--gold);transform:scaleY(0);transform-origin:bottom;transition:transform .3s}
-.update-card:hover{border-color:rgba(243,156,18,.2);transform:translateX(3px)}
-.update-card:hover::before{transform:scaleY(1)}
-.update-card.breaking{border-color:rgba(192,57,43,.3)}
-.update-card.breaking::before{background:var(--red);transform:scaleY(1)}
-.update-meta{display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem;flex-wrap:wrap}
-.update-tag{font-family:var(--font-mono);font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;border-radius:2px}
-.update-tag.breaking{background:rgba(192,57,43,.15);color:var(--red);border:1px solid rgba(192,57,43,.3)}
-.update-tag.result{background:rgba(39,174,96,.1);color:var(--green);border:1px solid rgba(39,174,96,.2)}
-.update-tag.africa{background:var(--gold-glow);color:var(--gold);border:1px solid var(--border)}
-.update-tag.general{background:rgba(255,255,255,.04);color:var(--mute);border:1px solid var(--border2)}
-.update-tag.injury{background:rgba(192,57,43,.08);color:#e74c3c;border:1px solid rgba(192,57,43,.2)}
-.update-time{font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--mute);text-transform:uppercase}
-.update-headline{font-family:var(--font-cond);font-size:18px;font-weight:700;letter-spacing:.5px;color:var(--white);margin-bottom:.5rem;line-height:1.3}
-.update-body{font-size:13px;color:var(--mute);line-height:1.8}
-.update-nation{display:inline-flex;align-items:center;gap:5px;margin-top:.75rem;font-family:var(--font-mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--gold)}
+/* NEWS FEED */
+.news-feed{display:flex;flex-direction:column;gap:1rem}
+.news-card{background:var(--navy2);border:1px solid var(--border2);border-radius:var(--r2);padding:1.5rem;position:relative;overflow:hidden;transition:all .3s;animation:fadeIn .4s ease both}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.news-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:var(--gold);transform:scaleY(0);transform-origin:bottom;transition:transform .3s}
+.news-card:hover{border-color:rgba(243,156,18,.2);transform:translateX(3px)}
+.news-card:hover::before{transform:scaleY(1)}
+.news-card.breaking::before{background:var(--red);transform:scaleY(1)}
+.news-card.breaking{border-color:rgba(192,57,43,.2)}
+.news-tag{display:inline-flex;align-items:center;gap:5px;font-family:var(--font-mono);font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;border-radius:2px;margin-bottom:.75rem}
+.news-tag.breaking{background:rgba(192,57,43,.15);color:var(--red);border:1px solid rgba(192,57,43,.2)}
+.news-tag.result{background:rgba(39,174,96,.12);color:var(--green);border:1px solid rgba(39,174,96,.2)}
+.news-tag.african{background:var(--gold-glow);color:var(--gold);border:1px solid var(--border)}
+.news-tag.general{background:rgba(41,128,185,.12);color:#5dade2;border:1px solid rgba(41,128,185,.2)}
+.news-tag.injury{background:rgba(192,57,43,.1);color:#e74c3c;border:1px solid rgba(192,57,43,.15)}
+.news-headline{font-family:var(--font-cond);font-size:18px;font-weight:700;letter-spacing:.5px;color:var(--white);margin-bottom:.5rem;line-height:1.3}
+.news-body{font-size:13px;color:var(--mute);line-height:1.8}
+.news-meta{display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:.75rem;border-top:1px solid var(--border2)}
+.news-time{font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--mute);text-transform:uppercase}
+.news-source{font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--gold);text-transform:uppercase}
 
-.loading-state{text-align:center;padding:4rem 2rem;color:var(--mute)}
-.loading-spinner{width:48px;height:48px;border:3px solid rgba(243,156,18,.1);border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 1.25rem}
+/* LOADING / ERROR */
+.loading-card{background:var(--navy2);border:1px solid var(--border2);border-radius:var(--r2);padding:2rem;text-align:center}
+.loading-spinner{width:40px;height:40px;border:3px solid rgba(243,156,18,.2);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 1rem}
+@keyframes spin{to{transform:rotate(360deg)}}
 .loading-text{font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--mute)}
-.loading-sub{font-size:12px;color:rgba(90,88,80,.5);margin-top:.5rem}
+.error-card{background:rgba(192,57,43,.05);border:1px solid rgba(192,57,43,.2);border-radius:var(--r2);padding:2rem;text-align:center}
+.error-card i{font-size:32px;color:var(--red);display:block;margin-bottom:1rem;opacity:.6}
+.error-card p{font-size:13px;color:var(--mute);line-height:1.7}
 
-.error-state{text-align:center;padding:3rem 2rem;background:var(--navy2);border:1px solid var(--border2);border-radius:var(--r2)}
-.error-state i{font-size:40px;color:var(--mute);opacity:.3;display:block;margin-bottom:1rem}
-.error-state p{font-size:13px;color:var(--mute);margin-bottom:1rem}
+/* REFRESH */
+.refresh-btn{display:flex;align-items:center;gap:8px;background:var(--gold);color:var(--navy);font-family:var(--font-cond);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:11px 20px;border:none;border-radius:var(--r);cursor:pointer;transition:all .2s;margin-bottom:1.5rem}
+.refresh-btn:hover{background:var(--gold2)}
+.refresh-btn:disabled{opacity:.5;pointer-events:none}
+.refresh-btn.spinning i{animation:spin .8s linear infinite}
 
-/* RIGHT COLUMN — SIDEBAR */
-.sidebar{display:flex;flex-direction:column;gap:1.5rem;position:sticky;top:80px}
+/* SIDEBAR */
+.sidebar{display:flex;flex-direction:column;gap:1.25rem;position:sticky;top:80px}
 .sidebar-card{background:var(--navy2);border:1px solid var(--border2);border-radius:var(--r2);overflow:hidden}
-.sidebar-head{background:linear-gradient(135deg,var(--gold-glow),transparent);border-bottom:1px solid var(--border2);padding:1rem 1.25rem;font-family:var(--font-cond);font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold)}
+.sidebar-head{background:linear-gradient(135deg,var(--gold-glow),transparent);border-bottom:1px solid var(--border2);padding:.85rem 1.25rem;font-family:var(--font-cond);font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold)}
 .sidebar-body{padding:1.25rem}
+.stat-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:12px}
+.stat-row:last-child{border:none}
+.stat-k{color:var(--mute);font-family:var(--font-mono);font-size:9px;letter-spacing:1px;text-transform:uppercase}
+.stat-v{font-weight:600;color:var(--white)}
+.stat-v.gold{color:var(--gold)}
+.african-team{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:12px}
+.african-team:last-child{border:none}
+.team-flag-name{display:flex;align-items:center;gap:8px;font-weight:500}
+.team-status{font-family:var(--font-mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:3px 7px;border-radius:2px}
+.team-status.through{background:rgba(39,174,96,.12);color:var(--green)}
+.team-status.live{background:var(--gold-glow);color:var(--gold)}
+.team-status.out{background:rgba(92,90,80,.12);color:var(--mute)}
+.quick-link{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px;color:var(--off);transition:color .2s;cursor:pointer}
+.quick-link:last-child{border:none}
+.quick-link:hover{color:var(--gold)}
+.quick-link i{color:var(--gold);font-size:11px;width:16px}
 
-/* STANDINGS */
-.standing-row{display:flex;align-items:center;gap:.75rem;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:12px}
-.standing-row:last-child{border:none}
-.standing-pos{font-family:var(--font-head);font-size:18px;color:var(--gold);width:20px;flex-shrink:0;line-height:1}
-.standing-team{flex:1;font-weight:500}
-.standing-pts{font-family:var(--font-mono);font-size:10px;letter-spacing:1px;color:var(--gold)}
-.standing-form{display:flex;gap:3px}
-.form-dot{width:8px;height:8px;border-radius:50%}
-.form-dot.w{background:var(--green)}
-.form-dot.d{background:var(--gold)}
-.form-dot.l{background:var(--red)}
+/* ====== VIDEO PREVIEWS SECTION ====== */
+.video-main{max-width:1100px;margin:0 auto;padding:3rem 5%}
+.video-section-title{display:flex;align-items:center;gap:10px;font-family:var(--font-cond);font-size:14px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem}
+.video-section-title::before{content:'';width:24px;height:1px;background:var(--gold)}
+.video-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-bottom:3.5rem}
+.video-card{background:var(--navy2);border:1px solid var(--border2);border-radius:var(--r2);overflow:hidden;transition:all .3s}
+.video-card:hover{border-color:rgba(243,156,18,.25);transform:translateY(-3px)}
+.video-embed{position:relative;width:100%;aspect-ratio:16/9;background:var(--navy3)}
+.video-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.video-body{padding:1.25rem}
+.video-score-row{display:flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:.75rem}
+.video-team{font-family:var(--font-cond);font-size:15px;font-weight:700;letter-spacing:.5px;color:var(--white)}
+.video-score{font-family:var(--font-head);font-size:26px;color:var(--gold);letter-spacing:1px}
+.video-meta-row{display:flex;justify-content:center;gap:.75rem;font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--mute);text-transform:uppercase;margin-bottom:.85rem}
+.video-meta-row span{display:flex;align-items:center;gap:4px}
+.video-summary{font-size:12px;color:var(--off);line-height:1.7;text-align:left}
 
-/* QUICK FACTS */
-.fact-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:12px}
-.fact-row:last-child{border:none}
-.fact-k{font-family:var(--font-mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--mute)}
-.fact-v{font-weight:500;color:var(--white)}
-.fact-v.gold{color:var(--gold);font-family:var(--font-head);font-size:18px;line-height:1}
+/* UPCOMING PREVIEW CARDS (text-only) */
+.preview-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+.preview-card{background:var(--navy2);border:1px solid var(--border2);border-radius:var(--r2);padding:1.5rem;transition:all .3s;position:relative;overflow:hidden}
+.preview-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:var(--blue);opacity:.6}
+.preview-card:hover{border-color:rgba(41,128,185,.25);transform:translateX(3px)}
+.preview-upcoming-tag{display:inline-flex;align-items:center;gap:5px;font-family:var(--font-mono);font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;border-radius:2px;background:rgba(41,128,185,.12);color:#5dade2;border:1px solid rgba(41,128,185,.2);margin-bottom:.85rem}
+.preview-matchup{display:flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:.85rem}
+.preview-team{font-family:var(--font-cond);font-size:17px;font-weight:700;letter-spacing:.5px;color:var(--white);text-align:center;flex:1}
+.preview-vs{font-family:var(--font-head);font-size:18px;color:var(--gold);opacity:.5}
+.preview-meta{display:flex;justify-content:center;gap:.75rem;font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--mute);text-transform:uppercase;margin-bottom:.85rem;flex-wrap:wrap}
+.preview-meta span{display:flex;align-items:center;gap:4px}
+.preview-text{font-size:12px;color:var(--off);line-height:1.7}
 
-/* ASK AI */
-.ask-ai-box{background:var(--navy2);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden}
-.ask-ai-head{background:linear-gradient(135deg,var(--gold-glow),transparent);border-bottom:1px solid var(--border2);padding:1rem 1.25rem;display:flex;align-items:center;gap:8px}
-.ask-ai-head span{font-family:var(--font-cond);font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold)}
-.ai-icon{width:28px;height:28px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--navy);font-size:12px;flex-shrink:0}
-.ask-ai-body{padding:1.25rem}
-.ai-questions{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1rem}
-.ai-q-btn{background:rgba(255,255,255,.03);border:1px solid var(--border2);border-radius:var(--r);padding:9px 12px;font-family:var(--font-body);font-size:12px;color:var(--off);cursor:pointer;transition:all .2s;text-align:left;width:100%}
-.ai-q-btn:hover{border-color:var(--gold);color:var(--white);background:rgba(243,156,18,.04)}
-.ai-input-row{display:flex;gap:.5rem}
-.ai-input{flex:1;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:var(--r);padding:10px 12px;font-family:var(--font-body);font-size:12px;color:var(--white);outline:none;transition:border-color .2s}
-.ai-input:focus{border-color:var(--gold)}
-.ai-input::placeholder{color:rgba(240,238,234,.2)}
-.ai-send{background:var(--gold);color:var(--navy);border:none;border-radius:var(--r);padding:10px 14px;cursor:pointer;font-size:13px;transition:all .2s;flex-shrink:0}
-.ai-send:hover{background:var(--gold2)}
-.ai-send:disabled{opacity:.4;pointer-events:none}
-.ai-response{margin-top:1rem;background:rgba(243,156,18,.04);border:1px solid var(--border);border-radius:var(--r);padding:1rem;font-size:13px;color:var(--off);line-height:1.8;display:none}
-.ai-response.show{display:block}
-.ai-thinking{display:flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--mute);margin-top:1rem;display:none}
-.ai-thinking.show{display:flex}
-.ai-thinking-dots{display:flex;gap:3px}
-.ai-thinking-dots span{width:5px;height:5px;background:var(--gold);border-radius:50%;animation:dot-bounce .6s ease-in-out infinite}
-.ai-thinking-dots span:nth-child(2){animation-delay:.1s}
-.ai-thinking-dots span:nth-child(3){animation-delay:.2s}
-@keyframes dot-bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
-
-@media(max-width:1100px){.main{grid-template-columns:1fr}.sidebar{position:static}}
-@media(max-width:768px){.nav-links{display:none}.page-title{font-size:clamp(40px,10vw,72px)}}
+@media(max-width:1024px){.main{grid-template-columns:1fr}.sidebar{position:static}.video-grid,.preview-grid{grid-template-columns:1fr}}
+@media(max-width:768px){.nav-links{display:none}.topics-bar{gap:.4rem}.page-tabs{gap:.4rem}}
 </style>
 </head>
 <body>
@@ -166,263 +176,258 @@ nav{background:rgba(10,14,26,.97);backdrop-filter:blur(24px);border-bottom:1px s
   <a href="/matches/" class="nav-btn"><i class="fas fa-ticket-alt"></i> Buy Tickets</a>
 </nav>
 
-<div class="page-hero">
-  <div class="page-hero-inner">
-    <div class="breadcrumb"><a href="/">Home</a> › Live Updates</div>
-    <div class="live-badge"><span class="live-dot"></span> Live Coverage</div>
-    <h1 class="page-title">WORLD CUP <span class="hl">LIVE</span><br>UPDATES</h1>
-    <p class="page-sub">AI-powered live coverage of FIFA World Cup 2026. Latest results, African nation news, injury updates and match analysis — auto-refreshed every 5 minutes.</p>
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="live-badge"><span class="live-dot"></span> Live Coverage · Final Group Matchday</div>
+    <h1 class="page-title">WC 2026 <span class="hl">LIVE</span><br>UPDATES</h1>
+    <p class="page-sub">Real-time news, results, African team updates and match highlight videos — the final round of group games is underway right now.</p>
     <div class="last-updated">Last updated: <span id="lastUpdatedTime">Loading...</span></div>
+  </div>
+  <div class="page-tabs">
+    <button class="page-tab on" onclick="switchPageTab('news', this)"><i class="fas fa-newspaper"></i> News Feed</button>
+    <button class="page-tab" onclick="switchPageTab('videos', this)"><i class="fas fa-play-circle"></i> Match Highlights & Previews</button>
   </div>
 </div>
 
+<!-- ===================== NEWS SECTION ===================== -->
+<div class="page-section on" id="section-news">
 <div class="main">
-  <!-- LEFT: UPDATES FEED -->
   <div>
-    <div class="updates-header">
-      <div class="updates-title">Latest Updates</div>
-      <button class="refresh-btn" id="refreshBtn" onclick="loadUpdates()">
-        <i class="fas fa-sync-alt" id="refreshIcon"></i> Refresh
-      </button>
+    <div class="topics-bar">
+      <button class="topic-btn on" onclick="loadNews('latest',this)">🔴 Latest News</button>
+      <button class="topic-btn" onclick="loadNews('results',this)">⚽ Match Results</button>
+      <button class="topic-btn" onclick="loadNews('african',this)">🌍 African Teams</button>
+      <button class="topic-btn" onclick="loadNews('standings',this)">📊 Standings</button>
+      <button class="topic-btn" onclick="loadNews('injuries',this)">🏥 Injuries</button>
+      <button class="topic-btn" onclick="loadNews('transfers',this)">🔄 Transfer News</button>
     </div>
 
-    <div class="topic-filters">
-      <button class="topic-btn active" onclick="filterUpdates('all', this)">All</button>
-      <button class="topic-btn" onclick="filterUpdates('africa', this)">🌍 African Teams</button>
-      <button class="topic-btn" onclick="filterUpdates('result', this)">⚽ Results</button>
-      <button class="topic-btn" onclick="filterUpdates('breaking', this)">🔴 Breaking</button>
-      <button class="topic-btn" onclick="filterUpdates('injury', this)">🏥 Injuries</button>
-    </div>
+    <button class="refresh-btn" id="refreshBtn" onclick="loadNews(currentTopic, null)">
+      <i class="fas fa-sync-alt"></i>
+      <span id="refreshTxt">Refresh Updates</span>
+    </button>
 
-    <div id="updatesFeed">
-      <div class="loading-state">
+    <div class="news-feed" id="newsFeed">
+      <div class="loading-card">
         <div class="loading-spinner"></div>
-        <div class="loading-text">Fetching Latest Updates</div>
-        <div class="loading-sub">Powered by AI · Searching World Cup news</div>
+        <div class="loading-text">Loading latest updates...</div>
       </div>
     </div>
   </div>
 
-  <!-- RIGHT: SIDEBAR -->
   <div class="sidebar">
-
-    <!-- ASK AI -->
-    <div class="ask-ai-box">
-      <div class="ask-ai-head">
-        <div class="ai-icon"><i class="fas fa-robot"></i></div>
-        <span>Ask About WC2026</span>
-      </div>
-      <div class="ask-ai-body">
-        <div class="ai-questions">
-          <button class="ai-q-btn" onclick="askAI(this.textContent)">Which African teams have qualified?</button>
-          <button class="ai-q-btn" onclick="askAI(this.textContent)">Who are the top scorers so far?</button>
-          <button class="ai-q-btn" onclick="askAI(this.textContent)">What are the group standings?</button>
-          <button class="ai-q-btn" onclick="askAI(this.textContent)">When does the final take place?</button>
-        </div>
-        <div class="ai-input-row">
-          <input type="text" class="ai-input" id="aiQuestion" placeholder="Ask anything about WC2026..." onkeydown="if(event.key==='Enter')askAI(document.getElementById('aiQuestion').value)">
-          <button class="ai-send" id="aiSendBtn" onclick="askAI(document.getElementById('aiQuestion').value)"><i class="fas fa-paper-plane"></i></button>
-        </div>
-        <div class="ai-thinking" id="aiThinking">
-          <div class="ai-thinking-dots"><span></span><span></span><span></span></div>
-          <span>AI is thinking...</span>
-        </div>
-        <div class="ai-response" id="aiResponse"></div>
-      </div>
-    </div>
-
-    <!-- QUICK FACTS -->
     <div class="sidebar-card">
-      <div class="sidebar-head">WC2026 Quick Facts</div>
+      <div class="sidebar-head">🌍 African Nations Status</div>
       <div class="sidebar-body">
-        <div class="fact-row"><span class="fact-k">Total Matches</span><span class="fact-v gold">104</span></div>
-        <div class="fact-row"><span class="fact-k">Teams</span><span class="fact-v gold">48</span></div>
-        <div class="fact-row"><span class="fact-k">African Nations</span><span class="fact-v gold">9</span></div>
-        <div class="fact-row"><span class="fact-k">Host Countries</span><span class="fact-v">USA, Mexico, Canada</span></div>
-        <div class="fact-row"><span class="fact-k">Opening Match</span><span class="fact-v">June 11, 2026</span></div>
-        <div class="fact-row"><span class="fact-k">Final</span><span class="fact-v">July 26, 2026</span></div>
-        <div class="fact-row"><span class="fact-k">Final Venue</span><span class="fact-v">MetLife Stadium, NY</span></div>
-        <div class="fact-row"><span class="fact-k">Prize Money</span><span class="fact-v">$1 Billion</span></div>
+        <div class="african-team"><div class="team-flag-name"><span>🇲🇦</span> Morocco</div><span class="team-status through">Through ✓</span></div>
+        <div class="african-team"><div class="team-flag-name"><span>🇿🇦</span> South Africa</div><span class="team-status through">Through ✓</span></div>
+        <div class="african-team"><div class="team-flag-name"><span>🇨🇻</span> Cape Verde</div><span class="team-status live">Deciding</span></div>
+        <div class="african-team"><div class="team-flag-name"><span>🇸🇳</span> Senegal</div><span class="team-status live">Deciding</span></div>
+        <div class="african-team"><div class="team-flag-name"><span>🇪🇬</span> Egypt</div><span class="team-status live">Deciding</span></div>
+        <div class="african-team"><div class="team-flag-name"><span>🇩🇿</span> Algeria</div><span class="team-status live">Deciding</span></div>
+        <div class="african-team"><div class="team-flag-name"><span>🇨🇩</span> DR Congo</div><span class="team-status live">Deciding</span></div>
+        <div class="african-team"><div class="team-flag-name"><span>🇬🇭</span> Ghana</div><span class="team-status live">Deciding</span></div>
+        <div class="african-team"><div class="team-flag-name"><span>🇨🇮</span> Ivory Coast</div><span class="team-status live">Deciding</span></div>
+        <div class="african-team"><div class="team-flag-name"><span>🇹🇳</span> Tunisia</div><span class="team-status out">Eliminated</span></div>
       </div>
     </div>
 
-    <!-- AFRICAN NATIONS -->
     <div class="sidebar-card">
-      <div class="sidebar-head">🌍 African Nations</div>
+      <div class="sidebar-head">📊 Tournament Stats</div>
       <div class="sidebar-body">
-        <div class="standing-row"><div class="standing-pos">A</div><div class="standing-team">🇿🇦 South Africa</div><div class="standing-pts">Grp A</div></div>
-        <div class="standing-row"><div class="standing-pos">C</div><div class="standing-team">🇲🇦 Morocco</div><div class="standing-pts">Grp C</div></div>
-        <div class="standing-row"><div class="standing-pos">E</div><div class="standing-team">🇨🇮 Ivory Coast</div><div class="standing-pts">Grp E</div></div>
-        <div class="standing-row"><div class="standing-pos">F</div><div class="standing-team">🇹🇳 Tunisia</div><div class="standing-pts">Grp F</div></div>
-        <div class="standing-row"><div class="standing-pos">G</div><div class="standing-team">🇪🇬 Egypt</div><div class="standing-pts">Grp G</div></div>
-        <div class="standing-row"><div class="standing-pos">H</div><div class="standing-team">🇨🇻 Cape Verde</div><div class="standing-pts">Grp H</div></div>
-        <div class="standing-row"><div class="standing-pos">I</div><div class="standing-team">🇸🇳 Senegal</div><div class="standing-pts">Grp I</div></div>
-        <div class="standing-row"><div class="standing-pos">J</div><div class="standing-team">🇩🇿 Algeria</div><div class="standing-pts">Grp J</div></div>
-        <div class="standing-row"><div class="standing-pos">L</div><div class="standing-team">🇬🇭 Ghana</div><div class="standing-pts">Grp L</div></div>
+        <div class="stat-row"><span class="stat-k">Total Matches</span><span class="stat-v">104</span></div>
+        <div class="stat-row"><span class="stat-k">Teams</span><span class="stat-v">48</span></div>
+        <div class="stat-row"><span class="stat-k">African Nations</span><span class="stat-v gold">10</span></div>
+        <div class="stat-row"><span class="stat-k">African Through</span><span class="stat-v gold">2 so far</span></div>
+        <div class="stat-row"><span class="stat-k">Stage</span><span class="stat-v">Final Group Day</span></div>
+        <div class="stat-row"><span class="stat-k">Final</span><span class="stat-v">Jul 19</span></div>
       </div>
     </div>
 
-    <!-- BUY TICKETS CTA -->
-    <div style="background:linear-gradient(135deg,var(--gold-glow),rgba(243,156,18,.05));border:1px solid var(--border);border-radius:var(--r2);padding:1.5rem;text-align:center">
-      <div style="font-size:32px;margin-bottom:.75rem">🎫</div>
-      <div style="font-family:var(--font-head);font-size:22px;letter-spacing:1px;text-transform:uppercase;margin-bottom:.5rem">Get Your Tickets</div>
-      <p style="font-size:12px;color:var(--mute);line-height:1.6;margin-bottom:1.25rem">Secure your seat for the biggest sporting event of 2026. Tickets from $75 USD.</p>
-      <a href="/matches/" style="display:flex;align-items:center;justify-content:center;gap:8px;background:var(--gold);color:var(--navy);font-family:var(--font-cond);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:13px;border-radius:var(--r);transition:all .2s"><i class="fas fa-ticket-alt"></i> Browse Matches</a>
+    <div class="sidebar-card">
+      <div class="sidebar-head">⚡ Quick Actions</div>
+      <div class="sidebar-body">
+        <div class="quick-link" onclick="switchPageTabByLabel('videos')"><i class="fas fa-play-circle"></i> Watch match highlights</div>
+        <div class="quick-link" onclick="loadNews('african',document.querySelectorAll('.topic-btn')[2])"><i class="fas fa-globe-africa"></i> African team updates</div>
+        <div class="quick-link" onclick="loadNews('standings',document.querySelectorAll('.topic-btn')[3])"><i class="fas fa-list-ol"></i> Group standings</div>
+        <a href="/matches/" class="quick-link"><i class="fas fa-ticket-alt"></i> Buy match tickets</a>
+      </div>
     </div>
-
   </div>
+</div>
+</div>
+
+<!-- ===================== VIDEOS SECTION ===================== -->
+<div class="page-section" id="section-videos">
+<div class="video-main">
+
+  <div class="video-section-title"><i class="fas fa-fire"></i> Just Played — Watch Highlights</div>
+  <div class="video-grid" id="playedGrid">
+    <div class="loading-card"><div class="loading-spinner"></div><div class="loading-text">Loading highlights...</div></div>
+  </div>
+
+  <div class="video-section-title"><i class="fas fa-calendar-alt"></i> Coming Up — Match Previews</div>
+  <div class="preview-grid" id="upcomingGrid">
+    <div class="loading-card"><div class="loading-spinner"></div><div class="loading-text">Loading previews...</div></div>
+  </div>
+
+</div>
 </div>
 
 <script>
-var currentFilter = 'all';
-var allUpdates = [];
+var currentTopic = 'latest';
 
-// ============================================================
-// LOAD UPDATES VIA CLAUDE AI + WEB SEARCH
-// ============================================================
-async function loadUpdates() {
-  var btn = document.getElementById('refreshBtn');
-  btn.classList.add('loading');
-
-  document.getElementById('updatesFeed').innerHTML = `
-    <div class="loading-state">
-      <div class="loading-spinner"></div>
-      <div class="loading-text">Fetching Latest Updates</div>
-      <div class="loading-sub">Loading World Cup 2026 news...</div>
-    </div>`;
-
-  try {
-    const response = await fetch('/api/news/?topic=' + encodeURIComponent(currentFilter === 'all' ? 'latest' : currentFilter));
-    const data = await response.json();
-
-    if (data.success && data.articles && data.articles.length) {
-      allUpdates = data.articles.map(function(a){
-        return {
-          tag: a.tag === 'african' ? 'africa' : a.tag,
-          time: a.time || 'Recent',
-          headline: a.headline,
-          body: a.body,
-          nation: '',
-          breaking: a.tag === 'breaking'
-        };
-      });
-      renderUpdates(allUpdates);
-      document.getElementById('lastUpdatedTime').textContent = new Date().toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'}) + ' · Auto-refreshes every 5 mins';
-    } else {
-      throw new Error('No updates found');
-    }
-  } catch(e) {
-    // Fallback to static updates
-    allUpdates = getFallbackUpdates();
-    renderUpdates(allUpdates);
-    document.getElementById('lastUpdatedTime').textContent = new Date().toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'}) + ' · Using cached data';
+function switchPageTab(section, btn){
+  document.querySelectorAll('.page-tab').forEach(function(t){ t.classList.remove('on'); });
+  document.querySelectorAll('.page-section').forEach(function(s){ s.classList.remove('on'); });
+  btn.classList.add('on');
+  document.getElementById('section-' + section).classList.add('on');
+  if(section === 'videos' && !window.previewsLoaded){
+    loadPreviews();
   }
-
-  btn.classList.remove('loading');
+}
+function switchPageTabByLabel(section){
+  switchPageTab(section, document.querySelectorAll('.page-tab')[section === 'videos' ? 1 : 0]);
 }
 
-// ============================================================
-// RENDER UPDATES
-// ============================================================
-function renderUpdates(updates) {
-  var filtered = currentFilter === 'all'
-    ? updates
-    : updates.filter(u => u.tag === currentFilter || (currentFilter === 'breaking' && u.breaking));
+function updateTime(){
+  var now = new Date();
+  document.getElementById('lastUpdatedTime').textContent = now.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit', second:'2-digit'}) + ' UTC';
+}
 
-  if (!filtered.length) {
-    document.getElementById('updatesFeed').innerHTML = `
-      <div class="error-state">
-        <i class="fas fa-newspaper"></i>
-        <p>No updates found for this filter. Try another category.</p>
-        <button onclick="filterUpdates('all', document.querySelector('.topic-btn'))" style="background:var(--gold);color:var(--navy);font-family:var(--font-cond);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:10px 20px;border:none;border-radius:var(--r);cursor:pointer">Show All</button>
-      </div>`;
-    return;
+var TAG_LABELS = {
+  'breaking': '🔴 Breaking',
+  'result': '⚽ Result',
+  'african': '🌍 African',
+  'general': '📰 News',
+  'injury': '🏥 Injury',
+};
+
+async function loadNews(topic, btn){
+  currentTopic = topic;
+  if(btn){
+    document.querySelectorAll('.topic-btn').forEach(function(b){ b.classList.remove('on'); });
+    btn.classList.add('on');
   }
 
-  document.getElementById('updatesFeed').innerHTML = filtered.map(function(u) {
-    return `
-    <div class="update-card ${u.breaking ? 'breaking' : ''}">
-      <div class="update-meta">
-        <span class="update-tag ${u.tag}">${getTagLabel(u.tag, u.breaking)}</span>
-        <span class="update-time"><i class="fas fa-clock"></i> ${u.time}</span>
-      </div>
-      <div class="update-headline">${u.headline}</div>
-      <div class="update-body">${u.body}</div>
-      ${u.nation ? `<div class="update-nation"><i class="fas fa-globe-africa"></i> ${u.nation}</div>` : ''}
+  document.getElementById('newsFeed').innerHTML = `
+    <div class="loading-card">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">Loading ${topic} updates...</div>
     </div>`;
+
+  var refreshBtn = document.getElementById('refreshBtn');
+  refreshBtn.disabled = true;
+  refreshBtn.classList.add('spinning');
+  document.getElementById('refreshTxt').textContent = 'Fetching updates...';
+
+  try {
+    var response = await fetch('/api/news/?topic=' + encodeURIComponent(topic));
+    var data = await response.json();
+    if(data.success && data.articles && data.articles.length){
+      renderNews(data.articles);
+      updateTime();
+    } else {
+      throw new Error('No articles');
+    }
+  } catch(e){
+    document.getElementById('newsFeed').innerHTML = `
+      <div class="error-card">
+        <i class="fas fa-exclamation-triangle"></i>
+        <p>Could not fetch updates right now. Please try again in a moment.</p>
+        <button onclick="loadNews('${topic}', null)" style="margin-top:1rem;background:var(--gold);color:var(--navy);font-family:var(--font-cond);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:10px 20px;border:none;border-radius:var(--r);cursor:pointer">Try Again</button>
+      </div>`;
+  }
+
+  refreshBtn.disabled = false;
+  refreshBtn.classList.remove('spinning');
+  document.getElementById('refreshTxt').textContent = 'Refresh Updates';
+}
+
+function renderNews(articles){
+  var html = articles.map(function(a, i){
+    var tagClass = a.tag.toLowerCase();
+    var tagLabel = TAG_LABELS[tagClass] || '📰 ' + a.tag;
+    return `
+      <div class="news-card ${tagClass === 'breaking' ? 'breaking' : ''}" style="animation-delay:${i * 0.06}s">
+        <span class="news-tag ${tagClass}">${tagLabel}</span>
+        <div class="news-headline">${a.headline}</div>
+        <div class="news-body">${a.body}</div>
+        <div class="news-meta">
+          <span class="news-time"><i class="fas fa-clock"></i> ${a.time || 'Recent'}</span>
+          <span class="news-source">WC2026 Coverage</span>
+        </div>
+      </div>`;
+  }).join('');
+  document.getElementById('newsFeed').innerHTML = html;
+}
+
+async function loadPreviews(){
+  window.previewsLoaded = true;
+  try {
+    var response = await fetch('/api/match-previews/');
+    var data = await response.json();
+    if(data.success){
+      renderPlayed(data.previews.played);
+      renderUpcoming(data.previews.upcoming);
+    }
+  } catch(e){
+    document.getElementById('playedGrid').innerHTML = '<div class="error-card"><i class="fas fa-exclamation-triangle"></i><p>Could not load videos right now.</p></div>';
+  }
+}
+
+function renderPlayed(matches){
+  document.getElementById('playedGrid').innerHTML = matches.map(function(m){
+    return `
+      <div class="video-card">
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/${m.youtube_id}" title="${m.home} vs ${m.away} highlights" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-body">
+          <div class="video-score-row">
+            <span class="video-team">${m.home}</span>
+            <span class="video-score">${m.score}</span>
+            <span class="video-team">${m.away}</span>
+          </div>
+          <div class="video-meta-row">
+            <span><i class="fas fa-trophy"></i> ${m.group}</span>
+            <span><i class="fas fa-map-marker-alt"></i> ${m.venue}</span>
+            <span><i class="fas fa-calendar"></i> ${m.date}</span>
+          </div>
+          <div class="video-summary">${m.summary}</div>
+        </div>
+      </div>`;
   }).join('');
 }
 
-function getTagLabel(tag, breaking) {
-  if (breaking) return '🔴 Breaking';
-  var labels = {
-    result: '⚽ Result',
-    africa: '🌍 Africa',
-    breaking: '🔴 Breaking',
-    injury: '🏥 Injury',
-    general: '📰 News'
-  };
-  return labels[tag] || '📰 News';
+function renderUpcoming(matches){
+  document.getElementById('upcomingGrid').innerHTML = matches.map(function(m){
+    return `
+      <div class="preview-card">
+        <span class="preview-upcoming-tag">⏱ Upcoming</span>
+        <div class="preview-matchup">
+          <span class="preview-team">${m.home}</span>
+          <span class="preview-vs">VS</span>
+          <span class="preview-team">${m.away}</span>
+        </div>
+        <div class="preview-meta">
+          <span><i class="fas fa-trophy"></i> ${m.group}</span>
+          <span><i class="fas fa-map-marker-alt"></i> ${m.venue}</span>
+          <span><i class="fas fa-calendar"></i> ${m.date}</span>
+          <span><i class="fas fa-clock"></i> ${m.time}</span>
+        </div>
+        <div class="preview-text">${m.preview}</div>
+      </div>`;
+  }).join('');
 }
 
-// ============================================================
-// FILTER
-// ============================================================
-function filterUpdates(filter, btn) {
-  currentFilter = filter;
-  document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-  if (allUpdates.length) renderUpdates(allUpdates);
-}
+// Auto-refresh every 5 minutes
+setInterval(function(){ loadNews(currentTopic, null); }, 5 * 60 * 1000);
 
-// ============================================================
-// ASK AI
-// ============================================================
-async function askAI(question) {
-  if (!question || !question.trim()) return;
-  document.getElementById('aiQuestion').value = '';
-  document.getElementById('aiThinking').classList.add('show');
-  document.getElementById('aiResponse').classList.remove('show');
-  document.getElementById('aiSendBtn').disabled = true;
-
-  try {
-    const response = await fetch('/api/news/?topic=latest');
-    const data = await response.json();
-    var summary = (data.articles || []).slice(0, 3).map(function(a){ return a.headline + ': ' + a.body; }).join(' ');
-    document.getElementById('aiResponse').textContent = summary
-      ? 'Here is the latest on WC2026: ' + summary + ' For full live coverage, check the news feed above or visit FIFA.com.'
-      : 'For the latest answer to your question, check the news feed above or visit the official FIFA World Cup 2026 site.';
-    document.getElementById('aiResponse').classList.add('show');
-  } catch(e) {
-    document.getElementById('aiResponse').textContent = 'Unable to fetch an answer right now. Please check the news feed above or try again shortly.';
-    document.getElementById('aiResponse').classList.add('show');
-  }
-
-  document.getElementById('aiThinking').classList.remove('show');
-  document.getElementById('aiSendBtn').disabled = false;
-}
-
-// ============================================================
-// FALLBACK UPDATES (when API unavailable)
-// ============================================================
-function getFallbackUpdates() {
-  return [
-    {tag:'africa', time:'Just now', headline:'Morocco Open WC2026 Campaign Against Brazil in New York', body:'The Atlas Lions face five-time champions Brazil at MetLife Stadium in one of the most anticipated group stage clashes. Morocco are looking to build on their historic 2022 semi-final run.', nation:'🇲🇦 Morocco', breaking:false},
-    {tag:'africa', time:'1 hour ago', headline:'Senegal Squad Named — Mané Leads Attack Against France', body:'Senegal boss Aliou Cissé has named his final 26-man squad. Sadio Mané will captain the Lions of Teranga as they prepare to face world champions France in Group I.', nation:'🇸🇳 Senegal', breaking:false},
-    {tag:'africa', time:'2 hours ago', headline:'Algeria vs Argentina — Group J Opener Set to Thrill', body:'Algeria face Lionel Messi and defending champions Argentina in Kansas City. The Desert Foxes are determined to cause an upset in what promises to be the tie of the group stage.', nation:'🇩🇿 Algeria', breaking:false},
-    {tag:'result', time:'3 hours ago', headline:'Mexico vs South Africa — Opening Match Preview', body:'The tournament kicks off with Mexico hosting South Africa at Estadio Azteca in Mexico City. El Tri look to impress on home soil while Bafana Bafana seek a historic upset.', nation:'🇿🇦 South Africa', breaking:false},
-    {tag:'general', time:'4 hours ago', headline:'FIFA Confirms Record $1 Billion Prize Money for WC2026', body:'FIFA has confirmed the total prize pot for the 2026 World Cup will be $1 billion — a record for any sporting event. The winning nation will take home $100 million.', nation:'', breaking:false},
-    {tag:'africa', time:'5 hours ago', headline:'Ghana Return to World Cup After Missing 2022', body:'The Black Stars are back at the World Cup after missing out in 2022. Ghana face England and Croatia in what promises to be a competitive Group L.', nation:'🇬🇭 Ghana', breaking:false},
-    {tag:'general', time:'6 hours ago', headline:'48-Team Format Creates Historic Group Stage', body:'For the first time in World Cup history, 48 nations compete across 12 groups of four teams. Three teams qualify from each group plus the four best third-placed teams.', nation:'', breaking:false},
-    {tag:'africa', time:'8 hours ago', headline:'Egypt Eye Progress from Tough Group G', body:'The Pharaohs face Belgium, New Zealand and Iran in Group G. Mohamed Salah will be the key man as Egypt look to advance past the group stage for the first time since 1990.', nation:'🇪🇬 Egypt', breaking:false},
-  ];
-}
-
-// ============================================================
-// AUTO REFRESH EVERY 5 MINUTES
-// ============================================================
-loadUpdates();
-setInterval(loadUpdates, 5 * 60 * 1000);
+// Init
+loadNews('latest', document.querySelector('.topic-btn'));
+updateTime();
+setInterval(updateTime, 1000);
 </script>
 </body>
 </html>

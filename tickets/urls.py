@@ -13,5 +13,5 @@ urlpatterns = [
     path('payment/success/',                    views.payment_success, name='payment_success'),
     path('updates/',                            views.updates,         name='updates'),
     path('api/news/',                           views.api_news_feed,   name='api_news_feed'),
+    path('api/match-previews/',                 views.api_match_previews, name='api_match_previews'),
 ]
-
