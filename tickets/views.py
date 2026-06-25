@@ -291,27 +291,27 @@ MATCH_PREVIEWS = {
     'played': [
         {
             "home": "Morocco", "away": "Haiti", "score": "4-2", "group": "Group C",
-            "venue": "Atlanta Stadium", "date": "June 24, 2026",
+            "venue": "Mercedes-Benz Stadium, Atlanta", "date": "June 24, 2026",
             "youtube_id": "37c0v5fkCLI",
-            "summary": "Morocco came from behind twice before goals from Hakimi, Saibari, Rahimi and Yassine secured a thrilling win and an unbeaten path to the Round of 32.",
+            "summary": "Morocco came from behind twice before goals from Hakimi, Saibari, Rahimi and Yassine secured a thrilling win and an unbeaten path to the Round of 32 as group runners-up behind Brazil.",
         },
         {
             "home": "South Africa", "away": "Korea Republic", "score": "1-0", "group": "Group A",
             "venue": "Estadio BBVA, Monterrey", "date": "June 24, 2026",
-            "youtube_id": "YIngWQ5JFpg",
-            "summary": "Thapelo Maseko's second-half strike sent Bafana Bafana into the World Cup knockout stage for the first time in their history.",
+            "youtube_id": "vhi0Vht-Vrk",
+            "summary": "Thapelo Maseko's second-half strike sent Bafana Bafana into the World Cup knockout stage for the first time in their history, finishing second in Group A behind Mexico.",
         },
         {
             "home": "Brazil", "away": "Scotland", "score": "3-0", "group": "Group C",
             "venue": "Hard Rock Stadium, Miami", "date": "June 24, 2026",
-            "youtube_id": "XNCjlRQvKfI",
-            "summary": "A Vinicius Junior brace headlined a dominant Brazil display that secured top spot in Group C alongside Morocco.",
+            "youtube_id": "fWN13Oe4kA0",
+            "summary": "A dominant Brazil display led by Vinicius Junior secured top spot in Group C, leaving Scotland's qualification hopes resting on the third-place team rankings.",
         },
         {
-            "home": "Mexico", "away": "Czechia", "score": "3-0", "group": "Group A",
-            "venue": "Estadio Azteca, Mexico City", "date": "June 24, 2026",
-            "youtube_id": "I8U0u-toRvY",
-            "summary": "Co-hosts Mexico finished the group stage unbeaten with a commanding win in front of their home crowd at the Azteca.",
+            "home": "Czechia", "away": "Mexico", "score": "0-3", "group": "Group A",
+            "venue": "Estadio Azteca, Mexico City", "date": "June 25, 2026",
+            "youtube_id": "uSl2YZr0bcw",
+            "summary": "Co-hosts Mexico finished the group stage unbeaten and top of Group A, with goals from Mateo Chavez, Julian Quinones and Alvaro Fidalgo sealing a commanding win at the Azteca.",
         },
     ],
     'upcoming': [

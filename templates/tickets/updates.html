@@ -381,7 +381,7 @@ function renderPlayed(matches){
     return `
       <div class="video-card">
         <div class="video-embed">
-          <iframe src="https://www.youtube.com/embed/${m.youtube_id}" title="${m.home} vs ${m.away} highlights" allowfullscreen loading="lazy"></iframe>
+          <iframe src="https://www.youtube.com/embed/${m.youtube_id}?rel=0&modestbranding=1" title="${m.home} vs ${m.away} highlights" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
         </div>
         <div class="video-body">
           <div class="video-score-row">
@@ -395,6 +395,7 @@ function renderPlayed(matches){
             <span><i class="fas fa-calendar"></i> ${m.date}</span>
           </div>
           <div class="video-summary">${m.summary}</div>
+          <a href="https://www.youtube.com/watch?v=${m.youtube_id}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;margin-top:.85rem;font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--gold);text-transform:uppercase"><i class="fab fa-youtube"></i> Watch on YouTube</a>
         </div>
       </div>`;
   }).join('');
