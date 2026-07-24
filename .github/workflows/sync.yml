@@ -1,0 +1,42 @@
+name: Sync Football Data & Buzz
+
+on:
+  schedule:
+    # Runs every 30 minutes. GitHub's schedule times are approximate,
+    # not exact-to-the-minute, especially on the free tier — that's fine
+    # for this use case.
+    - cron: '*/30 * * * *'
+  workflow_dispatch:  # lets you also trigger it manually from the Actions tab
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run football data sync
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          FOOTBALL_DATA_API_TOKEN: ${{ secrets.FOOTBALL_DATA_API_TOKEN }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          DEBUG: "False"
+          ALLOWED_HOSTS: "localhost,127.0.0.1"
+        run: python manage.py fetch_football_data
+
+      - name: Run buzz news sync
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          FOOTBALL_DATA_API_TOKEN: ${{ secrets.FOOTBALL_DATA_API_TOKEN }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          DEBUG: "False"
+          ALLOWED_HOSTS: "localhost,127.0.0.1"
+        run: python manage.py fetch_buzz_news
