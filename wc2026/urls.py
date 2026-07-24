@@ -13,6 +13,7 @@ admin.site.index_title = 'Ticketing Management'
 urlpatterns = [
     path(ADMIN_URL, admin.site.urls),
     path('', include('tickets.urls')),
+    path("api/football/", include("football.urls")),
 ]
 
 if settings.DEBUG:

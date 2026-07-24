@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Major Leagues — Fixtures Board</title>
+<style>
+  :root{
+    --pitch:      #10241c;
+    --pitch-line: #1e3f30;
+    --board-black:#0b0c0a;
+    --chalk:      #f1faee;
+    --chalk-dim:  #a9b8ad;
+    --amber:      #ffb627;
+    --amber-dim:  #6b4c14;
+    --danger:     #e35d4f;
+    --ok:         #4caf7d;
+    --font-display: 'Oswald', 'Arial Narrow', sans-serif;
+    --font-mono:    'Space Mono', 'Courier New', monospace;
+    --font-body:    'Inter', -apple-system, sans-serif;
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0;
+    background: radial-gradient(ellipse at top, var(--pitch-line) 0%, var(--pitch) 55%), var(--pitch);
+    font-family:var(--font-body);
+    color:var(--chalk);
+    min-height:100vh;
+    padding:32px 16px 64px;
+  }
+  .wrap{ max-width:960px; margin:0 auto; }
+
+  /* ---------- header ---------- */
+  .board-header{
+    background:var(--board-black);
+    border:3px solid #000;
+    border-radius:6px;
+    padding:20px 24px;
+    box-shadow:0 12px 30px rgba(0,0,0,.45), inset 0 0 0 1px #1a1a17;
+    display:flex; justify-content:space-between; align-items:flex-end;
+    flex-wrap:wrap; gap:16px; margin-bottom:6px;
+  }
+  .league-name{
+    font-family:var(--font-display); font-weight:600; letter-spacing:.08em;
+    text-transform:uppercase; font-size:clamp(20px,4vw,30px); color:var(--chalk);
+  }
+  .league-name span{ color:var(--amber); }
+  .matchday-tag{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:.15em;
+    color:var(--chalk-dim); text-transform:uppercase; margin-top:4px;
+  }
+  .countdown{ text-align:right; }
+  .countdown-num{
+    font-family:var(--font-mono); font-size:34px; color:var(--amber); line-height:1;
+    font-weight:700; font-variant-numeric: tabular-nums;
+  }
+  .countdown-label{ font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--chalk-dim); }
+
+  .rail{
+    height:8px;
+    background:repeating-linear-gradient(90deg, var(--amber-dim) 0 14px, transparent 14px 28px);
+    opacity:.5; border-radius:2px; margin-bottom:20px;
+  }
+
+  /* ---------- league switcher ---------- */
+  .league-tabs{
+    display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;
+  }
+  .league-tab{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+    padding:9px 16px; border-radius:4px; border:1px solid var(--pitch-line);
+    background:var(--board-black); color:var(--chalk-dim); cursor:pointer;
+    transition:all .15s; display:flex; align-items:center; gap:8px;
+  }
+  .league-tab img{ width:16px; height:16px; object-fit:contain; }
+  .league-tab:hover{ color:var(--chalk); border-color:var(--amber-dim); }
+  .league-tab.on{ background:var(--amber); color:var(--board-black); border-color:var(--amber); font-weight:700; }
+
+  /* ---------- view toggle (fixtures / table) ---------- */
+  .view-toggle{ display:flex; gap:6px; margin-bottom:16px; }
+  .view-btn{
+    font-family:var(--font-mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase;
+    padding:6px 14px; border-radius:999px; border:1px solid var(--pitch-line);
+    background:none; color:var(--chalk-dim); cursor:pointer; transition:all .15s;
+  }
+  .view-btn:hover{ color:var(--chalk); }
+  .view-btn.on{ background:var(--amber-dim); color:var(--amber); border-color:var(--amber-dim); }
+
+  .status-strip{ display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap; }
+  .status-pill{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+    padding:6px 12px; border-radius:999px; border:1px solid var(--pitch-line);
+    color:var(--chalk-dim); background:rgba(255,255,255,.02);
+  }
+  .status-pill b{ color:var(--chalk); }
+  .status-pill.live{ border-color:var(--danger); color:var(--danger); }
+  .status-pill.live b{ color:var(--danger); }
+
+  /* ---------- spotlight card ---------- */
+  .spotlight{
+    position:relative; overflow:hidden;
+    background:
+      radial-gradient(circle at 15% -10%, rgba(255,182,39,.16), transparent 55%),
+      radial-gradient(circle at 85% -10%, rgba(255,182,39,.16), transparent 55%),
+      var(--board-black);
+    border:1px solid var(--amber-dim); border-radius:6px;
+    padding:22px 24px; margin-bottom:18px;
+    box-shadow:0 12px 30px rgba(0,0,0,.4);
+  }
+  .spotlight::before{
+    content:''; position:absolute; inset:0;
+    background-image: repeating-linear-gradient(115deg, rgba(255,255,255,.025) 0 2px, transparent 2px 26px);
+    pointer-events:none;
+  }
+  .spotlight-eyebrow{
+    font-family:var(--font-mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--amber); display:flex; align-items:center; gap:8px; margin-bottom:14px;
+  }
+  .spotlight-eyebrow .dot{ width:6px; height:6px; border-radius:50%; background:var(--danger); }
+  .spotlight-eyebrow.upcoming .dot{ background:var(--amber); animation:pulse 1.6s ease-in-out infinite; }
+  @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.35; } }
+  .spotlight-body{
+    display:flex; align-items:center; justify-content:center; gap:28px; flex-wrap:wrap; position:relative;
+  }
+  .spotlight-team{ display:flex; flex-direction:column; align-items:center; gap:10px; flex:1; min-width:110px; max-width:220px; }
+  .spotlight-team img{ width:64px; height:64px; object-fit:contain; filter:drop-shadow(0 4px 10px rgba(0,0,0,.55)); }
+  .spotlight-team-name{ font-family:var(--font-display); font-size:17px; letter-spacing:.02em; text-align:center; line-height:1.15; }
+  .spotlight-center{ text-align:center; min-width:100px; }
+  .spotlight-score{ font-family:var(--font-mono); font-size:36px; font-weight:700; color:var(--chalk); letter-spacing:.05em; }
+  .spotlight-vs{ font-family:var(--font-display); font-size:22px; color:var(--amber-dim); }
+  .spotlight-sub{ font-family:var(--font-mono); font-size:10px; color:var(--chalk-dim); letter-spacing:.1em; text-transform:uppercase; margin-top:6px; }
+  .spotlight-meta{
+    display:flex; justify-content:center; gap:16px; flex-wrap:wrap; margin-top:16px;
+    font-family:var(--font-mono); font-size:10px; letter-spacing:.08em; color:var(--chalk-dim); text-transform:uppercase;
+  }
+
+  @media (max-width:520px){
+    .spotlight{ padding:18px 16px; }
+    .spotlight-body{ gap:14px; }
+    .spotlight-team{ min-width:80px; }
+    .spotlight-team img{ width:44px; height:44px; }
+    .spotlight-team-name{ font-size:14px; }
+    .spotlight-score{ font-size:28px; }
+    .spotlight-eyebrow{ flex-wrap:wrap; }
+  }
+
+  /* ---------- standings zone accents ---------- */
+  table.standings tr.zone-title td.pos{ box-shadow: inset 3px 0 0 var(--ok); }
+  table.standings tr.zone-relegation td.pos{ box-shadow: inset 3px 0 0 var(--danger); }
+  .zone-legend{ display:flex; gap:16px; flex-wrap:wrap; margin-top:10px; font-family:var(--font-mono); font-size:9.5px; color:var(--chalk-dim); letter-spacing:.06em; text-transform:uppercase; }
+  .zone-legend span{ display:flex; align-items:center; gap:6px; }
+  .zone-legend i{ width:8px; height:8px; border-radius:2px; display:inline-block; }
+  .zone-legend .ok-dot{ background:var(--ok); }
+  .zone-legend .danger-dot{ background:var(--danger); }
+
+  /* ---------- fixture rows ---------- */
+  .board{
+    background:var(--board-black); border-radius:6px; border:3px solid #000;
+    box-shadow:0 12px 30px rgba(0,0,0,.45), inset 0 0 0 1px #1a1a17; overflow:hidden;
+  }
+  .row{
+    display:grid; grid-template-columns: 64px 1fr 108px 1fr 96px;
+    align-items:center; padding:14px 18px; border-bottom:1px solid #1c1d19; gap:10px;
+    opacity:0; transform:translateY(6px); animation:flapIn .5s ease forwards;
+  }
+  .row:last-child{ border-bottom:none; }
+  .row:nth-child(1){ animation-delay:.02s; } .row:nth-child(2){ animation-delay:.08s; }
+  .row:nth-child(3){ animation-delay:.14s; } .row:nth-child(4){ animation-delay:.20s; }
+  .row:nth-child(5){ animation-delay:.26s; } .row:nth-child(6){ animation-delay:.32s; }
+  @keyframes flapIn{ from{ opacity:0; transform:translateY(6px) scaleY(.85); } to{ opacity:1; transform:translateY(0) scaleY(1); } }
+  @media (prefers-reduced-motion: reduce){ .row{ animation:none; opacity:1; transform:none; } }
+
+  .md-cell{ font-family:var(--font-mono); font-size:11px; color:var(--chalk-dim); text-align:center; border-right:1px dashed #24261f; }
+  .md-cell .n{ display:block; font-size:16px; color:var(--amber); font-weight:700; }
+  .team{ display:flex; align-items:center; gap:10px; min-width:0; }
+  .team.away{ justify-content:flex-end; text-align:right; flex-direction:row-reverse; }
+  .team img{ width:26px; height:26px; object-fit:contain; flex-shrink:0; filter:drop-shadow(0 1px 2px rgba(0,0,0,.5)); }
+  .team-name{ font-family:var(--font-display); font-weight:500; letter-spacing:.02em; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .score-slot{ font-family:var(--font-mono); text-align:center; font-weight:700; font-size:18px; letter-spacing:.05em; }
+  .score-slot.scheduled{ font-size:12px; color:var(--chalk-dim); letter-spacing:.1em; }
+  .score-slot .score-num{ color:var(--chalk); }
+  .score-slot .dash{ color:var(--chalk-dim); margin:0 4px; }
+  .meta-cell{ font-family:var(--font-mono); font-size:10px; color:var(--chalk-dim); text-align:right; letter-spacing:.05em; line-height:1.4; }
+  .meta-cell .tla{ color:var(--amber); font-weight:700; }
+  .empty-note{ padding:22px 18px; font-family:var(--font-mono); font-size:12px; color:var(--chalk-dim); text-align:center; }
+
+  /* ---------- standings table ---------- */
+  .table-wrap{ overflow-x:auto; }
+  table.standings{ width:100%; border-collapse:collapse; font-family:var(--font-mono); font-size:11.5px; }
+  table.standings th, table.standings td{ padding:9px 10px; text-align:center; border-bottom:1px solid #1c1d19; white-space:nowrap; }
+  table.standings th{ color:var(--amber); font-size:10px; letter-spacing:.08em; text-transform:uppercase; text-align:center; }
+  table.standings td.team-col, table.standings th.team-col{ text-align:left; }
+  table.standings tr:last-child td{ border-bottom:none; }
+  table.standings .pos{ color:var(--chalk-dim); width:28px; }
+  .team-cell{ display:flex; align-items:center; gap:8px; }
+  .team-cell img{ width:18px; height:18px; object-fit:contain; }
+  .team-cell span{ font-family:var(--font-display); font-size:13px; letter-spacing:.02em; }
+  td.pts{ color:var(--amber); font-weight:700; }
+
+  /* ---------- off-season buzz ---------- */
+  .buzz-section{ margin-top:36px; }
+  .buzz-header{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .buzz-header h2{
+    font-family:var(--font-display); font-weight:600; letter-spacing:.06em; text-transform:uppercase;
+    font-size:20px; color:var(--chalk); margin:0;
+  }
+  .buzz-header .amber-line{ flex:1; height:1px; background:var(--amber-dim); }
+  .buzz-topics{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+  .buzz-topic-btn{
+    font-family:var(--font-mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase;
+    padding:8px 14px; border-radius:4px; border:1px solid var(--pitch-line);
+    background:var(--board-black); color:var(--chalk-dim); cursor:pointer; transition:all .15s;
+  }
+  .buzz-topic-btn:hover{ color:var(--chalk); border-color:var(--amber-dim); }
+  .buzz-topic-btn.on{ background:var(--amber); color:var(--board-black); border-color:var(--amber); font-weight:700; }
+  .buzz-feed{ display:flex; flex-direction:column; gap:10px; }
+  .buzz-card{
+    background:var(--board-black); border:1px solid var(--pitch-line); border-left:3px solid var(--amber-dim);
+    border-radius:4px; padding:14px 18px; opacity:0; transform:translateY(6px); animation:flapIn .4s ease forwards;
+  }
+  .buzz-card.tag-controversy{ border-left-color:var(--danger); }
+  .buzz-card.tag-wc2030{ border-left-color:#5aa9e6; }
+  .buzz-tag{
+    display:inline-block; font-family:var(--font-mono); font-size:9px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--amber); margin-bottom:6px;
+  }
+  .buzz-card.tag-controversy .buzz-tag{ color:var(--danger); }
+  .buzz-card.tag-wc2030 .buzz-tag{ color:#5aa9e6; }
+  .buzz-headline{ font-family:var(--font-display); font-size:16px; font-weight:500; letter-spacing:.01em; color:var(--chalk); margin-bottom:5px; }
+  .buzz-body{ font-size:13px; color:var(--chalk-dim); line-height:1.65; }
+  .buzz-time{ font-family:var(--font-mono); font-size:9.5px; color:var(--chalk-dim); letter-spacing:.06em; text-transform:uppercase; margin-top:8px; display:block; }
+
+  /* ---------- debug ---------- */
+  .debug-toggle{
+    margin:22px auto 0; display:block; background:none; border:1px solid var(--pitch-line);
+    color:var(--chalk-dim); font-family:var(--font-mono); font-size:11px; letter-spacing:.1em;
+    text-transform:uppercase; padding:8px 16px; border-radius:4px; cursor:pointer;
+  }
+  .debug-toggle:hover{ color:var(--amber); border-color:var(--amber-dim); }
+  .debug-toggle:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible{ outline:2px solid var(--amber); outline-offset:2px; }
+  .debug-panel{ display:none; margin-top:16px; background:var(--board-black); border:1px solid var(--pitch-line); border-radius:6px; padding:16px; font-family:var(--font-mono); font-size:11px; color:var(--chalk-dim); }
+  .debug-panel.open{ display:block; }
+  .debug-panel h3{ color:var(--chalk); font-size:12px; letter-spacing:.1em; text-transform:uppercase; margin:0 0 10px; }
+  .debug-row{ display:flex; justify-content:space-between; gap:12px; padding:4px 0; border-bottom:1px dashed #24261f; }
+  .debug-row:last-of-type{ border-bottom:none; }
+  .debug-row .k{ color:var(--chalk-dim); }
+  .debug-row .v{ color:var(--chalk); text-align:right; }
+  .debug-row .v.warn{ color:var(--danger); }
+  .debug-row .v.good{ color:var(--ok); }
+  .debug-actions{ display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
+  .debug-actions input{ flex:1; min-width:220px; background:#151611; border:1px solid #24261f; color:var(--chalk); font-family:var(--font-mono); font-size:11px; padding:8px 10px; border-radius:4px; }
+  .debug-actions button{ background:var(--amber-dim); color:var(--amber); border:1px solid var(--amber-dim); font-family:var(--font-mono); font-size:11px; padding:8px 12px; border-radius:4px; cursor:pointer; text-transform:uppercase; letter-spacing:.05em; }
+  .debug-actions button:hover{ background:var(--amber); color:var(--board-black); }
+  .raw-json{ margin-top:12px; max-height:220px; overflow:auto; background:#0f100c; border:1px solid #24261f; border-radius:4px; padding:10px; white-space:pre-wrap; word-break:break-word; font-size:10.5px; color:var(--chalk-dim); }
+  .footnote{ text-align:center; margin-top:10px; color:var(--chalk-dim); font-size:11px; font-family:var(--font-mono); }
+
+  @media (max-width:640px){
+    .row{ grid-template-columns: 40px 1fr 70px 1fr; }
+    .meta-cell{ display:none; }
+    .team-name{ font-size:13px; }
+    table.standings th:nth-child(n+6), table.standings td:nth-child(n+6){ display:none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="board-header">
+    <div>
+      <div class="league-name" id="league-title">Major <span>Leagues</span></div>
+      <div class="matchday-tag" id="matchday-tag">Loading leagues…</div>
+    </div>
+    <div class="countdown">
+      <div class="countdown-num" id="countdown-num">—</div>
+      <div class="countdown-label" id="countdown-label">days to next fixture</div>
+    </div>
+  </div>
+  <div class="rail"></div>
+
+  <div class="league-tabs" id="league-tabs">
+    <span style="font-family:var(--font-mono);font-size:11px;color:var(--chalk-dim);padding:9px 0;">Loading leagues…</span>
+  </div>
+
+  <div class="view-toggle">
+    <button class="view-btn on" id="view-fixtures-btn" onclick="setView('fixtures')">Fixtures</button>
+    <button class="view-btn" id="view-table-btn" onclick="setView('table')">Table</button>
+  </div>
+
+  <div id="spotlight-container"></div>
+
+  <div class="status-strip" id="status-strip"></div>
+
+  <div id="board-container">
+    <div class="board" id="board">
+      <div class="empty-note">Reading the board…</div>
+    </div>
+  </div>
+
+  <div class="buzz-section">
+    <div class="buzz-header">
+      <h2>Off-Season Buzz</h2>
+      <div class="amber-line"></div>
+    </div>
+    <div class="buzz-topics">
+      <button class="buzz-topic-btn on" data-topic="transfers">Transfer News</button>
+      <button class="buzz-topic-btn" data-topic="preseason">Pre-Season Friendlies</button>
+      <button class="buzz-topic-btn" data-topic="wc2030">2030 World Cup Watch</button>
+      <button class="buzz-topic-btn" data-topic="aftermath">Post-WC Fallout</button>
+    </div>
+    <div class="buzz-feed" id="buzz-feed">
+      <div class="empty-note">Loading...</div>
+    </div>
+  </div>
+
+  <button class="debug-toggle" id="debug-toggle" aria-expanded="false">Show diagnostics</button>
+
+  <div class="debug-panel" id="debug-panel">
+    <h3>API diagnostics</h3>
+    <div id="debug-rows"></div>
+    <div class="debug-actions">
+      <input id="base-input" type="text" value="http://127.0.0.1:8000/api/football/" />
+      <button id="refetch-btn">Reload leagues</button>
+    </div>
+    <div class="raw-json" id="raw-json">No response yet.</div>
+  </div>
+
+  <div class="footnote">Split-flap board · switch leagues above · fixtures/table toggle per league</div>
+</div>
+
+<script>
+(function(){
+  const board = document.getElementById('board');
+  const boardContainer = document.getElementById('board-container');
+  const spotlightContainer = document.getElementById('spotlight-container');
+  const statusStrip = document.getElementById('status-strip');
+  const matchdayTag = document.getElementById('matchday-tag');
+  const leagueTitle = document.getElementById('league-title');
+  const countdownNum = document.getElementById('countdown-num');
+  const countdownLabel = document.getElementById('countdown-label');
+  const leagueTabsEl = document.getElementById('league-tabs');
+  const debugRows = document.getElementById('debug-rows');
+  const rawJson = document.getElementById('raw-json');
+  const debugPanel = document.getElementById('debug-panel');
+  const debugToggle = document.getElementById('debug-toggle');
+  const baseInput = document.getElementById('base-input');
+
+  let currentLeague = null;
+  let currentView = 'fixtures';
+  let leagues = [];
+
+  // Fallback league list — used only if /leagues/ can't be reached,
+  // so the switcher still works and you can see something render.
+  const FALLBACK_LEAGUES = [
+    {code:'PL', name:'Premier League', area_name:'England', emblem_url:''},
+    {code:'PD', name:'La Liga', area_name:'Spain', emblem_url:''},
+    {code:'BL1', name:'Bundesliga', area_name:'Germany', emblem_url:''},
+    {code:'SA', name:'Serie A', area_name:'Italy', emblem_url:''},
+    {code:'FL1', name:'Ligue 1', area_name:'France', emblem_url:''},
+  ];
+
+  debugToggle.addEventListener('click', () => {
+    const open = debugPanel.classList.toggle('open');
+    debugToggle.setAttribute('aria-expanded', open);
+    debugToggle.textContent = open ? 'Hide diagnostics' : 'Show diagnostics';
+  });
+
+  function base(){ return baseInput.value.trim().replace(/\/$/, '') + '/'; }
+
+  function logDebug(entries){
+    debugRows.innerHTML = entries.map(e =>
+      `<div class="debug-row"><span class="k">${e.k}</span><span class="v ${e.cls||''}">${e.v}</span></div>`
+    ).join('');
+  }
+
+  function setView(view){
+    currentView = view;
+    document.getElementById('view-fixtures-btn').classList.toggle('on', view==='fixtures');
+    document.getElementById('view-table-btn').classList.toggle('on', view==='table');
+    if(view === 'fixtures') loadFixtures(currentLeague);
+    else loadStandings(currentLeague);
+  }
+  window.setView = setView;
+
+  function renderLeagueTabs(){
+    leagueTabsEl.innerHTML = leagues.map(l => `
+      <button class="league-tab ${l.code===currentLeague?'on':''}" data-code="${l.code}">
+        ${l.emblem_url ? `<img src="${l.emblem_url}" alt="" onerror="this.style.display='none'">` : ''}
+        ${l.name}
+      </button>
+    `).join('');
+    leagueTabsEl.querySelectorAll('.league-tab').forEach(btn => {
+      btn.addEventListener('click', () => selectLeague(btn.dataset.code));
+    });
+  }
+
+  function selectLeague(code){
+    currentLeague = code;
+    renderLeagueTabs();
+    const l = leagues.find(x => x.code === code);
+    leagueTitle.innerHTML = `<span>${l ? l.name : code}</span>`;
+    if(currentView === 'fixtures') loadFixtures(code);
+    else loadStandings(code);
+  }
+
+  async function loadLeagues(){
+    try{
+      const res = await fetch(base() + 'leagues/');
+      const data = await res.json();
+      if(data.success && data.leagues && data.leagues.length){
+        leagues = data.leagues;
+        logDebug([{k:'Leagues loaded', v:leagues.length, cls:'good'}]);
+      } else {
+        throw new Error('No leagues in response');
+      }
+    }catch(err){
+      leagues = FALLBACK_LEAGUES;
+      logDebug([{k:'Leagues endpoint', v:'unreachable — using fallback list', cls:'warn'}, {k:'Error', v: err.message, cls:'warn'}]);
+    }
+    renderLeagueTabs();
+    selectLeague(leagues[0].code);
+  }
+
+  function fmtKickoff(iso){
+    try{
+      const d = new Date(iso);
+      const day = d.toLocaleDateString(undefined,{weekday:'short', month:'short', day:'numeric'});
+      const time = d.toLocaleTimeString(undefined,{hour:'2-digit', minute:'2-digit'});
+      return {day, time};
+    }catch(e){ return {day:'—', time:'—'}; }
+  }
+
+  function renderStatusStrip(data){
+    const counts = [
+      {label:'Live', n:(data.live||[]).length, cls:'live'},
+      {label:'Finished', n:(data.finished||[]).length, cls:''},
+      {label:'Upcoming', n:(data.upcoming||[]).length, cls:''}
+    ];
+    statusStrip.innerHTML = counts.map(c =>
+      `<span class="status-pill ${c.n>0 && c.cls ? c.cls : ''}">${c.label} <b>${c.n}</b></span>`
+    ).join('');
+  }
+
+  function renderRow(match){
+    const home = match.home_team || {};
+    const away = match.away_team || {};
+    const {day, time} = fmtKickoff(match.utc_date);
+    const isLive = match.status === 'IN_PLAY' || match.status === 'LIVE' || match.status === 'PAUSED';
+    const isFinished = match.status === 'FINISHED';
+    const hasScore = match.home_score !== null && match.home_score !== undefined;
+
+    let scoreHtml;
+    if (hasScore && (isFinished || isLive)) {
+      scoreHtml = `<span class="score-num">${match.home_score}</span><span class="dash">–</span><span class="score-num">${match.away_score}</span>`;
+    } else {
+      scoreHtml = `${day}<br>${time}`;
+    }
+
+    return `
+      <div class="row">
+        <div class="md-cell">MD<span class="n">${match.matchday ?? '–'}</span></div>
+        <div class="team home">
+          <img src="${home.crest||''}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
+          <span class="team-name">${home.short_name || home.name || 'TBD'}</span>
+        </div>
+        <div class="score-slot ${hasScore && (isFinished||isLive) ? '' : 'scheduled'}">${scoreHtml}</div>
+        <div class="team away">
+          <img src="${away.crest||''}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
+          <span class="team-name">${away.short_name || away.name || 'TBD'}</span>
+        </div>
+        <div class="meta-cell"><span class="tla">${match.status||''}</span><br>${match.venue || '&nbsp;'}</div>
+      </div>
+    `;
+  }
+
+  function renderSpotlight(data){
+    const live = data.live || [];
+    const finished = data.finished || [];
+    const upcoming = data.upcoming || [];
+
+    let match, mode;
+    if(live.length){ match = live[0]; mode = 'live'; }
+    else if(finished.length){ match = finished[0]; mode = 'finished'; } // finished_qs is ordered -utc_date, so [0] is most recent
+    else if(upcoming.length){ match = upcoming[0]; mode = 'upcoming'; }
+    else { spotlightContainer.innerHTML = ''; return; }
+
+    const home = match.home_team || {};
+    const away = match.away_team || {};
+    const {day, time} = fmtKickoff(match.utc_date);
+
+    let eyebrowText, eyebrowClass, centerHtml, subText;
+    if(mode === 'live'){
+      eyebrowText = '🔴 Live Now'; eyebrowClass = '';
+      centerHtml = `<div class="spotlight-score">${match.home_score ?? 0}<span style="color:var(--chalk-dim);margin:0 6px;">–</span>${match.away_score ?? 0}</div>`;
+      subText = 'In play';
+    } else if(mode === 'finished'){
+      eyebrowText = '⚽ Last Result'; eyebrowClass = '';
+      centerHtml = `<div class="spotlight-score">${match.home_score ?? 0}<span style="color:var(--chalk-dim);margin:0 6px;">–</span>${match.away_score ?? 0}</div>`;
+      subText = 'Full time';
+    } else {
+      eyebrowText = '⏱ Next Up'; eyebrowClass = 'upcoming';
+      centerHtml = `<div class="spotlight-vs">VS</div>`;
+      subText = (data.days_until_next != null) ? `Kicks off in ${data.days_until_next} day${data.days_until_next===1?'':'s'}` : 'Kickoff time TBC';
+    }
+
+    spotlightContainer.innerHTML = `
+      <div class="spotlight">
+        <div class="spotlight-eyebrow ${eyebrowClass}"><span class="dot"></span>${eyebrowText}</div>
+        <div class="spotlight-body">
+          <div class="spotlight-team">
+            <img src="${home.crest||''}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
+            <div class="spotlight-team-name">${home.short_name || home.name || 'TBD'}</div>
+          </div>
+          <div class="spotlight-center">
+            ${centerHtml}
+            <div class="spotlight-sub">${subText}</div>
+          </div>
+          <div class="spotlight-team">
+            <img src="${away.crest||''}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
+            <div class="spotlight-team-name">${away.short_name || away.name || 'TBD'}</div>
+          </div>
+        </div>
+        <div class="spotlight-meta">
+          <span><i class="mono">MD ${match.matchday ?? '–'}</i></span>
+          <span>${day} · ${time}</span>
+          ${match.venue ? `<span>${match.venue}</span>` : ''}
+        </div>
+      </div>
+    `;
+  }
+
+  function renderFixtures(data){
+    if(!data || data.success !== true){
+      spotlightContainer.innerHTML = '';
+      board.innerHTML = `<div class="empty-note">Response received but "success" was not true — check diagnostics for the raw JSON.</div>`;
+      return;
+    }
+    matchdayTag.textContent = `${data.league?.name || currentLeague} · live-scores feed`;
+    countdownLabel.textContent = 'days to next fixture';
+    countdownNum.textContent = (data.days_until_next ?? '—');
+    renderStatusStrip(data);
+    renderSpotlight(data);
+
+    const all = [...(data.live||[]), ...(data.finished||[]), ...(data.upcoming||[])];
+    if(all.length === 0){
+      board.innerHTML = `<div class="empty-note">No fixtures in live, finished, or upcoming right now for this league.</div>`;
+      return;
+    }
+    board.innerHTML = all.map(renderRow).join('');
+  }
+
+  function renderStandingsTable(data){
+    spotlightContainer.innerHTML = '';
+    if(!data || data.success !== true || !data.table){
+      board.innerHTML = `<div class="empty-note">Couldn't load the table — check diagnostics for the raw JSON.</div>`;
+      return;
+    }
+    matchdayTag.textContent = `${data.league?.name || currentLeague} · league table`;
+    countdownLabel.textContent = 'teams';
+    countdownNum.textContent = data.table.length;
+    statusStrip.innerHTML = '';
+
+    const total = data.table.length;
+    const rows = data.table.map(r => {
+      // Standard European convention: top 4 = continental qualification,
+      // bottom 3 = relegation zone. Adjust the thresholds if a league's
+      // format differs, since this isn't returned by the API itself.
+      let zoneClass = '';
+      if(r.position <= 4) zoneClass = 'zone-title';
+      else if(total >= 3 && r.position > total - 3) zoneClass = 'zone-relegation';
+
+      return `
+      <tr class="${zoneClass}">
+        <td class="pos">${r.position}</td>
+        <td class="team-col">
+          <div class="team-cell">
+            ${r.team.crest ? `<img src="${r.team.crest}" alt="" onerror="this.style.display='none'">` : ''}
+            <span>${r.team.short_name || r.team.name}</span>
+          </div>
+        </td>
+        <td>${r.played}</td>
+        <td>${r.won}</td>
+        <td>${r.draw}</td>
+        <td>${r.lost}</td>
+        <td>${r.goals_for}</td>
+        <td>${r.goals_against}</td>
+        <td>${r.goal_difference}</td>
+        <td class="pts">${r.points}</td>
+      </tr>
+    `;
+    }).join('');
+
+    board.innerHTML = `
+      <div class="table-wrap">
+        <table class="standings">
+          <thead><tr>
+            <th>#</th><th class="team-col">Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>Pts</th>
+          </tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+      <div class="zone-legend" style="padding:12px 18px 4px;">
+        <span><i class="ok-dot"></i> Continental qualification (top 4)</span>
+        <span><i class="danger-dot"></i> Relegation zone (bottom 3)</span>
+      </div>
+    `;
+  }
+
+  async function loadFixtures(code){
+    board.innerHTML = `<div class="empty-note">Reading the board…</div>`;
+    const url = `${base()}live-scores/?league=${encodeURIComponent(code)}`;
+    const started = performance.now();
+    try{
+      const res = await fetch(url);
+      const elapsed = Math.round(performance.now() - started);
+      const text = await res.text();
+      let body;
+      try{ body = JSON.parse(text); } catch(e){
+        logDebug([{k:'Request', v:url},{k:'HTTP status', v:res.status, cls: res.ok?'good':'warn'},{k:'JSON parse', v:'FAILED', cls:'warn'}]);
+        rawJson.textContent = text.slice(0,2000);
+        board.innerHTML = `<div class="empty-note">Response wasn't valid JSON — see diagnostics.</div>`;
+        spotlightContainer.innerHTML = '';
+        return;
+      }
+      logDebug([
+        {k:'Request', v:url},
+        {k:'HTTP status', v:res.status, cls: res.ok?'good':'warn'},
+        {k:'Response time', v: elapsed+'ms'},
+        {k:'success flag', v: String(body.success), cls: body.success? 'good':'warn'},
+        {k:'live / finished / upcoming', v: `${(body.live||[]).length} / ${(body.finished||[]).length} / ${(body.upcoming||[]).length}`},
+      ]);
+      rawJson.textContent = JSON.stringify(body, null, 2);
+      renderFixtures(body);
+    }catch(err){
+      logDebug([{k:'Request', v:url},{k:'Fetch error', v: err.message, cls:'warn'},{k:'Likely cause', v:'CORS block or server not running', cls:'warn'}]);
+      rawJson.textContent = 'Fetch threw before a response arrived:\n' + err.stack;
+      board.innerHTML = `<div class="empty-note">Couldn't reach the live-scores endpoint — see diagnostics.</div>`;
+      spotlightContainer.innerHTML = '';
+    }
+  }
+
+  async function loadStandings(code){
+    board.innerHTML = `<div class="empty-note">Loading table…</div>`;
+    const url = `${base()}standings/?league=${encodeURIComponent(code)}`;
+    const started = performance.now();
+    try{
+      const res = await fetch(url);
+      const elapsed = Math.round(performance.now() - started);
+      const body = await res.json();
+      logDebug([
+        {k:'Request', v:url},
+        {k:'HTTP status', v:res.status, cls: res.ok?'good':'warn'},
+        {k:'Response time', v: elapsed+'ms'},
+        {k:'success flag', v: String(body.success), cls: body.success? 'good':'warn'},
+        {k:'rows', v: (body.table||[]).length},
+      ]);
+      rawJson.textContent = JSON.stringify(body, null, 2);
+      renderStandingsTable(body);
+    }catch(err){
+      logDebug([{k:'Request', v:url},{k:'Fetch error', v: err.message, cls:'warn'}]);
+      board.innerHTML = `<div class="empty-note">Couldn't reach the standings endpoint — see diagnostics.</div>`;
+    }
+  }
+
+  document.getElementById('refetch-btn').addEventListener('click', loadLeagues);
+
+  // ---------------- Off-Season Buzz ----------------
+  const buzzFeed = document.getElementById('buzz-feed');
+  const TAG_LABELS = { transfer:'\ud83d\udd04 Transfer', rumour:'\ud83d\udc40 Rumour', friendly:'\u26bd Friendly', wc2030:'\ud83c\udfc6 2030 Watch', controversy:'\u26a0\ufe0f Fallout', general:'\ud83d\udcf0 News' };
+
+  async function loadBuzz(topic){
+    buzzFeed.innerHTML = `<div class="empty-note">Loading ${topic}...</div>`;
+    try{
+      const res = await fetch(`${base()}buzz/?topic=${encodeURIComponent(topic)}`);
+      const data = await res.json();
+      if(!data.success || !data.articles || !data.articles.length){
+        buzzFeed.innerHTML = `<div class="empty-note">Nothing here yet.</div>`;
+        return;
+      }
+      const liveTag = data.live
+        ? `<span style="color:var(--ok);">\u25cf live feed</span>`
+        : `<span style="color:var(--chalk-dim);">\u25cb curated fallback \u2014 sync hasn't run for this topic yet</span>`;
+      buzzFeed.innerHTML = `
+        <div style="font-family:var(--font-mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;">${liveTag}</div>
+      ` + data.articles.map((a, i) => `
+        <div class="buzz-card tag-${(a.tag||'general').toLowerCase()}" style="animation-delay:${i*0.05}s">
+          <span class="buzz-tag">${TAG_LABELS[a.tag] || '\ud83d\udcf0 ' + a.tag}</span>
+          <div class="buzz-headline">${a.headline}</div>
+          <div class="buzz-body">${a.body}</div>
+          <span class="buzz-time">${a.time || ''}${a.source ? ' · ' + a.source : ''}${a.url ? ` · <a href="${a.url}" target="_blank" rel="noopener" style="color:var(--amber);">Read more</a>` : ''}</span>
+        </div>
+      `).join('');
+    }catch(err){
+      buzzFeed.innerHTML = `<div class="empty-note">Couldn't load this section \u2014 check the endpoint is reachable at ${base()}buzz/</div>`;
+    }
+  }
+
+  document.querySelectorAll('.buzz-topic-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.buzz-topic-btn').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      loadBuzz(btn.dataset.topic);
+    });
+  });
+  loadBuzz('transfers');
+
+  loadLeagues();
+})();
+</script>
+</body>
+</html>
