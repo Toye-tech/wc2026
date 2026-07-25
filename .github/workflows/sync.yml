@@ -2,11 +2,8 @@ name: Sync Football Data & Buzz
 
 on:
   schedule:
-    # Runs every 30 minutes. GitHub's schedule times are approximate,
-    # not exact-to-the-minute, especially on the free tier — that's fine
-    # for this use case.
     - cron: '*/30 * * * *'
-  workflow_dispatch:  # lets you also trigger it manually from the Actions tab
+  workflow_dispatch:
 
 jobs:
   sync:
@@ -22,6 +19,25 @@ jobs:
 
       - name: Install dependencies
         run: pip install -r requirements.txt
+
+      - name: Debug — check DATABASE_URL is present
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "DATABASE_URL is NOT set or empty"
+          else
+            echo "DATABASE_URL is set, length: ${#DATABASE_URL} characters"
+            echo "Starts with: ${DATABASE_URL:0:15}..."
+          fi
+
+      - name: Apply migrations
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          DEBUG: "False"
+          ALLOWED_HOSTS: "localhost,127.0.0.1"
+        run: python manage.py migrate --noinput
 
       - name: Run football data sync
         env:
