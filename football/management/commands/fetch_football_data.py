@@ -12,6 +12,7 @@ Run on a schedule (every 10-15 minutes is plenty given delayed-score free tier):
 
 from decouple import config
 import time
+import socket
 import urllib.request
 import urllib.error
 import json
@@ -21,6 +22,13 @@ from django.core.management.base import BaseCommand
 from django.utils.dateparse import parse_datetime
 
 from football.models import League, Team, Fixture, Standing
+
+# Hard backstop: no single socket operation (including DNS resolution,
+# which urllib's per-request timeout parameter doesn't always cover) can
+# hang longer than this. Without this, a connection silently blocked or
+# throttled by the remote API's network layer can hang indefinitely even
+# with a per-call timeout set on urlopen() itself.
+socket.setdefaulttimeout(20)
 
 API_BASE = "https://api.football-data.org/v4"
 
@@ -32,7 +40,6 @@ COMPETITIONS = {
     "SA":  ("Serie A", "Italy"),
     "FL1": ("Ligue 1", "France"),
 }
-
 
 # Free tier: 10 requests/minute. Sleep between every call to stay well under that.
 SLEEP_SECONDS = 7
@@ -164,40 +171,3 @@ class Command(BaseCommand):
                     "goal_difference": row.get("goalDifference", 0),
                 },
             )
-TOPIC_TO_TAG = {
-    "transfers": "transfer",
-    "preseason": "friendly",
-    "wc2030": "wc2030",
-    "aftermath": "controversy",
-}
-
-
-def api_buzz_feed(request):
-    """Returns off-season content to keep visitors engaged before
-    leagues kick off: transfer news, pre-season friendlies, 2030
-    World Cup developments, and post-WC2026 fallout.
-
-    Reads live, auto-fetched articles from BuzzArticle first. Falls
-    back to the static BUZZ_SEED content only if nothing's been
-    synced yet for that topic."""
-    topic = request.GET.get("topic", "transfers")
-    limit = int(request.GET.get("limit", 12))
-
-    qs = BuzzArticle.objects.filter(topic=topic).order_by("-published_at")[:limit]
-
-    if qs.exists():
-        articles = [{
-            "headline": a.headline,
-            "body": a.body,
-            "tag": TOPIC_TO_TAG.get(a.topic, "general"),
-            "time": a.published_at.strftime("%b %d, %Y"),
-            "source": a.source,
-            "url": a.url,
-        } for a in qs]
-        return JsonResponse({"success": True, "articles": articles, "live": True})
-
-    return JsonResponse({
-        "success": True,
-        "articles": BUZZ_SEED.get(topic, BUZZ_SEED["transfers"]),
-        "live": False,
-    })
