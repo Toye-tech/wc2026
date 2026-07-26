@@ -2,12 +2,16 @@ name: Sync Football Data & Buzz
 
 on:
   schedule:
+    # Runs every 30 minutes. GitHub's schedule times are approximate,
+    # not exact-to-the-minute, especially on the free tier — that's fine
+    # for this use case.
     - cron: '*/30 * * * *'
-  workflow_dispatch:
+  workflow_dispatch:  # lets you also trigger it manually from the Actions tab
 
 jobs:
   sync:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
