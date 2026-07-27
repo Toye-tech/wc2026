@@ -12,25 +12,27 @@ Run on a schedule (every 10-15 minutes is plenty given delayed-score free tier):
 
 from decouple import config
 import time
-import socket
 import urllib.request
 import urllib.error
 import json
 from datetime import datetime, timezone as dt_timezone
+from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeoutError
 
 from django.core.management.base import BaseCommand
 from django.utils.dateparse import parse_datetime
 
 from football.models import League, Team, Fixture, Standing
 
-# Hard backstop: no single socket operation (including DNS resolution,
-# which urllib's per-request timeout parameter doesn't always cover) can
-# hang longer than this. Without this, a connection silently blocked or
-# throttled by the remote API's network layer can hang indefinitely even
-# with a per-call timeout set on urlopen() itself.
-socket.setdefaulttimeout(20)
-
 API_BASE = "https://api.football-data.org/v4"
+
+# Hard ceiling (seconds) on any single call to football-data.org. Enforced
+# via a worker thread rather than urlopen's own timeout= parameter, because
+# that parameter does NOT cover DNS resolution — DNS lookups can hang
+# indefinitely on networks that silently block/throttle a host, regardless
+# of any timeout passed to urlopen(). A thread-based deadline catches that
+# case too, since it bounds wall-clock time no matter where the call is
+# actually stuck.
+REQUEST_TIMEOUT = 20
 
 # code -> (Display Name, Area)
 COMPETITIONS = {
@@ -76,18 +78,35 @@ class Command(BaseCommand):
 
     # ------------------------------------------------------------------
     def _get(self, url, headers):
-        req = urllib.request.Request(url, headers=headers)
-        try:
-            with urllib.request.urlopen(req, timeout=15) as response:
+        def _do_request():
+            req = urllib.request.Request(url, headers=headers)
+            with urllib.request.urlopen(req, timeout=REQUEST_TIMEOUT) as response:
                 return json.loads(response.read())
+
+        started = time.time()
+        try:
+            with ThreadPoolExecutor(max_workers=1) as executor:
+                future = executor.submit(_do_request)
+                result = future.result(timeout=REQUEST_TIMEOUT)
+                elapsed = round(time.time() - started, 1)
+                self.stdout.write(f"  -> OK in {elapsed}s: {url}")
+                return result
+        except FuturesTimeoutError:
+            self.stderr.write(self.style.WARNING(
+                f"  -> TIMED OUT after {REQUEST_TIMEOUT}s calling {url} "
+                f"(possibly a DNS or connection block from this network) — skipping."
+            ))
+            return None
         except urllib.error.HTTPError as e:
+            elapsed = round(time.time() - started, 1)
             body = e.read().decode(errors="ignore")
             self.stderr.write(self.style.WARNING(
-                f"HTTP {e.code} calling {url}: {body[:300]}"
+                f"  -> HTTP {e.code} after {elapsed}s calling {url}: {body[:300]}"
             ))
             return None
         except Exception as e:
-            self.stderr.write(self.style.WARNING(f"Error calling {url}: {e}"))
+            elapsed = round(time.time() - started, 1)
+            self.stderr.write(self.style.WARNING(f"  -> FAILED after {elapsed}s calling {url}: {e}"))
             return None
 
     # ------------------------------------------------------------------
