@@ -130,7 +130,10 @@ class Command(BaseCommand):
         if not data or "matches" not in data:
             return
 
-        for m in data["matches"]:
+        total = len(data["matches"])
+        self.stdout.write(f"  -> Got {total} matches from API, writing to DB...")
+
+        for i, m in enumerate(data["matches"], start=1):
             home_team = self._upsert_team(m.get("homeTeam"))
             away_team = self._upsert_team(m.get("awayTeam"))
             if not home_team or not away_team:
@@ -153,6 +156,8 @@ class Command(BaseCommand):
                     "venue": m.get("venue") or "",
                 },
             )
+            if i % 20 == 0 or i == total:
+                self.stdout.write(f"  -> Wrote {i}/{total} fixtures for {code}")
 
     # ------------------------------------------------------------------
     def _fetch_standings(self, league, code, headers):
