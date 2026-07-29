@@ -110,19 +110,33 @@ class Command(BaseCommand):
             return None
 
     # ------------------------------------------------------------------
-    def _upsert_team(self, team_data):
-        if not team_data or not team_data.get("id"):
-            return None
-        team, _ = Team.objects.update_or_create(
-            external_id=team_data["id"],
-            defaults={
-                "name": team_data.get("name", "")[:150],
-                "short_name": (team_data.get("shortName") or "")[:100],
-                "tla": (team_data.get("tla") or "")[:5],
-                "crest_url": team_data.get("crest") or "",
-            },
+    def _bulk_upsert_teams(self, teams_by_id):
+        """Upserts every team in ONE query instead of one round-trip per
+        team. Requires Team.external_id to be a real unique/primary-key
+        column in the database — if it isn't, add that constraint via a
+        migration first, since Postgres needs it to do ON CONFLICT."""
+        if not teams_by_id:
+            return {}
+
+        team_objs = [
+            Team(
+                external_id=tid,
+                name=t.get("name", "")[:150],
+                short_name=(t.get("shortName") or "")[:100],
+                tla=(t.get("tla") or "")[:5],
+                crest_url=t.get("crest") or "",
+            )
+            for tid, t in teams_by_id.items()
+        ]
+        Team.objects.bulk_create(
+            team_objs,
+            update_conflicts=True,
+            unique_fields=["external_id"],
+            update_fields=["name", "short_name", "tla", "crest_url"],
         )
-        return team
+        # bulk_create doesn't reliably return PKs for rows that hit the
+        # conflict/update path, so one follow-up query builds the id map.
+        return {t.external_id: t for t in Team.objects.filter(external_id__in=teams_by_id.keys())}
 
     # ------------------------------------------------------------------
     def _fetch_matches(self, league, code, headers):
@@ -130,34 +144,55 @@ class Command(BaseCommand):
         if not data or "matches" not in data:
             return
 
-        total = len(data["matches"])
-        self.stdout.write(f"  -> Got {total} matches from API, writing to DB...")
+        matches = data["matches"]
+        total = len(matches)
+        self.stdout.write(f"  -> Got {total} matches from API")
 
-        for i, m in enumerate(data["matches"], start=1):
-            home_team = self._upsert_team(m.get("homeTeam"))
-            away_team = self._upsert_team(m.get("awayTeam"))
-            if not home_team or not away_team:
+        # Collect every unique team appearing in this league's fixtures
+        # (typically ~20, even though there are hundreds of fixtures) and
+        # upsert them all in a single query.
+        teams_by_id = {}
+        for m in matches:
+            for t in (m.get("homeTeam"), m.get("awayTeam")):
+                if t and t.get("id"):
+                    teams_by_id[t["id"]] = t
+
+        team_map = self._bulk_upsert_teams(teams_by_id)
+        self.stdout.write(f"  -> Upserted {len(teams_by_id)} unique teams in 1 query")
+
+        # Build every Fixture row in memory, then write them all in a
+        # single bulk upsert instead of one update_or_create per match.
+        # This is the change that actually matters: 380 individual writes
+        # at ~1-2s of network latency each was the whole bottleneck.
+        fixture_objs = []
+        for m in matches:
+            home = team_map.get((m.get("homeTeam") or {}).get("id"))
+            away = team_map.get((m.get("awayTeam") or {}).get("id"))
+            if not home or not away:
                 continue
-
             score = m.get("score", {}).get("fullTime", {}) or {}
-            utc_date = parse_datetime(m["utcDate"])
-
-            Fixture.objects.update_or_create(
+            fixture_objs.append(Fixture(
                 external_id=m["id"],
-                defaults={
-                    "league": league,
-                    "home_team": home_team,
-                    "away_team": away_team,
-                    "utc_date": utc_date,
-                    "status": m.get("status", "SCHEDULED"),
-                    "matchday": m.get("matchday"),
-                    "home_score": score.get("home"),
-                    "away_score": score.get("away"),
-                    "venue": m.get("venue") or "",
-                },
+                league=league,
+                home_team=home,
+                away_team=away,
+                utc_date=parse_datetime(m["utcDate"]),
+                status=m.get("status", "SCHEDULED"),
+                matchday=m.get("matchday"),
+                home_score=score.get("home"),
+                away_score=score.get("away"),
+                venue=m.get("venue") or "",
+            ))
+
+        if fixture_objs:
+            Fixture.objects.bulk_create(
+                fixture_objs,
+                update_conflicts=True,
+                unique_fields=["external_id"],
+                update_fields=["league", "home_team", "away_team", "utc_date",
+                                "status", "matchday", "home_score", "away_score", "venue"],
             )
-            if i % 20 == 0 or i == total:
-                self.stdout.write(f"  -> Wrote {i}/{total} fixtures for {code}")
+        self.stdout.write(f"  -> Wrote {len(fixture_objs)}/{total} fixtures for {code} in 1 query")
 
     # ------------------------------------------------------------------
     def _fetch_standings(self, league, code, headers):
@@ -175,23 +210,34 @@ class Command(BaseCommand):
         if not total_table:
             return
 
+        teams_by_id = {row["team"]["id"]: row["team"] for row in total_table if row.get("team", {}).get("id")}
+        team_map = self._bulk_upsert_teams(teams_by_id)
+
+        standing_objs = []
         for row in total_table:
-            team = self._upsert_team(row.get("team"))
+            team = team_map.get((row.get("team") or {}).get("id"))
             if not team:
                 continue
-
-            Standing.objects.update_or_create(
+            standing_objs.append(Standing(
                 league=league,
                 team=team,
-                defaults={
-                    "position": row.get("position", 0),
-                    "played": row.get("playedGames", 0),
-                    "won": row.get("won", 0),
-                    "draw": row.get("draw", 0),
-                    "lost": row.get("lost", 0),
-                    "points": row.get("points", 0),
-                    "goals_for": row.get("goalsFor", 0),
-                    "goals_against": row.get("goalsAgainst", 0),
-                    "goal_difference": row.get("goalDifference", 0),
-                },
+                position=row.get("position", 0),
+                played=row.get("playedGames", 0),
+                won=row.get("won", 0),
+                draw=row.get("draw", 0),
+                lost=row.get("lost", 0),
+                points=row.get("points", 0),
+                goals_for=row.get("goalsFor", 0),
+                goals_against=row.get("goalsAgainst", 0),
+                goal_difference=row.get("goalDifference", 0),
+            ))
+
+        if standing_objs:
+            Standing.objects.bulk_create(
+                standing_objs,
+                update_conflicts=True,
+                unique_fields=["league", "team"],
+                update_fields=["position", "played", "won", "draw", "lost",
+                                "points", "goals_for", "goals_against", "goal_difference"],
             )
+        self.stdout.write(f"  -> Wrote {len(standing_objs)} standings rows for {code} in 1 query")
