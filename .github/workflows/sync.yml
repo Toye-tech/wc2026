@@ -2,18 +2,14 @@ name: Sync Football Data & Buzz
 
 on:
   schedule:
-    # Every 3 hours. A full sync now takes several minutes (Supabase is in a
-    # different region from GitHub's runners, so each DB write has real
-    # network latency) — running every 30 minutes isn't necessary anyway
-    # during the off-season when nothing's actively changing, and risks
-    # overlapping runs if kept that frequent.
-    - cron: '0 */3 * * *'
+    # Every 30 minutes — safe now that a full sync takes under 2 minutes.
+    - cron: '*/30 * * * *'
   workflow_dispatch:  # lets you also trigger it manually from the Actions tab
 
 jobs:
   sync:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 8
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
