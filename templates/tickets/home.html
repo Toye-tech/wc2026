@@ -9,6 +9,59 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
 :root {
+/* ====================== 1. CSS ====================== */
+
+.flash-section{padding:5rem 5% 4rem;background:var(--navy);border-top:1px solid var(--border2);overflow:hidden}
+.flash-inner{max-width:1320px;margin:0 auto}
+.flash-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem}
+.flash-live-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gold)}
+.flash-live-dot{width:6px;height:6px;border-radius:50%;background:var(--red);animation:pulse-a 1.4s ease-in-out infinite}
+
+.flash-viewport{position:relative;border-radius:var(--r2);overflow:hidden;background:var(--navy2);border:1px solid var(--border2);height:340px}
+.flash-track{display:flex;height:100%;transition:transform .6s cubic-bezier(.4,0,.2,1)}
+.flash-slide{flex:0 0 100%;height:100%;position:relative;display:flex;align-items:center;justify-content:center;padding:2rem}
+
+/* illustrated WC2026 slide */
+.flash-slide.wc{background:
+    radial-gradient(circle at 20% 20%, rgba(243,156,18,.10), transparent 55%),
+    radial-gradient(circle at 80% 80%, rgba(243,156,18,.08), transparent 55%),
+    var(--navy2)}
+.flash-wc-eyebrow{font-family:var(--font-mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:.75rem;text-align:center}
+.flash-wc-headline{font-family:var(--font-head);font-size:clamp(30px,4vw,52px);text-transform:uppercase;line-height:1;color:var(--white);text-align:center;letter-spacing:-.5px;margin-bottom:.5rem}
+.flash-wc-headline span{color:var(--gold)}
+.flash-wc-sub{font-size:13px;color:var(--mute);text-align:center;max-width:560px;margin:0 auto}
+
+/* live league slide */
+.flash-slide.league{flex-direction:column;gap:1rem}
+.flash-league-tag{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:8px}
+.flash-matchup{display:flex;align-items:center;justify-content:center;gap:2rem}
+.flash-team{display:flex;flex-direction:column;align-items:center;gap:8px;width:150px}
+.flash-team img{width:56px;height:56px;object-fit:contain;filter:drop-shadow(0 4px 10px rgba(0,0,0,.5))}
+.flash-team-name{font-family:var(--font-head);font-size:18px;letter-spacing:.5px;text-transform:uppercase;color:var(--white);text-align:center}
+.flash-score{font-family:var(--font-head);font-size:40px;color:var(--gold);min-width:80px;text-align:center}
+.flash-score.scheduled{font-size:13px;font-family:var(--font-mono);color:var(--mute);letter-spacing:1px}
+.flash-meta{font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--mute);text-transform:uppercase;text-align:center}
+.flash-empty{color:var(--mute);font-family:var(--font-mono);font-size:11px;text-align:center}
+
+/* controls */
+.flash-dots{display:flex;justify-content:center;gap:8px;margin-top:1.25rem}
+.flash-dot{width:8px;height:8px;border-radius:50%;background:var(--border2);border:none;cursor:pointer;transition:all .2s;padding:0}
+.flash-dot.on{background:var(--gold);width:22px;border-radius:4px}
+.flash-arrow{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;background:rgba(10,14,26,.6);border:1px solid var(--border2);color:var(--white);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:5;transition:all .2s}
+.flash-arrow:hover{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+.flash-arrow.prev{left:14px}
+.flash-arrow.next{right:14px}
+
+@media(max-width:640px){
+  .flash-viewport{height:300px}
+  .flash-matchup{gap:1rem}
+  .flash-team{width:110px}
+  .flash-team img{width:44px;height:44px}
+  .flash-team-name{font-size:14px}
+  .flash-score{font-size:30px}
+  .flash-arrow{display:none}
+}
+
   --navy:#0a0e1a;--navy2:#0f1525;--navy3:#151c30;
   --red:#c0392b;--red2:#a93226;--red-glow:rgba(192,57,43,.2);
   --gold:#f39c12;--gold2:#d68910;--gold-glow:rgba(243,156,18,.15);
@@ -113,6 +166,28 @@ nav.stuck{background:rgba(10,14,26,.97);backdrop-filter:blur(24px);border-bottom
 .sec-heading .hl{color:var(--gold)}
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease}
 .reveal.in{opacity:1;transform:translateY(0)}
+/* ====================== 2. HTML ====================== */
+
+<section class="flash-section">
+  <div class="flash-inner">
+    <div class="flash-header">
+      <div>
+        <div class="sec-eyebrow">Around The Game</div>
+        <h2 class="sec-heading" style="margin-bottom:0">MOMENTS <span class="hl">& ACTION</span></h2>
+      </div>
+      <div class="flash-live-badge"><span class="flash-live-dot"></span> Auto-updating from live league data</div>
+    </div>
+
+    <div class="flash-viewport" id="flashViewport">
+      <button class="flash-arrow prev" onclick="flashGo(-1)" aria-label="Previous">&#8592;</button>
+      <button class="flash-arrow next" onclick="flashGo(1)" aria-label="Next">&#8594;</button>
+      <div class="flash-track" id="flashTrack">
+        <!-- slides injected by JS -->
+      </div>
+    </div>
+    <div class="flash-dots" id="flashDots"></div>
+  </div>
+</section>
 
 /* HOST NATIONS */
 .hosts-section{padding:5rem 5%;background:var(--navy)}
@@ -648,6 +723,143 @@ function toggleFaq(el){
   document.querySelectorAll('.faq-item').forEach(function(i){i.classList.remove('open');});
   if(!wasOpen) item.classList.add('open');
 }
+  /* ====================== 3. JAVASCRIPT ====================== */
+
+// ---------------- Homepage Flash Carousel ----------------
+(function(){
+  const LEAGUES = [
+    { code: 'PL',  name: 'Premier League' },
+    { code: 'PD',  name: 'La Liga' },
+    { code: 'BL1', name: 'Bundesliga' },
+    { code: 'SA',  name: 'Serie A' },
+    { code: 'FL1', name: 'Ligue 1' },
+  ];
+
+  // Static, illustrated WC2026 recap slides — no photography needed.
+  const WC_SLIDES = [
+    { eyebrow: '\ud83c\udfc6 Final \u00b7 Jul 19, 2026', headline: 'SPAIN ARE <span>WORLD CHAMPIONS</span>', sub: 'Ferran Torres settled it in the 106th minute \u2014 Spain 1, Argentina 0, after extra time at MetLife Stadium.' },
+    { eyebrow: '\ud83c\udf0d Record Turnout', headline: 'AFRICA SENT <span>TEN NATIONS</span>', sub: 'The most African representation in World Cup history \u2014 Morocco reached the quarterfinals, South Africa a first-ever knockout round.' },
+    { eyebrow: '\u26a1 Individual Honours', headline: '<span>RODRI & MBAPPE</span> TAKE THE AWARDS', sub: 'Rodri won the Golden Ball; Mbappe finished top scorer and became the World Cup\u2019s all-time leading goalscorer.' },
+    { eyebrow: '\ud83c\udfdf\ufe0f Round of 16', headline: 'ALL THREE <span>CO-HOSTS ELIMINATED</span>', sub: 'Canada, Mexico and the USA were each knocked out before the quarterfinals \u2014 the tournament\u2019s biggest early shock.' },
+  ];
+
+  let slides = [...WC_SLIDES.map(s => ({ type: 'wc', data: s }))];
+  let current = 0;
+  let timer = null;
+
+  function fmtDate(iso){
+    try{
+      const d = new Date(iso);
+      return d.toLocaleDateString(undefined, { month:'short', day:'numeric' }) + ' \u00b7 ' +
+             d.toLocaleTimeString(undefined, { hour:'2-digit', minute:'2-digit' });
+    }catch(e){ return ''; }
+  }
+
+  function renderSlide(slide){
+    if(slide.type === 'wc'){
+      const s = slide.data;
+      return `
+        <div class="flash-slide wc">
+          <div>
+            <div class="flash-wc-eyebrow">${s.eyebrow}</div>
+            <div class="flash-wc-headline">${s.headline}</div>
+            <div class="flash-wc-sub">${s.sub}</div>
+          </div>
+        </div>`;
+    }
+    // league slide
+    const m = slide.data;
+    if(!m){
+      return `<div class="flash-slide league"><div class="flash-empty">No fixture data available for ${slide.leagueName} right now.</div></div>`;
+    }
+    const home = m.home_team || {}, away = m.away_team || {};
+    const isFinished = m.status === 'FINISHED';
+    const isLive = m.status === 'IN_PLAY' || m.status === 'LIVE' || m.status === 'PAUSED';
+    const hasScore = m.home_score !== null && m.home_score !== undefined;
+    const scoreHtml = (hasScore && (isFinished || isLive))
+      ? `<span class="flash-score">${m.home_score} \u2013 ${m.away_score}</span>`
+      : `<span class="flash-score scheduled">${fmtDate(m.utc_date)}</span>`;
+    const tagLabel = isLive ? '\ud83d\udd34 Live' : isFinished ? '\u26bd Full Time' : '\u23f1 Upcoming';
+
+    return `
+      <div class="flash-slide league">
+        <div class="flash-league-tag">${tagLabel} \u00b7 ${slide.leagueName}</div>
+        <div class="flash-matchup">
+          <div class="flash-team">
+            <img src="${home.crest||''}" alt="" onerror="this.style.visibility='hidden'">
+            <div class="flash-team-name">${home.short_name || home.name || 'TBD'}</div>
+          </div>
+          ${scoreHtml}
+          <div class="flash-team">
+            <img src="${away.crest||''}" alt="" onerror="this.style.visibility='hidden'">
+            <div class="flash-team-name">${away.short_name || away.name || 'TBD'}</div>
+          </div>
+        </div>
+        <div class="flash-meta">${m.venue || ''}</div>
+      </div>`;
+  }
+
+  function renderAll(){
+    const track = document.getElementById('flashTrack');
+    const dots = document.getElementById('flashDots');
+    if(!track) return;
+    track.innerHTML = slides.map(renderSlide).join('');
+    dots.innerHTML = slides.map((_, i) =>
+      `<button class="flash-dot ${i===current?'on':''}" onclick="flashJump(${i})" aria-label="Slide ${i+1}"></button>`
+    ).join('');
+    goTo(current, true);
+  }
+
+  function goTo(i, skipAnim){
+    current = (i + slides.length) % slides.length;
+    const track = document.getElementById('flashTrack');
+    if(track) track.style.transform = `translateX(-${current * 100}%)`;
+    document.querySelectorAll('.flash-dot').forEach((d, idx) => d.classList.toggle('on', idx === current));
+  }
+
+  window.flashGo = function(delta){ goTo(current + delta); resetTimer(); };
+  window.flashJump = function(i){ goTo(i); resetTimer(); };
+
+  function resetTimer(){
+    if(timer) clearInterval(timer);
+    timer = setInterval(() => goTo(current + 1), 5000);
+  }
+
+  async function loadLeagueSlides(){
+    const results = await Promise.all(LEAGUES.map(async (l) => {
+      try{
+        const res = await fetch(`/api/football/live-scores/?league=${l.code}`);
+        const data = await res.json();
+        if(!data.success) return { type: 'league', leagueName: l.name, data: null };
+        const pick = (data.live && data.live[0]) || (data.finished && data.finished[0]) || (data.upcoming && data.upcoming[0]) || null;
+        return { type: 'league', leagueName: l.name, data: pick };
+      }catch(e){
+        return { type: 'league', leagueName: l.name, data: null };
+      }
+    }));
+    // Interleave: WC slide, league slide, WC slide, league slide...
+    const merged = [];
+    const maxLen = Math.max(WC_SLIDES.length, results.length);
+    for(let i = 0; i < maxLen; i++){
+      if(WC_SLIDES[i]) merged.push({ type: 'wc', data: WC_SLIDES[i] });
+      if(results[i]) merged.push(results[i]);
+    }
+    slides = merged.length ? merged : slides;
+    renderAll();
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    renderAll();       // show WC slides immediately, no flash of empty content
+    loadLeagueSlides(); // then fetch live data and merge it in
+    resetTimer();
+
+    const viewport = document.getElementById('flashViewport');
+    if(viewport){
+      viewport.addEventListener('mouseenter', () => { if(timer) clearInterval(timer); });
+      viewport.addEventListener('mouseleave', resetTimer);
+    }
+  });
+})();
 </script>
 </body>
 </html>
