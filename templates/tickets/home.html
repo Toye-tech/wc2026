@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FIFA World Cup 2026 Archive — African Ticketing Portal</title>
-<meta name="description" content="Relive the FIFA World Cup 2026 — Spain's victory, Africa's record ten qualifiers, and the road to 2030. Look up existing bookings or follow live club football.">
+<title>Live Football Hub — WC2026 African Ticketing Portal</title>
+<meta name="description" content="Follow the 2026/27 season live across the Premier League, La Liga, Bundesliga, Serie A and Ligue 1 — plus transfer buzz and the World Cup 2026 archive.">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=Barlow+Condensed:wght@400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
@@ -21,58 +21,6 @@
   --font-cond:'Barlow Condensed',sans-serif;
   --font-body:'Barlow',sans-serif;
   --font-mono:'DM Mono',monospace;
-}
-/* ====================== 1. CSS ====================== */
-
-.flash-section{padding:5rem 5% 4rem;background:var(--navy);border-top:1px solid var(--border2);overflow:hidden}
-.flash-inner{max-width:1320px;margin:0 auto}
-.flash-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem}
-.flash-live-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gold)}
-.flash-live-dot{width:6px;height:6px;border-radius:50%;background:var(--red);animation:pulse-a 1.4s ease-in-out infinite}
-
-.flash-viewport{position:relative;border-radius:var(--r2);overflow:hidden;background:var(--navy2);border:1px solid var(--border2);height:340px}
-.flash-track{display:flex;height:100%;transition:transform .6s cubic-bezier(.4,0,.2,1)}
-.flash-slide{flex:0 0 100%;height:100%;position:relative;display:flex;align-items:center;justify-content:center;padding:2rem}
-
-/* illustrated WC2026 slide */
-.flash-slide.wc{background:
-    radial-gradient(circle at 20% 20%, rgba(243,156,18,.10), transparent 55%),
-    radial-gradient(circle at 80% 80%, rgba(243,156,18,.08), transparent 55%),
-    var(--navy2)}
-.flash-wc-eyebrow{font-family:var(--font-mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:.75rem;text-align:center}
-.flash-wc-headline{font-family:var(--font-head);font-size:clamp(30px,4vw,52px);text-transform:uppercase;line-height:1;color:var(--white);text-align:center;letter-spacing:-.5px;margin-bottom:.5rem}
-.flash-wc-headline span{color:var(--gold)}
-.flash-wc-sub{font-size:13px;color:var(--mute);text-align:center;max-width:560px;margin:0 auto}
-
-/* live league slide */
-.flash-slide.league{flex-direction:column;gap:1rem}
-.flash-league-tag{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:8px}
-.flash-matchup{display:flex;align-items:center;justify-content:center;gap:2rem}
-.flash-team{display:flex;flex-direction:column;align-items:center;gap:8px;width:150px}
-.flash-team img{width:56px;height:56px;object-fit:contain;filter:drop-shadow(0 4px 10px rgba(0,0,0,.5))}
-.flash-team-name{font-family:var(--font-head);font-size:18px;letter-spacing:.5px;text-transform:uppercase;color:var(--white);text-align:center}
-.flash-score{font-family:var(--font-head);font-size:40px;color:var(--gold);min-width:80px;text-align:center}
-.flash-score.scheduled{font-size:13px;font-family:var(--font-mono);color:var(--mute);letter-spacing:1px}
-.flash-meta{font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--mute);text-transform:uppercase;text-align:center}
-.flash-empty{color:var(--mute);font-family:var(--font-mono);font-size:11px;text-align:center}
-
-/* controls */
-.flash-dots{display:flex;justify-content:center;gap:8px;margin-top:1.25rem}
-.flash-dot{width:8px;height:8px;border-radius:50%;background:var(--border2);border:none;cursor:pointer;transition:all .2s;padding:0}
-.flash-dot.on{background:var(--gold);width:22px;border-radius:4px}
-.flash-arrow{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;background:rgba(10,14,26,.6);border:1px solid var(--border2);color:var(--white);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:5;transition:all .2s}
-.flash-arrow:hover{background:var(--gold);color:var(--navy);border-color:var(--gold)}
-.flash-arrow.prev{left:14px}
-.flash-arrow.next{right:14px}
-
-@media(max-width:640px){
-  .flash-viewport{height:300px}
-  .flash-matchup{gap:1rem}
-  .flash-team{width:110px}
-  .flash-team img{width:44px;height:44px}
-  .flash-team-name{font-size:14px}
-  .flash-score{font-size:30px}
-  .flash-arrow{display:none}
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -115,48 +63,37 @@ nav.stuck{background:rgba(10,14,26,.97);backdrop-filter:blur(24px);border-bottom
 .mob-menu a:hover{color:var(--gold)}
 .mob-close{position:absolute;top:1.5rem;right:2rem;background:none;border:none;color:var(--mute);font-size:24px;cursor:pointer}
 
-/* HERO */
-.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:98px}
-.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,14,26,.99) 0%,rgba(10,14,26,.85) 50%,rgba(10,14,26,.70) 100%),url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1800&q=80') center/cover no-repeat}
+/* HERO — about live football now, not the World Cup */
+.hero{min-height:88vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:98px}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,14,26,.99) 0%,rgba(10,14,26,.85) 50%,rgba(10,14,26,.70) 100%),url('https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=1800&q=80') center/cover no-repeat}
 .hero-pattern{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(243,156,18,.06) 1px,transparent 1px);background-size:40px 40px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black,transparent)}
 .hero-inner{position:relative;z-index:2;max-width:1320px;margin:0 auto;padding:0 5%;width:100%;display:grid;grid-template-columns:1.2fr 1fr;gap:4rem;align-items:center}
 .hero-eyebrow{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--border);padding:7px 16px;border-radius:2px;font-family:var(--font-mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;background:var(--gold-glow)}
-.pulse{width:6px;height:6px;background:var(--gold);border-radius:50%}
-.hero-title{font-family:var(--font-head);font-size:clamp(72px,10vw,148px);line-height:.85;letter-spacing:-1px;text-transform:uppercase;margin-bottom:1.5rem}
+.pulse{width:6px;height:6px;background:var(--red);border-radius:50%;animation:pulse-a 1.4s ease-in-out infinite}
+@keyframes pulse-a{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.6)}}
+.hero-title{font-family:var(--font-head);font-size:clamp(60px,8.5vw,124px);line-height:.9;letter-spacing:-1px;text-transform:uppercase;margin-bottom:1.5rem}
 .hero-title .hl{color:var(--gold)}
-.hero-title .ol-g{-webkit-text-stroke:1.5px var(--gold);color:transparent}
 .hero-sub{font-size:15px;line-height:1.9;color:rgba(240,238,234,.5);max-width:520px;margin-bottom:2rem}
-.hero-cta{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.hero-cta{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2rem}
 .cta-gold{display:inline-flex;align-items:center;gap:9px;background:var(--gold);color:var(--navy);font-family:var(--font-cond);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:15px 30px;border-radius:var(--r);border:none;cursor:pointer;transition:all .25s}
 .cta-gold:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 12px 32px var(--gold-glow)}
 .cta-outline{display:inline-flex;align-items:center;gap:9px;border:1px solid rgba(240,238,234,.2);color:var(--white);font-family:var(--font-cond);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:15px 30px;border-radius:var(--r);transition:all .25s}
 .cta-outline:hover{border-color:var(--gold);color:var(--gold)}
-.trust-row{display:flex;gap:1.5rem;flex-wrap:wrap}
-.trust-item{display:flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--mute);text-transform:uppercase}
-.trust-item i{color:var(--gold);font-size:11px}
+.hero-archive-note{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:1px;color:var(--mute);text-transform:uppercase}
+.hero-archive-note a{color:var(--gold);border-bottom:1px dotted var(--gold)}
+.hero-archive-note a:hover{color:var(--gold2)}
 
-/* RESULT / COUNTDOWN CARD */
-.countdown-card{background:rgba(15,21,37,.9);border:1px solid var(--border);border-radius:var(--r2);padding:2rem;backdrop-filter:blur(16px)}
-.cd-label{font-family:var(--font-mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--mute);text-align:center;margin-bottom:1.25rem}
-.cd-final-score{text-align:center;margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border2)}
-.cd-final-teams{font-family:var(--font-cond);font-size:15px;letter-spacing:1px;text-transform:uppercase;color:var(--off);margin-bottom:6px}
-.cd-final-score-num{font-family:var(--font-head);font-size:52px;color:var(--gold);letter-spacing:2px;line-height:1}
-.cd-final-sub{font-family:var(--font-mono);font-size:9px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase;margin-top:6px}
+/* LIVE SNAPSHOT CARD (replaces the old WC2026 final-result card) */
+.snapshot-card{background:rgba(15,21,37,.9);border:1px solid var(--border);border-radius:var(--r2);padding:2rem;backdrop-filter:blur(16px)}
+.cd-label{font-family:var(--font-mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--mute);text-align:center;margin-bottom:1.25rem;display:flex;align-items:center;justify-content:center;gap:8px}
+.snap-leagues{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-bottom:1.25rem}
+.snap-league-chip{font-family:var(--font-mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:6px 12px;border:1px solid var(--border2);border-radius:999px;color:var(--off)}
 .cd-matches{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:1.25rem}
 .cd-stat{background:rgba(255,255,255,.03);border:1px solid var(--border2);border-radius:var(--r);padding:.85rem;text-align:center}
 .cd-stat-n{font-family:var(--font-head);font-size:30px;color:var(--gold);line-height:1}
 .cd-stat-l{font-family:var(--font-mono);font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--mute);margin-top:3px}
 .cd-foot{text-align:center;font-family:var(--font-cond);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--mute)}
 .cd-foot span{color:var(--gold)}
-
-/* STATS BAR */
-.stats-bar{background:var(--navy2);border-top:1px solid var(--border2);border-bottom:1px solid var(--border2)}
-.stats-inner{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);padding:0 5%}
-.stat-block{padding:2.25rem 1.75rem;border-right:1px solid var(--border2);transition:background .3s}
-.stat-block:last-child{border:none}
-.stat-block:hover{background:rgba(243,156,18,.03)}
-.stat-n{font-family:var(--font-head);font-size:52px;color:var(--gold);line-height:1;letter-spacing:-1px}
-.stat-l{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mute);margin-top:5px}
 
 /* SECTION HELPERS */
 .sec-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
@@ -165,69 +102,63 @@ nav.stuck{background:rgba(10,14,26,.97);backdrop-filter:blur(24px);border-bottom
 .sec-heading .hl{color:var(--gold)}
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease}
 .reveal.in{opacity:1;transform:translateY(0)}
-/* ====================== 2. HTML ====================== */
 
-<section class="flash-section">
-  <div class="flash-inner">
-    <div class="flash-header">
-      <div>
-        <div class="sec-eyebrow">Around The Game</div>
-        <h2 class="sec-heading" style="margin-bottom:0">MOMENTS <span class="hl">& ACTION</span></h2>
-      </div>
-      <div class="flash-live-badge"><span class="flash-live-dot"></span> Auto-updating from live league data</div>
-    </div>
+/* FLASH CAROUSEL */
+.flash-section{padding:5rem 5% 4rem;background:var(--navy);border-top:1px solid var(--border2);overflow:hidden}
+.flash-inner{max-width:1320px;margin:0 auto}
+.flash-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem}
+.flash-live-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gold)}
+.flash-live-dot{width:6px;height:6px;border-radius:50%;background:var(--red);animation:pulse-a 1.4s ease-in-out infinite}
+.flash-viewport{position:relative;border-radius:var(--r2);overflow:hidden;background:var(--navy2);border:1px solid var(--border2);height:340px}
+.flash-track{display:flex;height:100%;transition:transform .6s cubic-bezier(.4,0,.2,1)}
+.flash-slide{flex:0 0 100%;height:100%;position:relative;display:flex;align-items:center;justify-content:center;padding:2rem}
+.flash-slide.wc{background:radial-gradient(circle at 20% 20%, rgba(243,156,18,.10), transparent 55%),radial-gradient(circle at 80% 80%, rgba(243,156,18,.08), transparent 55%),var(--navy2)}
+.flash-wc-eyebrow{font-family:var(--font-mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:.75rem;text-align:center}
+.flash-wc-headline{font-family:var(--font-head);font-size:clamp(28px,3.6vw,46px);text-transform:uppercase;line-height:1;color:var(--white);text-align:center;letter-spacing:-.5px;margin-bottom:.5rem}
+.flash-wc-headline span{color:var(--gold)}
+.flash-wc-sub{font-size:13px;color:var(--mute);text-align:center;max-width:560px;margin:0 auto}
+.flash-slide.league{flex-direction:column;gap:1rem}
+.flash-league-tag{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:8px}
+.flash-matchup{display:flex;align-items:center;justify-content:center;gap:2rem}
+.flash-team{display:flex;flex-direction:column;align-items:center;gap:8px;width:150px}
+.flash-team img{width:56px;height:56px;object-fit:contain;filter:drop-shadow(0 4px 10px rgba(0,0,0,.5))}
+.flash-team-name{font-family:var(--font-head);font-size:18px;letter-spacing:.5px;text-transform:uppercase;color:var(--white);text-align:center}
+.flash-score{font-family:var(--font-head);font-size:40px;color:var(--gold);min-width:80px;text-align:center}
+.flash-score.scheduled{font-size:13px;font-family:var(--font-mono);color:var(--mute);letter-spacing:1px}
+.flash-meta{font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--mute);text-transform:uppercase;text-align:center}
+.flash-empty{color:var(--mute);font-family:var(--font-mono);font-size:11px;text-align:center}
+.flash-dots{display:flex;justify-content:center;gap:8px;margin-top:1.25rem}
+.flash-dot{width:8px;height:8px;border-radius:50%;background:var(--border2);border:none;cursor:pointer;transition:all .2s;padding:0}
+.flash-dot.on{background:var(--gold);width:22px;border-radius:4px}
+.flash-arrow{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;background:rgba(10,14,26,.6);border:1px solid var(--border2);color:var(--white);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:5;transition:all .2s}
+.flash-arrow:hover{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+.flash-arrow.prev{left:14px}
+.flash-arrow.next{right:14px}
 
-    <div class="flash-viewport" id="flashViewport">
-      <button class="flash-arrow prev" onclick="flashGo(-1)" aria-label="Previous">&#8592;</button>
-      <button class="flash-arrow next" onclick="flashGo(1)" aria-label="Next">&#8594;</button>
-      <div class="flash-track" id="flashTrack">
-        <!-- slides injected by JS -->
-      </div>
-    </div>
-    <div class="flash-dots" id="flashDots"></div>
-  </div>
-</section>
+/* LIVE LEAGUES GRID */
+.leagues-section{padding:5rem 5%;background:var(--navy2);border-top:1px solid var(--border2)}
+.leagues-inner{max-width:1320px;margin:0 auto}
+.leagues-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem}
+.leagues-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem}
+.league-card{background:var(--navy3);border:1px solid var(--border2);border-radius:var(--r2);padding:1.5rem 1rem;text-align:center;transition:all .25s}
+.league-card:hover{border-color:rgba(243,156,18,.3);transform:translateY(-4px)}
+.league-card-name{font-family:var(--font-cond);font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--white);margin-bottom:.5rem}
+.league-card-cta{font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--gold);text-transform:uppercase}
 
-/* HOST NATIONS */
-.hosts-section{padding:5rem 5%;background:var(--navy)}
-.hosts-inner{max-width:1320px;margin:0 auto}
-.hosts-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
-.host-card{position:relative;border-radius:var(--r2);overflow:hidden;height:320px;cursor:pointer;transition:transform .3s}
-.host-card:hover{transform:translateY(-6px)}
-.host-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .5s}
-.host-card:hover .host-bg{transform:scale(1.06)}
-.host-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,14,26,.95) 0%,rgba(10,14,26,.3) 100%)}
-.host-body{position:absolute;bottom:0;left:0;right:0;padding:1.75rem}
-.host-flag{font-size:36px;display:block;margin-bottom:.75rem}
-.host-country{font-family:var(--font-head);font-size:36px;letter-spacing:2px;text-transform:uppercase;color:var(--white);line-height:1}
-.host-cities{font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;color:var(--gold);text-transform:uppercase;margin-top:6px}
-.host-matches{position:absolute;top:1.25rem;right:1.25rem;background:var(--gold);color:var(--navy);font-family:var(--font-head);font-size:18px;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+/* BUZZ TEASER */
+.buzz-teaser{padding:5rem 5%;background:var(--navy);border-top:1px solid var(--border2)}
+.buzz-inner{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+.buzz-text p{font-size:14px;line-height:1.9;color:rgba(240,238,234,.5);margin-bottom:1.5rem}
+.buzz-topics{display:flex;flex-wrap:wrap;gap:.6rem}
+.buzz-topic-chip{font-family:var(--font-mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border:1px solid var(--border2);border-radius:2px;color:var(--off)}
+.buzz-visual{background:var(--navy2);border:1px solid var(--border2);border-radius:var(--r2);padding:2rem;text-align:center}
+.buzz-visual i{font-size:44px;color:var(--gold);margin-bottom:1rem;display:block}
 
-/* KNOCKOUT RECAP */
-.matches-section{padding:5rem 5%;background:var(--navy2)}
-.matches-inner{max-width:1320px;margin:0 auto}
-.matches-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:3rem;flex-wrap:wrap;gap:1.5rem}
-.matches-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
-.match-card{background:var(--navy3);border:1px solid var(--border2);border-radius:var(--r2);overflow:hidden;transition:all .3s;position:relative}
-.match-card:hover{transform:translateY(-5px);border-color:rgba(243,156,18,.25);box-shadow:var(--shadow)}
-.match-stagebar{display:flex;justify-content:space-between;align-items:center;padding:.85rem 1.25rem;border-bottom:1px solid var(--border2)}
-.match-stage{background:var(--gold);color:var(--navy);font-family:var(--font-cond);font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:2px}
-.match-country{background:rgba(10,14,26,.85);border:1px solid var(--border2);font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--off);padding:4px 9px;border-radius:2px}
-.match-body{padding:1.25rem}
-.match-teams{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1rem}
-.match-team{text-align:center;flex:1}
-.match-team-name{font-family:var(--font-head);font-size:22px;letter-spacing:1px;text-transform:uppercase;line-height:1;color:var(--white)}
-.match-vs{font-family:var(--font-head);font-size:28px;color:var(--gold);opacity:.9}
-.match-meta{display:flex;justify-content:space-between;align-items:center;font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--mute);text-transform:uppercase;padding-top:1rem;border-top:1px solid var(--border2);margin-bottom:1rem}
-.match-summary{font-size:12px;color:var(--off);line-height:1.7;margin-bottom:1rem}
-.match-btn{width:100%;background:none;border:1px solid var(--border);color:var(--gold);font-family:var(--font-cond);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:11px;border-radius:var(--r);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:7px}
-.match-btn:hover{background:var(--gold-glow);border-color:var(--gold)}
-
-/* HOW IT WORKS NOW */
-.how-section{padding:5rem 5%;background:var(--navy);border-top:1px solid var(--border2)}
+/* HOW IT WORKS */
+.how-section{padding:5rem 5%;background:var(--navy2);border-top:1px solid var(--border2)}
 .how-inner{max-width:1320px;margin:0 auto}
 .how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:3rem}
-.how-card{position:relative;padding:2rem 1.5rem;border:1px solid var(--border2);border-radius:var(--r2);background:var(--navy2);transition:all .3s;overflow:hidden}
+.how-card{position:relative;padding:2rem 1.5rem;border:1px solid var(--border2);border-radius:var(--r2);background:var(--navy3);transition:all .3s;overflow:hidden}
 .how-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform .4s}
 .how-card:hover{border-color:rgba(243,156,18,.2);transform:translateY(-3px)}
 .how-card:hover::before{transform:scaleX(1)}
@@ -237,27 +168,22 @@ nav.stuck{background:rgba(10,14,26,.97);backdrop-filter:blur(24px);border-bottom
 .how-card p{font-size:13px;color:var(--mute);line-height:1.7}
 .how-card a.how-link{display:inline-block;margin-top:.85rem;font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--gold);text-transform:uppercase}
 
-/* AFRICAN NATIONS */
-.africa-section{padding:5rem 5%;background:var(--navy2);border-top:1px solid var(--border2)}
-.africa-inner{max-width:1320px;margin:0 auto}
-.africa-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-top:3rem}
-.africa-text p{font-size:14px;line-height:1.9;color:rgba(240,238,234,.5);margin-bottom:2rem}
-.africa-flags{display:flex;flex-wrap:wrap;gap:.75rem}
-.flag-chip{font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--mute);padding:5px 10px;border:1px solid var(--border2);border-radius:2px;text-transform:uppercase;transition:all .2s;cursor:default}
-.flag-chip:hover{border-color:var(--gold);color:var(--gold)}
-.flag-chip.qualified{border-color:rgba(39,174,96,.3);color:var(--green)}
-.flag-chip.knockout{border-color:var(--gold);color:var(--gold);background:var(--gold-glow)}
-.africa-stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.africa-stat{background:var(--navy3);border:1px solid var(--border2);border-radius:var(--r);padding:1.5rem;border-top:2px solid var(--gold);transition:transform .2s}
-.africa-stat:hover{transform:translateY(-2px)}
-.africa-stat-n{font-family:var(--font-head);font-size:44px;color:var(--gold);line-height:1}
-.africa-stat-l{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mute);margin-top:4px}
+/* ARCHIVE TEASER BANNER — the ONLY WC2026 section left on the homepage */
+.archive-banner{padding:4rem 5%;background:var(--navy);border-top:1px solid var(--border2)}
+.archive-banner-inner{max-width:1320px;margin:0 auto;background:linear-gradient(135deg,var(--navy2),var(--navy3));border:1px solid var(--border);border-radius:var(--r2);padding:3rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;position:relative;overflow:hidden}
+.archive-banner-inner::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(243,156,18,.06) 1px,transparent 1px);background-size:32px 32px}
+.archive-banner-text{position:relative;z-index:1}
+.archive-banner-eyebrow{font-family:var(--font-mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem}
+.archive-banner-title{font-family:var(--font-head);font-size:clamp(28px,3vw,42px);text-transform:uppercase;color:var(--white);line-height:1;margin-bottom:.5rem}
+.archive-banner-title span{color:var(--gold)}
+.archive-banner-sub{font-size:13px;color:var(--mute);max-width:480px}
+.archive-banner-cta{position:relative;z-index:1;flex-shrink:0}
 
 /* FAQ */
-.faq-section{padding:5rem 5%;background:var(--navy);border-top:1px solid var(--border2)}
+.faq-section{padding:5rem 5%;background:var(--navy2);border-top:1px solid var(--border2)}
 .faq-inner{max-width:860px;margin:0 auto}
 .faq-list{margin-top:3rem;display:flex;flex-direction:column;gap:.75rem}
-.faq-item{border:1px solid var(--border2);border-radius:var(--r);overflow:hidden;transition:border-color .2s}
+.faq-item{border:1px solid var(--border2);border-radius:var(--r);overflow:hidden;transition:border-color .2s;background:var(--navy3)}
 .faq-item.open{border-color:rgba(243,156,18,.25)}
 .faq-q{padding:1.25rem 1.5rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-family:var(--font-cond);font-size:15px;font-weight:600;letter-spacing:.5px;color:var(--white);transition:background .2s;gap:1rem}
 .faq-q:hover{background:rgba(243,156,18,.04)}
@@ -287,43 +213,37 @@ footer{background:var(--navy);border-top:1px solid var(--border2);padding:4rem 5
 #btt{position:fixed;bottom:2.5rem;left:2.5rem;width:40px;height:40px;background:var(--navy3);border:1px solid var(--border2);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:12px;cursor:pointer;opacity:0;pointer-events:none;transition:all .3s;z-index:88}
 #btt.show{opacity:1;pointer-events:all}
 #btt:hover{background:var(--gold);color:var(--navy)}
-#toast{position:fixed;bottom:5rem;left:50%;transform:translateX(-50%) translateY(10px);background:var(--navy3);border:1px solid var(--border2);color:var(--white);padding:10px 20px;border-radius:var(--r);font-family:var(--font-mono);font-size:10px;letter-spacing:.5px;opacity:0;pointer-events:none;transition:all .35s;z-index:9999;white-space:nowrap}
-#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
 /* RESPONSIVE */
-@media(max-width:1100px){.hero-inner{grid-template-columns:1fr}.countdown-card{display:none}.matches-grid{grid-template-columns:1fr 1fr}.hosts-grid{grid-template-columns:1fr 1fr}.how-grid{grid-template-columns:1fr 1fr}.foot-grid{grid-template-columns:1fr 1fr;gap:2rem}}
-@media(max-width:768px){.nav-links,.nav-right{display:none}.hamburger{display:flex}.stats-inner{grid-template-columns:repeat(2,1fr)}.matches-grid{grid-template-columns:1fr}.hosts-grid{grid-template-columns:1fr}.how-grid{grid-template-columns:1fr}.africa-grid{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr}}
+@media(max-width:1100px){.hero-inner{grid-template-columns:1fr}.snapshot-card{display:none}.leagues-grid{grid-template-columns:repeat(3,1fr)}.how-grid{grid-template-columns:1fr 1fr}.foot-grid{grid-template-columns:1fr 1fr;gap:2rem}.buzz-inner{grid-template-columns:1fr}}
+@media(max-width:768px){.nav-links,.nav-right{display:none}.hamburger{display:flex}.leagues-grid{grid-template-columns:repeat(2,1fr)}.how-grid{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr}.archive-banner-inner{flex-direction:column;text-align:center}
+  .flash-viewport{height:300px}.flash-matchup{gap:1rem}.flash-team{width:110px}.flash-team img{width:44px;height:44px}.flash-team-name{font-size:14px}.flash-score{font-size:30px}.flash-arrow{display:none}}
 </style>
 </head>
 <body>
 
-<!-- TICKER -->
 <div class="ticker">
   <div class="ticker-wrap">
-    <span class="ticker-item">🏆 FIFA World Cup 2026 — Spain Are Champions</span><span class="ticker-dot">◆</span>
-    <span class="ticker-item">Final: Spain 1-0 Argentina (a.e.t.) · Ferran Torres 106'</span><span class="ticker-dot">◆</span>
-    <span class="ticker-item">Africa's Record Turnout — 10 Nations, A Historic First</span><span class="ticker-dot">◆</span>
-    <span class="ticker-item">2026/27 Club Season Live — Premier League · La Liga · Bundesliga · Serie A · Ligue 1</span><span class="ticker-dot">◆</span>
-    <span class="ticker-item">Next Stop: 2030 World Cup — Spain · Portugal · Morocco</span><span class="ticker-dot">◆</span>
-    <span class="ticker-item">🏆 FIFA World Cup 2026 — Spain Are Champions</span><span class="ticker-dot">◆</span>
-    <span class="ticker-item">Final: Spain 1-0 Argentina (a.e.t.) · Ferran Torres 106'</span><span class="ticker-dot">◆</span>
-    <span class="ticker-item">Africa's Record Turnout — 10 Nations, A Historic First</span><span class="ticker-dot">◆</span>
-    <span class="ticker-item">2026/27 Club Season Live — Premier League · La Liga · Bundesliga · Serie A · Ligue 1</span><span class="ticker-dot">◆</span>
-    <span class="ticker-item">Next Stop: 2030 World Cup — Spain · Portugal · Morocco</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">⚽ 2026/27 Season Live — Premier League · La Liga · Bundesliga · Serie A · Ligue 1</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">🔄 Transfer Window Open — Latest Moves & Rumours</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">🌍 Road to 2030 — Spain · Portugal · Morocco</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">🏆 WC2026 Archive — Relive Spain's Title Run</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">⚽ 2026/27 Season Live — Premier League · La Liga · Bundesliga · Serie A · Ligue 1</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">🔄 Transfer Window Open — Latest Moves & Rumours</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">🌍 Road to 2030 — Spain · Portugal · Morocco</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">🏆 WC2026 Archive — Relive Spain's Title Run</span><span class="ticker-dot">◆</span>
   </div>
 </div>
 
-<!-- NAV -->
 <nav id="navbar">
   <a href="/" class="nav-logo">
     <div class="logo-emblem">WC</div>
-    <div class="logo-text"><h1>WC 2026</h1><p>African Ticketing Portal · Archive</p></div>
+    <div class="logo-text"><h1>WC 2026</h1><p>African Football Hub</p></div>
   </a>
   <ul class="nav-links">
-    <li><a href="#hosts">Venues</a></li>
+    <li><a href="#leagues">Live Leagues</a></li>
+    <li><a href="#buzz">Off-Season Buzz</a></li>
     <li><a href="/updates/">Tournament Archive</a></li>
-    <li><a href="/api/football/fixtures/">Live Scores</a></li>
-    <li><a href="#how">How This Works Now</a></li>
     <li><a href="/booking/lookup/">My Tickets</a></li>
   </ul>
   <div class="nav-right">
@@ -335,284 +255,160 @@ footer{background:var(--navy);border-top:1px solid var(--border2);padding:4rem 5
 
 <div class="mob-menu" id="mobMenu">
   <button class="mob-close" id="mobClose"><i class="fas fa-times"></i></button>
+  <a href="#leagues" onclick="closeMob()">Live Leagues</a>
+  <a href="#buzz" onclick="closeMob()">Buzz</a>
   <a href="/updates/" onclick="closeMob()">Archive</a>
-  <a href="#hosts" onclick="closeMob()">Venues</a>
-  <a href="/api/football/fixtures/" onclick="closeMob()">Live Scores</a>
-  <a href="#how" onclick="closeMob()">How This Works</a>
   <a href="/booking/lookup/" onclick="closeMob()">My Tickets</a>
 </div>
 
-
-<!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-pattern"></div>
   <div class="hero-inner">
     <div>
-      <div class="hero-eyebrow"><span class="pulse"></span>Tournament Complete · Archive & Live Football Hub</div>
+      <div class="hero-eyebrow"><span class="pulse"></span>2026/27 Season Underway</div>
       <h1 class="hero-title">
-        SPAIN<br>
-        ARE<br>
-        <span class="hl">WORLD</span><br>
-        <span class="ol-g">CHAMPIONS</span>
+        FOLLOW THE<br>
+        GAME. <span class="hl">LIVE.</span>
       </h1>
-      <p class="hero-sub">Spain beat Argentina 1-0 after extra time at MetLife Stadium to lift a second World Cup — and Africa sent a record ten nations to the finals along the way. Ticket sales through this site have now closed, but the story isn't over: relive the tournament, retrieve an existing booking, or follow the new club season live as it kicks off.</p>
+      <p class="hero-sub">Fixtures, tables and transfer buzz across the Premier League, La Liga, Bundesliga, Serie A and Ligue 1 — updated automatically as the season happens. World Cup 2026 has its own home too, whenever you want to look back.</p>
       <div class="hero-cta">
-        <a href="/updates/" class="cta-gold"><i class="fas fa-trophy"></i> View Tournament Archive</a>
-        <a href="/api/football/fixtures/" class="cta-outline"><i class="fas fa-futbol"></i> Explore Live Leagues</a>
+        <a href="/api/football/fixtures/" class="cta-gold"><i class="fas fa-futbol"></i> Explore Live Leagues</a>
+        <a href="#buzz" class="cta-outline"><i class="fas fa-fire"></i> Off-Season Buzz</a>
       </div>
-      <div class="trust-row">
-        <div class="trust-item"><i class="fas fa-shield-alt"></i> Bookings Secured via Paystack</div>
-        <div class="trust-item"><i class="fas fa-globe-africa"></i> 10 African Nations — A Record</div>
-        <div class="trust-item"><i class="fas fa-mobile-alt"></i> Booking Lookup Always Open</div>
-        <div class="trust-item"><i class="fas fa-calendar-check"></i> Next World Cup: 2030</div>
-      </div>
+      <div class="hero-archive-note"><i class="fas fa-trophy" style="color:var(--gold)"></i> Looking for the World Cup? <a href="/updates/">Visit the Tournament Archive →</a></div>
     </div>
 
-    <!-- FINAL RESULT CARD -->
-    <div class="countdown-card">
-      <div class="cd-label" style="display:flex;align-items:center;justify-content:center;gap:8px">
-        <i class="fas fa-trophy" style="color:var(--gold);font-size:11px"></i>
-        <span style="color:var(--gold);letter-spacing:3px">Tournament Complete</span>
-      </div>
-      <div class="cd-final-score">
-        <div class="cd-final-teams">Spain &nbsp;vs&nbsp; Argentina</div>
-        <div class="cd-final-score-num">1 – 0</div>
-        <div class="cd-final-sub">a.e.t. · Ferran Torres 106' · MetLife Stadium</div>
+    <div class="snapshot-card">
+      <div class="cd-label"><span class="pulse"></span> Live Football Snapshot</div>
+      <div class="snap-leagues">
+        <span class="snap-league-chip">Premier League</span>
+        <span class="snap-league-chip">La Liga</span>
+        <span class="snap-league-chip">Bundesliga</span>
+        <span class="snap-league-chip">Serie A</span>
+        <span class="snap-league-chip">Ligue 1</span>
       </div>
       <div class="cd-matches">
-        <div class="cd-stat"><div class="cd-stat-n">{{ total_matches }}</div><div class="cd-stat-l">Matches</div></div>
-        <div class="cd-stat"><div class="cd-stat-n">{{ total_venues }}</div><div class="cd-stat-l">Venues</div></div>
-        <div class="cd-stat"><div class="cd-stat-n">48</div><div class="cd-stat-l">Teams</div></div>
-        <div class="cd-stat"><div class="cd-stat-n">10</div><div class="cd-stat-l">Africa Slots</div></div>
+        <div class="cd-stat"><div class="cd-stat-n">5</div><div class="cd-stat-l">Leagues Tracked</div></div>
+        <div class="cd-stat"><div class="cd-stat-n">24/7</div><div class="cd-stat-l">Auto-Updating</div></div>
       </div>
-      <a href="/updates/" class="cta-gold" style="display:flex;margin-top:0;font-size:11px;justify-content:center"><i class="fas fa-book-open"></i> View Full Archive</a>
-      <div class="cd-foot" style="margin-top:1rem">Champion: <span>Spain</span> · Runner-up: Argentina</div>
+      <a href="/api/football/fixtures/" class="cta-gold" style="display:flex;margin-top:0;font-size:11px;justify-content:center"><i class="fas fa-chart-line"></i> See Fixtures & Tables</a>
+      <div class="cd-foot" style="margin-top:1rem">Data refreshed automatically <span>every 30 minutes</span></div>
     </div>
   </div>
 </section>
 
-<!-- STATS BAR -->
-<div class="stats-bar">
-  <div class="stats-inner">
-    <div class="stat-block reveal"><div class="stat-n">104</div><div class="stat-l">Total Matches</div></div>
-    <div class="stat-block reveal"><div class="stat-n">16</div><div class="stat-l">Host Venues</div></div>
-    <div class="stat-block reveal"><div class="stat-n">48</div><div class="stat-l">Nations Competing</div></div>
-    <div class="stat-block reveal"><div class="stat-n">10</div><div class="stat-l">African Qualifiers</div></div>
-  </div>
-</div>
-
-<!-- HOST NATIONS -->
-<section id="hosts" class="hosts-section">
-  <div class="hosts-inner">
-    <div class="reveal">
-      <div class="sec-eyebrow">Tournament Recap</div>
-      <h2 class="sec-heading">THREE NATIONS <span class="hl">DELIVERED</span></h2>
-    </div>
-    <div class="hosts-grid">
-      <div class="host-card reveal">
-        <div class="host-bg" style="background-image:url('https://images.unsplash.com/photo-1560969184-10fe8719e047?w=800&q=80')"></div>
-        <div class="host-overlay"></div>
-        <div class="host-matches">60</div>
-        <div class="host-body">
-          <span class="host-flag">🇺🇸</span>
-          <div class="host-country">United States</div>
-          <div class="host-cities">New York · LA · Dallas · Miami · Seattle · Boston · Philadelphia · Kansas City · San Francisco · Atlanta</div>
-        </div>
-      </div>
-      <div class="host-card reveal">
-        <div class="host-bg" style="background-image:url('https://images.unsplash.com/photo-1518638150340-f706e86654de?w=800&q=80')"></div>
-        <div class="host-overlay"></div>
-        <div class="host-matches">10</div>
-        <div class="host-body">
-          <span class="host-flag">🇲🇽</span>
-          <div class="host-country">Mexico</div>
-          <div class="host-cities">Mexico City · Guadalajara · Monterrey</div>
-        </div>
-      </div>
-      <div class="host-card reveal">
-        <div class="host-bg" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80')"></div>
-        <div class="host-overlay"></div>
-        <div class="host-matches">10</div>
-        <div class="host-body">
-          <span class="host-flag">🇨🇦</span>
-          <div class="host-country">Canada</div>
-          <div class="host-cities">Toronto · Vancouver</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- RELIVE THE KNOCKOUTS -->
-<section id="matches" class="matches-section">
-  <div class="matches-inner">
-    <div class="matches-header reveal">
+<section class="flash-section">
+  <div class="flash-inner">
+    <div class="flash-header">
       <div>
-        <div class="sec-eyebrow">The Road to the Trophy</div>
-        <h2 class="sec-heading">RELIVE THE <span class="hl">KNOCKOUTS</span></h2>
+        <div class="sec-eyebrow">Around The Game</div>
+        <h2 class="sec-heading" style="margin-bottom:0">MOMENTS <span class="hl">& ACTION</span></h2>
       </div>
-      <a href="/updates/" class="cta-outline" style="font-size:11px;font-family:var(--font-cond);letter-spacing:2px">Full Archive & Highlights <i class="fas fa-arrow-right"></i></a>
+      <div class="flash-live-badge"><span class="flash-live-dot"></span> Auto-updating from live league data</div>
     </div>
-    <div class="matches-grid">
-      <div class="match-card reveal">
-        <div class="match-stagebar"><span class="match-stage">Final</span><span class="match-country">MetLife Stadium</span></div>
-        <div class="match-body">
-          <div class="match-teams">
-            <div class="match-team"><div class="match-team-name">Spain</div></div>
-            <div class="match-vs">1–0</div>
-            <div class="match-team"><div class="match-team-name">Argentina</div></div>
-          </div>
-          <div class="match-summary">Ferran Torres scored the only goal in the 106th minute as Spain won their second World Cup title after extra time.</div>
-          <div class="match-meta" style="border-top:none;padding-top:0"><span><i class="fas fa-calendar"></i> Jul 19, 2026</span></div>
-          <a href="/updates/" class="match-btn"><i class="fas fa-play"></i> Watch Highlights</a>
-        </div>
-      </div>
-      <div class="match-card reveal">
-        <div class="match-stagebar"><span class="match-stage">3rd Place</span><span class="match-country">Hard Rock Stadium</span></div>
-        <div class="match-body">
-          <div class="match-teams">
-            <div class="match-team"><div class="match-team-name">England</div></div>
-            <div class="match-vs">6–4</div>
-            <div class="match-team"><div class="match-team-name">France</div></div>
-          </div>
-          <div class="match-summary">A Bukayo Saka hat-trick and a stoppage-time Jude Bellingham goal settled one of the highest-scoring games of the tournament.</div>
-          <div class="match-meta" style="border-top:none;padding-top:0"><span><i class="fas fa-calendar"></i> Jul 18, 2026</span></div>
-          <a href="/updates/" class="match-btn"><i class="fas fa-play"></i> Watch Highlights</a>
-        </div>
-      </div>
-      <div class="match-card reveal">
-        <div class="match-stagebar"><span class="match-stage">Semi-Final</span><span class="match-country">SoFi Stadium</span></div>
-        <div class="match-body">
-          <div class="match-teams">
-            <div class="match-team"><div class="match-team-name">Spain</div></div>
-            <div class="match-vs">2–0</div>
-            <div class="match-team"><div class="match-team-name">France</div></div>
-          </div>
-          <div class="match-summary">Spain controlled the game from start to finish to reach their second World Cup final.</div>
-          <div class="match-meta" style="border-top:none;padding-top:0"><span><i class="fas fa-calendar"></i> Jul 15, 2026</span></div>
-          <a href="/updates/" class="match-btn"><i class="fas fa-play"></i> Watch Highlights</a>
-        </div>
-      </div>
-      <div class="match-card reveal">
-        <div class="match-stagebar"><span class="match-stage">Semi-Final</span><span class="match-country">AT&T Stadium</span></div>
-        <div class="match-body">
-          <div class="match-teams">
-            <div class="match-team"><div class="match-team-name">Argentina</div></div>
-            <div class="match-vs">2–1</div>
-            <div class="match-team"><div class="match-team-name">England</div></div>
-          </div>
-          <div class="match-summary">Argentina scored twice late to stun England and reach the final as defending champions.</div>
-          <div class="match-meta" style="border-top:none;padding-top:0"><span><i class="fas fa-calendar"></i> Jul 14, 2026</span></div>
-          <a href="/updates/" class="match-btn"><i class="fas fa-play"></i> Watch Highlights</a>
-        </div>
-      </div>
-      <div class="match-card reveal">
-        <div class="match-stagebar"><span class="match-stage">Quarter-Final · 🇲🇦</span><span class="match-country">Boston Stadium</span></div>
-        <div class="match-body">
-          <div class="match-teams">
-            <div class="match-team"><div class="match-team-name">France</div></div>
-            <div class="match-vs">2–0</div>
-            <div class="match-team"><div class="match-team-name">Morocco</div></div>
-          </div>
-          <div class="match-summary">France ended Morocco's run in the last eight — still Africa's best-performing side of the tournament, following their historic 2022 semi-final.</div>
-          <div class="match-meta" style="border-top:none;padding-top:0"><span><i class="fas fa-calendar"></i> Jul 9, 2026</span></div>
-          <a href="/updates/" class="match-btn"><i class="fas fa-play"></i> Watch Highlights</a>
-        </div>
-      </div>
-      <div class="match-card reveal">
-        <div class="match-stagebar"><span class="match-stage">Round of 16</span><span class="match-country">Multiple Venues</span></div>
-        <div class="match-body">
-          <div class="match-teams" style="justify-content:center">
-            <div class="match-team" style="flex:none"><div class="match-team-name" style="font-size:18px">Co-Hosts Bow Out</div></div>
-          </div>
-          <div class="match-summary">Canada, Mexico and the USA were all eliminated in the Round of 16 — Canada lost to Morocco, Mexico fell to England, and the USMNT were beaten by Belgium.</div>
-          <div class="match-meta" style="border-top:none;padding-top:0"><span><i class="fas fa-calendar"></i> Late Jun / early Jul</span></div>
-          <a href="/updates/" class="match-btn"><i class="fas fa-play"></i> Watch Highlights</a>
-        </div>
-      </div>
+
+    <div class="flash-viewport" id="flashViewport">
+      <button class="flash-arrow prev" onclick="flashGo(-1)" aria-label="Previous">&#8592;</button>
+      <button class="flash-arrow next" onclick="flashGo(1)" aria-label="Next">&#8594;</button>
+      <div class="flash-track" id="flashTrack"></div>
     </div>
-    <div style="text-align:center;margin-top:2.5rem" class="reveal">
-      <a href="/updates/" class="cta-gold" style="display:inline-flex;font-size:12px"><i class="fas fa-book-open"></i> See the Full Tournament Archive</a>
+    <div class="flash-dots" id="flashDots"></div>
+  </div>
+</section>
+
+<section id="leagues" class="leagues-section">
+  <div class="leagues-inner">
+    <div class="leagues-header reveal">
+      <div>
+        <div class="sec-eyebrow">Five Leagues, One Hub</div>
+        <h2 class="sec-heading" style="margin-bottom:0">LIVE <span class="hl">LEAGUES</span></h2>
+      </div>
+      <a href="/api/football/fixtures/" class="cta-outline" style="font-size:11px;font-family:var(--font-cond);letter-spacing:2px">Open Fixtures Board <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="leagues-grid">
+      <a href="/api/football/fixtures/" class="league-card reveal"><div class="league-card-name">Premier League</div><div class="league-card-cta">View Table →</div></a>
+      <a href="/api/football/fixtures/" class="league-card reveal"><div class="league-card-name">La Liga</div><div class="league-card-cta">View Table →</div></a>
+      <a href="/api/football/fixtures/" class="league-card reveal"><div class="league-card-name">Bundesliga</div><div class="league-card-cta">View Table →</div></a>
+      <a href="/api/football/fixtures/" class="league-card reveal"><div class="league-card-name">Serie A</div><div class="league-card-cta">View Table →</div></a>
+      <a href="/api/football/fixtures/" class="league-card reveal"><div class="league-card-name">Ligue 1</div><div class="league-card-cta">View Table →</div></a>
     </div>
   </div>
 </section>
 
-<!-- HOW THIS SITE WORKS NOW -->
-<section id="how" class="how-section">
+<section id="buzz" class="buzz-teaser">
+  <div class="buzz-inner">
+    <div class="buzz-text reveal">
+      <div class="sec-eyebrow">While The Season Builds</div>
+      <h2 class="sec-heading">OFF-SEASON <span class="hl">BUZZ</span></h2>
+      <p>Transfer news and rumours, pre-season friendlies, the road to the 2030 World Cup, and the fallout still being talked about from 2026 — all auto-synced from BBC Sport and Sky Sports, refreshed automatically so it's never stale.</p>
+      <div class="buzz-topics">
+        <span class="buzz-topic-chip">Transfer News</span>
+        <span class="buzz-topic-chip">Pre-Season Friendlies</span>
+        <span class="buzz-topic-chip">2030 World Cup Watch</span>
+        <span class="buzz-topic-chip">Post-WC Fallout</span>
+      </div>
+      <div style="margin-top:2rem">
+        <a href="/api/football/fixtures/" class="cta-gold" style="display:inline-flex;font-size:11px"><i class="fas fa-fire"></i> Read the Buzz</a>
+      </div>
+    </div>
+    <div class="buzz-visual reveal">
+      <i class="fas fa-newspaper"></i>
+      <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--mute)">Synced every 30 minutes</div>
+    </div>
+  </div>
+</section>
+
+<section class="how-section">
   <div class="how-inner">
     <div class="reveal" style="text-align:center;max-width:600px;margin:0 auto">
-      <div class="sec-eyebrow">Ticket Sales Are Closed</div>
-      <h2 class="sec-heading">HOW THIS SITE <span class="hl">WORKS NOW</span></h2>
+      <div class="sec-eyebrow">Quick Start</div>
+      <h2 class="sec-heading">HOW TO USE <span class="hl">THIS SITE</span></h2>
     </div>
     <div class="how-grid">
       <div class="how-card reveal">
         <div class="how-num">1</div>
-        <span class="how-icon">🏆</span>
-        <h3>Relive the Final</h3>
-        <p>Browse the full results archive — every knockout match, the final recap, and the awards handed out at the end.</p>
-        <a href="/updates/" class="how-link">Open Archive →</a>
-      </div>
-      <div class="how-card reveal">
-        <div class="how-num">2</div>
-        <span class="how-icon">🎫</span>
-        <h3>Find Your Booking</h3>
-        <p>Already bought a ticket? Look up your existing booking and e-ticket anytime using your email or reference code.</p>
-        <a href="/booking/lookup/" class="how-link">My Bookings →</a>
-      </div>
-      <div class="how-card reveal">
-        <div class="how-num">3</div>
         <span class="how-icon">⚽</span>
-        <h3>Follow the New Season</h3>
-        <p>The Premier League, La Liga, Bundesliga, Serie A and Ligue 1 are gearing up — live fixtures, tables and transfer buzz.</p>
+        <h3>Follow Live Leagues</h3>
+        <p>Fixtures, results and tables across five major leagues, updating automatically all season.</p>
         <a href="/api/football/fixtures/" class="how-link">Live Scores →</a>
       </div>
       <div class="how-card reveal">
+        <div class="how-num">2</div>
+        <span class="how-icon">🔥</span>
+        <h3>Catch the Buzz</h3>
+        <p>Transfers, pre-season, and 2030 World Cup build-up, refreshed continuously from real sources.</p>
+        <a href="#buzz" class="how-link">See Buzz →</a>
+      </div>
+      <div class="how-card reveal">
+        <div class="how-num">3</div>
+        <span class="how-icon">🏆</span>
+        <h3>Relive WC2026</h3>
+        <p>Final results, Africa's record campaign, and the full knockout story — all in the archive.</p>
+        <a href="/updates/" class="how-link">Open Archive →</a>
+      </div>
+      <div class="how-card reveal">
         <div class="how-num">4</div>
-        <span class="how-icon">🌍</span>
-        <h3>Look Ahead to 2030</h3>
-        <p>The centenary World Cup heads to Spain, Portugal and Morocco in 2030 — Spain arrive as defending champions.</p>
-        <a href="/updates/" class="how-link">2030 Watch →</a>
+        <span class="how-icon">🎫</span>
+        <h3>Find Your Booking</h3>
+        <p>Already bought a WC2026 ticket? Look up your booking and e-ticket anytime.</p>
+        <a href="/booking/lookup/" class="how-link">My Bookings →</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- AFRICAN NATIONS -->
-<section class="africa-section">
-  <div class="africa-inner">
-    <div class="reveal">
-      <div class="sec-eyebrow">Africa's Record Turnout</div>
-      <h2 class="sec-heading">FOR <span class="hl">AFRICA</span><br>BY AFRICANS</h2>
+<section class="archive-banner">
+  <div class="archive-banner-inner reveal">
+    <div class="archive-banner-text">
+      <div class="archive-banner-eyebrow">Tournament Complete</div>
+      <div class="archive-banner-title">SPAIN ARE <span>WORLD CHAMPIONS</span></div>
+      <div class="archive-banner-sub">Spain beat Argentina 1-0 after extra time to win the 2026 World Cup, with Africa sending a record ten nations to the finals. The full story — every knockout result, the awards, and Africa's campaign — lives in the archive.</div>
     </div>
-    <div class="africa-grid">
-      <div class="africa-text reveal">
-        <p>The 2026 FIFA World Cup delivered the largest African representation in tournament history — ten nations reached the finals for the first time ever, after CAF's final African slot went to DR Congo following a play-off decision against Nigeria. Morocco and South Africa went furthest, with Morocco reaching the quarterfinals and South Africa qualifying for a first-ever knockout round.</p>
-        <p>This portal remains open for anyone who purchased a ticket through us — bookings and e-tickets can still be looked up anytime. All past transactions were processed in USD via Paystack, trusted across African banks.</p>
-        <div class="africa-flags">
-          <span class="flag-chip knockout">Morocco 🇲🇦 · Quarterfinals</span>
-          <span class="flag-chip knockout">South Africa 🇿🇦 · Round of 32</span>
-          <span class="flag-chip qualified">Senegal 🇸🇳</span>
-          <span class="flag-chip qualified">Egypt 🇪🇬</span>
-          <span class="flag-chip qualified">Ghana 🇬🇭</span>
-          <span class="flag-chip qualified">Algeria 🇩🇿</span>
-          <span class="flag-chip qualified">Tunisia 🇹🇳</span>
-          <span class="flag-chip qualified">Ivory Coast 🇨🇮</span>
-          <span class="flag-chip qualified">Cape Verde 🇨🇻</span>
-          <span class="flag-chip qualified">DR Congo 🇨🇩</span>
-        </div>
-      </div>
-      <div class="africa-stats reveal">
-        <div class="africa-stat"><div class="africa-stat-n">10</div><div class="africa-stat-l">African Teams</div></div>
-        <div class="africa-stat"><div class="africa-stat-n">2</div><div class="africa-stat-l">Reached Knockouts</div></div>
-        <div class="africa-stat"><div class="africa-stat-n">QF</div><div class="africa-stat-l">Morocco's Best Finish</div></div>
-        <div class="africa-stat"><div class="africa-stat-n">3</div><div class="africa-stat-l">Host Countries</div></div>
-      </div>
-    </div>
+    <a href="/updates/" class="cta-gold archive-banner-cta"><i class="fas fa-book-open"></i> View Full Archive</a>
   </div>
 </section>
 
-<!-- FAQ -->
 <section class="faq-section">
   <div class="faq-inner">
     <div class="reveal" style="text-align:center">
@@ -621,53 +417,43 @@ footer{background:var(--navy);border-top:1px solid var(--border2);padding:4rem 5
     </div>
     <div class="faq-list reveal">
       <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>How current is the fixture and table data?</span><i class="fas fa-plus"></i></div>
+        <div class="faq-a"><p>Fixtures, results and league tables are synced automatically every 30 minutes from a live football data provider — no manual updates needed.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>Where did the World Cup 2026 content go?</span><i class="fas fa-plus"></i></div>
+        <div class="faq-a"><p>It's all still here — just moved to a dedicated Tournament Archive so the homepage can focus on what's happening in football right now. Visit the Archive link in the menu anytime.</p></div>
+      </div>
+      <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)"><span>Is ticket booking still open?</span><i class="fas fa-plus"></i></div>
-        <div class="faq-a"><p>No — with the tournament complete, ticket sales and new bookings through this site are closed. If you already purchased a ticket, you can still look up your booking and e-ticket at any time.</p></div>
+        <div class="faq-a"><p>No — with the World Cup complete, ticket sales through this site are closed. If you already purchased a ticket, you can still look up your booking and e-ticket at any time.</p></div>
       </div>
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)"><span>How do I retrieve a ticket I already bought?</span><i class="fas fa-plus"></i></div>
-        <div class="faq-a"><p>Use the "My Bookings" page and search by the email address or reference code you used at checkout. Your booking details and e-ticket will still be accessible there.</p></div>
+        <div class="faq-a"><p>Use the "My Bookings" page and search by the email address or reference code you used at checkout.</p></div>
       </div>
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)"><span>Where can I relive the tournament?</span><i class="fas fa-plus"></i></div>
-        <div class="faq-a"><p>Head to the Tournament Archive for the final recap, every knockout result, Africa's campaign, the individual awards, and match highlight videos.</p></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)"><span>Was my past payment information safe?</span><i class="fas fa-plus"></i></div>
-        <div class="faq-a"><p>Yes. All payments were processed by Paystack, which is PCI-DSS Level 1 compliant — the highest standard of payment security. We never stored your card details directly.</p></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)"><span>When's the next World Cup?</span><i class="fas fa-plus"></i></div>
-        <div class="faq-a"><p>2030 — jointly hosted by Spain, Portugal and Morocco, with symbolic centenary matches also played in Uruguay, Argentina and Paraguay. Spain arrive as defending champions.</p></div>
+        <div class="faq-q" onclick="toggleFaq(this)"><span>Where does the Off-Season Buzz content come from?</span><i class="fas fa-plus"></i></div>
+        <div class="faq-a"><p>It's synced automatically from BBC Sport and Sky Sports' public feeds, classified into topics, and refreshed every 30 minutes.</p></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="foot-grid">
     <div class="foot-brand">
       <div class="nav-logo" style="margin-bottom:.5rem">
         <div class="logo-emblem" style="width:36px;height:36px;font-size:15px">WC</div>
-        <div class="logo-text"><h1 style="font-size:18px">WC 2026</h1><p>African Ticketing Portal · Archive</p></div>
+        <div class="logo-text"><h1 style="font-size:18px">WC 2026</h1><p>African Football Hub</p></div>
       </div>
-      <p>Africa's gateway to the FIFA World Cup 2026. Ticket sales are now closed — this site remains open as a results archive and booking lookup.</p>
+      <p>Live football scores, tables and buzz for Africa — plus the full World Cup 2026 archive whenever you want to relive it.</p>
       <div class="foot-socials">
         <a href="#" class="soc"><i class="fab fa-instagram"></i></a>
-        <a href="#" class="soc"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="soc"><i class="fab fa-x-twitter"></i></a>
         <a href="#" class="soc"><i class="fab fa-facebook"></i></a>
         <a href="#" class="soc"><i class="fab fa-youtube"></i></a>
       </div>
-    </div>
-    <div class="foot-col">
-      <h4>Archive</h4>
-      <ul class="foot-links">
-        <li><a href="/updates/">Final Recap</a></li>
-        <li><a href="/updates/">Knockout Results</a></li>
-        <li><a href="/updates/">African Campaign</a></li>
-        <li><a href="/booking/lookup/">My Bookings</a></li>
-      </ul>
     </div>
     <div class="foot-col">
       <h4>Live Football</h4>
@@ -676,6 +462,15 @@ footer{background:var(--navy);border-top:1px solid var(--border2);padding:4rem 5
         <li><a href="/api/football/fixtures/">La Liga</a></li>
         <li><a href="/api/football/fixtures/">Bundesliga</a></li>
         <li><a href="/api/football/fixtures/">Serie A · Ligue 1</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Archive</h4>
+      <ul class="foot-links">
+        <li><a href="/updates/">Final Recap</a></li>
+        <li><a href="/updates/">Knockout Results</a></li>
+        <li><a href="/updates/">African Campaign</a></li>
+        <li><a href="/booking/lookup/">My Bookings</a></li>
       </ul>
     </div>
     <div class="foot-col">
@@ -689,17 +484,15 @@ footer{background:var(--navy);border-top:1px solid var(--border2);padding:4rem 5
     </div>
   </div>
   <div class="foot-bottom">
-    <span>© 2026 WC2026 African Ticketing Portal · Tournament Complete · All Rights Reserved</span>
+    <span>© 2026 WC2026 African Football Hub · All Rights Reserved</span>
     <span>Powered by Paystack · Supabase · Django</span>
   </div>
 </footer>
 
 <a href="https://wa.me/2348000000000" target="_blank" class="wa-float"><i class="fab fa-whatsapp"></i></a>
 <button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i></button>
-<div id="toast"></div>
 
 <script>
-// NAV
 window.addEventListener('scroll',function(){
   document.getElementById('navbar').classList.toggle('stuck',scrollY>60);
   document.getElementById('btt').classList.toggle('show',scrollY>400);
@@ -708,23 +501,19 @@ document.getElementById('ham').onclick=function(){document.getElementById('mobMe
 document.getElementById('mobClose').onclick=function(){document.getElementById('mobMenu').classList.remove('open');};
 function closeMob(){document.getElementById('mobMenu').classList.remove('open');}
 
-// REVEAL
 document.querySelectorAll('.reveal').forEach(function(el){
   new IntersectionObserver(function(e){
     e.forEach(function(x){if(x.isIntersecting)x.target.classList.add('in');});
   },{threshold:.1}).observe(el);
 });
 
-// FAQ
 function toggleFaq(el){
   var item=el.parentElement;
   var wasOpen=item.classList.contains('open');
   document.querySelectorAll('.faq-item').forEach(function(i){i.classList.remove('open');});
   if(!wasOpen) item.classList.add('open');
 }
-  /* ====================== 3. JAVASCRIPT ====================== */
 
-// ---------------- Homepage Flash Carousel ----------------
 (function(){
   const LEAGUES = [
     { code: 'PL',  name: 'Premier League' },
@@ -734,12 +523,10 @@ function toggleFaq(el){
     { code: 'FL1', name: 'Ligue 1' },
   ];
 
-  // Static, illustrated WC2026 recap slides — no photography needed.
   const WC_SLIDES = [
-    { eyebrow: '\ud83c\udfc6 Final \u00b7 Jul 19, 2026', headline: 'SPAIN ARE <span>WORLD CHAMPIONS</span>', sub: 'Ferran Torres settled it in the 106th minute \u2014 Spain 1, Argentina 0, after extra time at MetLife Stadium.' },
-    { eyebrow: '\ud83c\udf0d Record Turnout', headline: 'AFRICA SENT <span>TEN NATIONS</span>', sub: 'The most African representation in World Cup history \u2014 Morocco reached the quarterfinals, South Africa a first-ever knockout round.' },
-    { eyebrow: '\u26a1 Individual Honours', headline: '<span>RODRI & MBAPPE</span> TAKE THE AWARDS', sub: 'Rodri won the Golden Ball; Mbappe finished top scorer and became the World Cup\u2019s all-time leading goalscorer.' },
-    { eyebrow: '\ud83c\udfdf\ufe0f Round of 16', headline: 'ALL THREE <span>CO-HOSTS ELIMINATED</span>', sub: 'Canada, Mexico and the USA were each knocked out before the quarterfinals \u2014 the tournament\u2019s biggest early shock.' },
+    { eyebrow: '🏆 Final · Jul 19, 2026', headline: 'SPAIN ARE <span>WORLD CHAMPIONS</span>', sub: 'Ferran Torres settled it in the 106th minute — Spain 1, Argentina 0, after extra time at MetLife Stadium.' },
+    { eyebrow: '🌍 Record Turnout', headline: 'AFRICA SENT <span>TEN NATIONS</span>', sub: 'The most African representation in World Cup history — Morocco reached the quarterfinals, South Africa a first-ever knockout round.' },
+    { eyebrow: '⚡ Individual Honours', headline: '<span>RODRI & MBAPPE</span> TAKE THE AWARDS', sub: 'Rodri won the Golden Ball; Mbappe finished top scorer and became the World Cup\u2019s all-time leading goalscorer.' },
   ];
 
   let slides = [...WC_SLIDES.map(s => ({ type: 'wc', data: s }))];
@@ -749,7 +536,7 @@ function toggleFaq(el){
   function fmtDate(iso){
     try{
       const d = new Date(iso);
-      return d.toLocaleDateString(undefined, { month:'short', day:'numeric' }) + ' \u00b7 ' +
+      return d.toLocaleDateString(undefined, { month:'short', day:'numeric' }) + ' · ' +
              d.toLocaleTimeString(undefined, { hour:'2-digit', minute:'2-digit' });
     }catch(e){ return ''; }
   }
@@ -766,7 +553,6 @@ function toggleFaq(el){
           </div>
         </div>`;
     }
-    // league slide
     const m = slide.data;
     if(!m){
       return `<div class="flash-slide league"><div class="flash-empty">No fixture data available for ${slide.leagueName} right now.</div></div>`;
@@ -776,13 +562,13 @@ function toggleFaq(el){
     const isLive = m.status === 'IN_PLAY' || m.status === 'LIVE' || m.status === 'PAUSED';
     const hasScore = m.home_score !== null && m.home_score !== undefined;
     const scoreHtml = (hasScore && (isFinished || isLive))
-      ? `<span class="flash-score">${m.home_score} \u2013 ${m.away_score}</span>`
+      ? `<span class="flash-score">${m.home_score} – ${m.away_score}</span>`
       : `<span class="flash-score scheduled">${fmtDate(m.utc_date)}</span>`;
-    const tagLabel = isLive ? '\ud83d\udd34 Live' : isFinished ? '\u26bd Full Time' : '\u23f1 Upcoming';
+    const tagLabel = isLive ? '🔴 Live' : isFinished ? '⚽ Full Time' : '⏱ Upcoming';
 
     return `
       <div class="flash-slide league">
-        <div class="flash-league-tag">${tagLabel} \u00b7 ${slide.leagueName}</div>
+        <div class="flash-league-tag">${tagLabel} · ${slide.leagueName}</div>
         <div class="flash-matchup">
           <div class="flash-team">
             <img src="${home.crest||''}" alt="" onerror="this.style.visibility='hidden'">
@@ -806,10 +592,10 @@ function toggleFaq(el){
     dots.innerHTML = slides.map((_, i) =>
       `<button class="flash-dot ${i===current?'on':''}" onclick="flashJump(${i})" aria-label="Slide ${i+1}"></button>`
     ).join('');
-    goTo(current, true);
+    goTo(current);
   }
 
-  function goTo(i, skipAnim){
+  function goTo(i){
     current = (i + slides.length) % slides.length;
     const track = document.getElementById('flashTrack');
     if(track) track.style.transform = `translateX(-${current * 100}%)`;
@@ -836,7 +622,6 @@ function toggleFaq(el){
         return { type: 'league', leagueName: l.name, data: null };
       }
     }));
-    // Interleave: WC slide, league slide, WC slide, league slide...
     const merged = [];
     const maxLen = Math.max(WC_SLIDES.length, results.length);
     for(let i = 0; i < maxLen; i++){
@@ -848,8 +633,8 @@ function toggleFaq(el){
   }
 
   document.addEventListener('DOMContentLoaded', function(){
-    renderAll();       // show WC slides immediately, no flash of empty content
-    loadLeagueSlides(); // then fetch live data and merge it in
+    renderAll();
+    loadLeagueSlides();
     resetTimer();
 
     const viewport = document.getElementById('flashViewport');
