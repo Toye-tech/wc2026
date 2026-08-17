@@ -3,7 +3,7 @@ name: Sync Football Data & Buzz
 on:
   schedule:
     # Every 30 minutes — safe now that a full sync takes under 2 minutes.
-    - cron: '*/30 * * * *'
+       - cron: '*/5 * * * *'
   workflow_dispatch:  # lets you also trigger it manually from the Actions tab
 
 jobs:

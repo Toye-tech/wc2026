@@ -19,9 +19,11 @@ if RENDER_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_HOSTNAME)
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://wc2026-tickets.onrender.com',
+    'https://wc2026-ndg2.onrender.com',  # confirmed permanent domain
     'http://localhost:8000',
 ]
+if RENDER_HOSTNAME:
+    CSRF_TRUSTED_ORIGINS.append(f'https://{RENDER_HOSTNAME}')
 
 CSRF_COOKIE_SECURE = False
 CSRF_COOKIE_SAMESITE = 'Lax'
